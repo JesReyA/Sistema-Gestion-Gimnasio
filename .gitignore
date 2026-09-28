@@ -1,0 +1,12 @@
+#Archivos dle sistema
+.DS_Store
+Thumbs.db
+
+#Condiguraciones de IDE
+.vscode/
+.idea/
+*.iml
+
+#Archivos de entorno
+.env
+.env.local
