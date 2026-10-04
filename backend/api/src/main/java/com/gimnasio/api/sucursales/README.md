@@ -1,3 +1,3 @@
 # Contenido en esta funcionalidad
 
-sucursales, salones, sucursales_proveedores, proveedores
+sucursales, salones, sucursales_proveedores, proveedores, entidades_federativas
