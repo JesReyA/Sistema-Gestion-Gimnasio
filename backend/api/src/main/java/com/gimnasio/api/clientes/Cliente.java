@@ -8,12 +8,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+
 
 @Entity 
 @Table (name = "clientes")
@@ -70,11 +74,15 @@ public class Cliente {
     @Column (name = "estatura_m")
     @Digits (integer = 1, fraction = 2, message = "La estatura debe escribirse en metros y con dos decimales")
     @Positive
+    @DecimalMin (value = "0.50", message = "La estatura debe ser mayor a 0.5 metros")
+    @Max (value = 3, message = "La estatura debe ser menor a 3 metros")
     private BigDecimal estaturaMetros;
 
     @Column (name = "peso_objetivo_kg")
     @Digits (integer = 3, fraction = 2, message = "El peso objetivo debe escribirse en kilogramos y con dos decimales")
     @Positive
+    @Min (value = 1, message = "El peso objetivo debe ser mayor a 1 kg")
+    @Max (value = 800, message = "El peso objetivo debe ser menor a 800 kg")
     private BigDecimal pesoObjetivoKg;
 
     public Integer getIdCliente() {
