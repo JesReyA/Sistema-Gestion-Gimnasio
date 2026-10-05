@@ -17,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -33,18 +34,20 @@ public class Trabajador {
     private Integer idTrabajador;
 
     @NotNull 
+    @NotBlank 
     @Column (nullable=false, length = 100)
     private String nombres;
 
     @NotNull 
+    @NotBlank
     @Column (name = "apellido_paterno", nullable=false, length = 100)
     private String apellidoPaterno;
 
-    @NotNull    
-    @Column (name = "apellido_materno", length = 100)
+    @Column (name = "apellido_materno", nullable=true, length = 100)
     private String apellidoMaterno;
 
     @NotNull 
+    @NotBlank 
     @Column (nullable=false, length = 13, unique = true)
     private String rfc;
 

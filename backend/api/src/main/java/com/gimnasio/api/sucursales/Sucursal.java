@@ -71,7 +71,6 @@ public class Sucursal {
     private String horario;
 
     @NotNull 
-    @NotBlank
     @Column (nullable=false, length = 100)
     @Positive 
     private Integer aforo;

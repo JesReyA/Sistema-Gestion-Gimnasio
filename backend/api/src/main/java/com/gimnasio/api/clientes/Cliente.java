@@ -66,7 +66,6 @@ public class Cliente {
     private String correoElectronico;
 
     @NotNull 
-    @NotBlank
     @Column (nullable=false)
     private LocalDate fechaNacimiento;
 

@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity 
@@ -23,6 +24,7 @@ public class EntidadFederativa {
     private Integer idEstado;
 
     @NotNull 
+    @NotBlank 
     @Column (nullable=false, length = 50)
     private String nombre;
 

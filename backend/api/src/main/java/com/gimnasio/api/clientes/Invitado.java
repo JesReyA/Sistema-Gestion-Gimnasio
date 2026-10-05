@@ -54,7 +54,6 @@ public class Invitado {
     private String correoElectronico;
 
     @NotNull 
-    @NotBlank
     @Column (name="fecha_nacimiento", nullable=false)
     private LocalDate fechaNacimiento;
 
