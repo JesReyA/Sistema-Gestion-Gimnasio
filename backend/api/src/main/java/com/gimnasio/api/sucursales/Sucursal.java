@@ -24,7 +24,8 @@ import jakarta.validation.constraints.Positive;
 public class Sucursal {    
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
-    private Integer id;
+    @Column (name = "id_sucursal", nullable=false)
+    private Integer idSucursal;
 
     @NotNull 
     @Column (nullable=false, length = 100)
@@ -64,12 +65,12 @@ public class Sucursal {
     @JsonManagedReference
     private List<Trabajador> trabajadores = new ArrayList<>();
 
-    public Integer getId() {
-        return id;
+    public Integer getIdSucursal() {
+        return idSucursal;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdSucursal(Integer idSucursal) {
+        this.idSucursal = idSucursal;
     }
 
     public String getNombre() {

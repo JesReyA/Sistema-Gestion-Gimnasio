@@ -26,7 +26,8 @@ public class Trabajador {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
-    private Integer id;
+    @Column (name = "id_trabajador", nullable=false)
+    private Integer idTrabajador;
 
     @NotNull 
     @Column (nullable=false, length = 100)
@@ -90,12 +91,12 @@ public class Trabajador {
     @JoinColumn (name="id_sucursal", nullable=false)
     private Sucursal sucursal_id;
 
-    public Integer getId() {
-        return id;
+    public Integer getIdTrabajador() {
+        return idTrabajador;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdTrabajador(Integer idTrabajador) {
+        this.idTrabajador = idTrabajador;
     }
 
     public String getNombres() {
