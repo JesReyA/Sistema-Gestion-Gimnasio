@@ -1,12 +1,17 @@
 package com.gimnasio.api.clientes;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -52,6 +57,10 @@ public class Invitado {
     @NotBlank
     @Column (name="fecha_nacimiento", nullable=false)
     private LocalDate fechaNacimiento;
+
+    @OneToMany (mappedBy="invitado")
+    @JsonManagedReference 
+    private List<ClienteInvitado> clientesInvitados = new ArrayList<>();
 
     public Integer getIdInvitado() {
         return idInvitado;
@@ -109,6 +118,14 @@ public class Invitado {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    
+    public List<ClienteInvitado> getClientesInvitados() {
+        return clientesInvitados;
+    }
 
+    public void setClientesInvitados(List<ClienteInvitado> clientesInvitados) {
+        this.clientesInvitados = clientesInvitados;
+    }
+
+    
+    
 }

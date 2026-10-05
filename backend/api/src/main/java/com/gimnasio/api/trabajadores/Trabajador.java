@@ -88,11 +88,12 @@ public class Trabajador {
     @Column (name= "fecha_nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
 
+    // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
     @NotNull 
     @ManyToOne 
     @JsonBackReference
-    @JoinColumn (name="id_sucursal", nullable=false)
-    private Sucursal sucursal_id;
+    @JoinColumn (name="sucursal_id", nullable=false)
+    private Sucursal sucursal;
 
     public Integer getIdTrabajador() {
         return idTrabajador;
@@ -158,12 +159,12 @@ public class Trabajador {
         this.sueldo = sueldo;
     }
 
-    public Sucursal getSucursal_id() {
-        return sucursal_id;
+    public Sucursal getSucursal() {
+        return sucursal;
     }
 
-    public void setSucursal_id(Sucursal sucursal_id) {
-        this.sucursal_id = sucursal_id;
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 
     public LocalDate getFechaNacimiento() {

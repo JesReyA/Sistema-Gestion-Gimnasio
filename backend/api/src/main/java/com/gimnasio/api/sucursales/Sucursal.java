@@ -52,11 +52,13 @@ public class Sucursal {
     @Column (name = "municipio_alcaldia", nullable=false, length = 150)
     private String municipioAlcaldia;
 
+    
+    // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
     @NotNull
     @ManyToOne 
     @JsonBackReference 
-    @JoinColumn (name="id_estado", nullable=false)
-    private EntidadFederativa estado_id;
+    @JoinColumn (name="estado_id", nullable=false)
+    private EntidadFederativa estado;
 
     @Column (nullable=false, length = 100)
     @NotNull
@@ -74,7 +76,10 @@ public class Sucursal {
     @Positive 
     private Integer aforo;
 
-    @OneToMany (mappedBy="sucursal_id")
+
+    // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
+    @NotNull
+    @OneToMany (mappedBy="sucursal")
     @JsonManagedReference
     private List<Trabajador> trabajadores = new ArrayList<>();
 
@@ -118,12 +123,12 @@ public class Sucursal {
         this.municipioAlcaldia = municipioAlcaldia;
     }
 
-    public EntidadFederativa getEstado_id() {
-        return estado_id;
+    public EntidadFederativa getEstado() {
+        return estado;
     }
 
-    public void setEstado_id(EntidadFederativa estado_id) {
-        this.estado_id = estado_id;
+    public void setEstado(EntidadFederativa estado) {
+        this.estado = estado;
     }
 
     public String getPais() {

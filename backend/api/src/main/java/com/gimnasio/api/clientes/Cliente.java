@@ -2,11 +2,15 @@ package com.gimnasio.api.clientes;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
@@ -84,6 +88,10 @@ public class Cliente {
     @Min (value = 1, message = "El peso objetivo debe ser mayor a 1 kg")
     @Max (value = 800, message = "El peso objetivo debe ser menor a 800 kg")
     private BigDecimal pesoObjetivoKg;
+
+    @OneToMany (mappedBy = "cliente")
+    @JsonManagedReference 
+    private List<ClienteInvitado> clientesInvitados;
 
     public Integer getIdCliente() {
         return idCliente;
@@ -173,6 +181,12 @@ public class Cliente {
         this.pesoObjetivoKg = pesoObjetivoKg;
     }
 
-    
-    
+    public List<ClienteInvitado> getClientesInvitados() {
+        return clientesInvitados;
+    }
+
+    public void setClientesInvitados(List<ClienteInvitado> clientesInvitados) {
+        this.clientesInvitados = clientesInvitados;
+    }
+  
 }

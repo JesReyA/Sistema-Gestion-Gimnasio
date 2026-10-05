@@ -27,7 +27,7 @@ public class EntidadFederativa {
     private String nombre;
 
     @JsonManagedReference     // Se usa en la traducción a JSON y para evitar referencias circulares
-    @OneToMany (mappedBy = "estado_id")
+    @OneToMany (mappedBy = "estado")
     private List<Sucursal> sucursales = new ArrayList<>();
 
     public Integer getIdEstado() {
