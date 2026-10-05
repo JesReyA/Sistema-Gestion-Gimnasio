@@ -89,4 +89,84 @@ public class Trabajador {
     @JsonBackReference
     @JoinColumn (name="id_sucursal", nullable=false)
     private Sucursal sucursal_id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getRfc() {
+        return rfc;
+    }
+
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public turnosTrabajador getTurno() {
+        return turno;
+    }
+
+    public void setTurno(turnosTrabajador turno) {
+        this.turno = turno;
+    }
+
+    public rolesTrabajador getRol() {
+        return rol;
+    }
+
+    public void setRol(rolesTrabajador rol) {
+        this.rol = rol;
+    }
+
+    public BigDecimal getSueldo() {
+        return sueldo;
+    }
+
+    public void setSueldo(BigDecimal sueldo) {
+        this.sueldo = sueldo;
+    }
+
+    public Sucursal getSucursal_id() {
+        return sucursal_id;
+    }
+
+    public void setSucursal_id(Sucursal sucursal_id) {
+        this.sucursal_id = sucursal_id;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
 }

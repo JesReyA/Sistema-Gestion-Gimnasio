@@ -29,4 +29,28 @@ public class EntidadFederativa {
     @JsonManagedReference     // Se usa en la traducción a JSON y para evitar referencias circulares
     @OneToMany (mappedBy = "estado_id")
     private List<Sucursal> sucursales = new ArrayList<>();
+
+    public Integer getIdEstado() {
+        return idEstado;
+    }
+
+    public void setIdEstado(Integer idEstado) {
+        this.idEstado = idEstado;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public List<Sucursal> getSucursales() {
+        return sucursales;
+    }
+
+    public void setSucursales(List<Sucursal> sucursales) {
+        this.sucursales = sucursales;
+    }
 }

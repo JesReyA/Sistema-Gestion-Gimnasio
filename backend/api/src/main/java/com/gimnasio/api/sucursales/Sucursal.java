@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gimnasio.api.trabajadores.Trabajador;
 
 import jakarta.persistence.Column;
@@ -20,7 +21,7 @@ import jakarta.validation.constraints.Positive;
 
 @Entity 
 @Table (name = "sucursales")
-public class Sucursal {
+public class Sucursal {    
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
     private Integer id;
@@ -59,6 +60,88 @@ public class Sucursal {
     @Positive 
     private Integer aforo;
 
-    @OneToMany (mappedBy="entidad_id")
+    @OneToMany (mappedBy="sucursal_id")
+    @JsonManagedReference
     private List<Trabajador> trabajadores = new ArrayList<>();
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getMunicipioAlcaldia() {
+        return municipioAlcaldia;
+    }
+
+    public void setMunicipioAlcaldia(String municipioAlcaldia) {
+        this.municipioAlcaldia = municipioAlcaldia;
+    }
+
+    public EntidadFederativa getEstado_id() {
+        return estado_id;
+    }
+
+    public void setEstado_id(EntidadFederativa estado_id) {
+        this.estado_id = estado_id;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
+    public Integer getAforo() {
+        return aforo;
+    }
+
+    public void setAforo(Integer aforo) {
+        this.aforo = aforo;
+    }
+
+    public List<Trabajador> getTrabajadores() {
+        return trabajadores;
+    }
+
+    public void setTrabajadores(List<Trabajador> trabajadores) {
+        this.trabajadores = trabajadores;
+    }
+
 }
