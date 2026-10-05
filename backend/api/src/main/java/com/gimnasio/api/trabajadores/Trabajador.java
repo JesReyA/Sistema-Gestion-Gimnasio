@@ -24,6 +24,9 @@ import jakarta.validation.constraints.Positive;
 @Table(name = "trabajadores")
 public class Trabajador {
 
+    public Trabajador() {
+    }
+
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
     @Column (name = "id_trabajador", nullable=false)

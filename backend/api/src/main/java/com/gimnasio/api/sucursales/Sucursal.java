@@ -16,30 +16,39 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 @Entity 
 @Table (name = "sucursales")
 public class Sucursal {    
+
+    public Sucursal() {
+    }
+
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
     @Column (name = "id_sucursal", nullable=false)
     private Integer idSucursal;
 
     @NotNull 
+    @NotBlank
     @Column (nullable=false, length = 100)
     private String nombre;
 
     @NotNull 
+    @NotBlank
     @Column (nullable=false, length = 150)
     private String calle;
 
     @NotNull 
+    @NotBlank
     @Column (name = "codigo_postal", nullable=false, length = 10)
     private String codigoPostal;
 
     @NotNull 
+    @NotBlank
     @Column (name = "municipio_alcaldia", nullable=false, length = 150)
     private String municipioAlcaldia;
 
@@ -50,13 +59,17 @@ public class Sucursal {
     private EntidadFederativa estado_id;
 
     @Column (nullable=false, length = 100)
+    @NotNull
+    @NotBlank
     private String pais;
 
     @NotNull 
+    @NotBlank
     @Column (nullable=false, length = 100)
     private String horario;
 
     @NotNull 
+    @NotBlank
     @Column (nullable=false, length = 100)
     @Positive 
     private Integer aforo;

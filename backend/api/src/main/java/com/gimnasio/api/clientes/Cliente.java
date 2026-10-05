@@ -9,12 +9,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 @Entity 
 @Table (name = "clientes")
 public class Cliente {
+
+    public Cliente() {
+    }
 
     @Id  
     @GeneratedValue (strategy = jakarta.persistence.GenerationType.IDENTITY)  // Auto-increment
@@ -22,10 +28,12 @@ public class Cliente {
     private Integer idCliente; 
 
     @NotNull 
+    @NotBlank
     @Column (nullable=false, length = 100)
     private String nombres;
 
     @NotNull 
+    @NotBlank
     @Column (name = "apellido_paterno", nullable=false, length = 100)
     private String apellidoPaterno;
 
@@ -33,22 +41,29 @@ public class Cliente {
     private String apellidoMaterno;
 
     @NotNull 
+    @NotBlank
+    @Size (min = 18, max = 18, message = "CURP debe tener exactamente 18 caracteres")
     @Column (nullable=false, length = 18, unique = true)
     private String curp;
 
     @NotNull 
+    @NotBlank
     @Column (name ="numero_celular", nullable=false, length = 20)
     private String numeroCelular;
 
     @NotNull 
+    @NotBlank
+    @Email (message = "El correo electrónico no es válido")
     @Column (name = "correo_electronico", nullable=false, length = 150, unique = true)
     private String correoElectronico;
 
     @NotNull 
+    @NotBlank
     @Column (nullable=false)
     private LocalDate fechaNacimiento;
 
     @NotNull 
+    @NotBlank
     @Column (name ="codigo_acceso", nullable=false, length = 32, unique = true)
     private String codigoAcceso;
 
@@ -58,7 +73,98 @@ public class Cliente {
     private BigDecimal estaturaMetros;
 
     @Column (name = "peso_objetivo_kg")
-    @Digits (integer = 5, fraction = 2, message = "El peso objetivo debe escribirse en kilogramos y con dos decimales")
+    @Digits (integer = 3, fraction = 2, message = "El peso objetivo debe escribirse en kilogramos y con dos decimales")
     @Positive
     private BigDecimal pesoObjetivoKg;
+
+    public Integer getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Integer idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getCurp() {
+        return curp;
+    }
+
+    public void setCurp(String curp) {
+        this.curp = curp;
+    }
+
+    public String getNumeroCelular() {
+        return numeroCelular;
+    }
+
+    public void setNumeroCelular(String numeroCelular) {
+        this.numeroCelular = numeroCelular;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getCodigoAcceso() {
+        return codigoAcceso;
+    }
+
+    public void setCodigoAcceso(String codigoAcceso) {
+        this.codigoAcceso = codigoAcceso;
+    }
+
+    public BigDecimal getEstaturaMetros() {
+        return estaturaMetros;
+    }
+
+    public void setEstaturaMetros(BigDecimal estaturaMetros) {
+        this.estaturaMetros = estaturaMetros;
+    }
+
+    public BigDecimal getPesoObjetivoKg() {
+        return pesoObjetivoKg;
+    }
+
+    public void setPesoObjetivoKg(BigDecimal pesoObjetivoKg) {
+        this.pesoObjetivoKg = pesoObjetivoKg;
+    }
+
+    
+    
 }
