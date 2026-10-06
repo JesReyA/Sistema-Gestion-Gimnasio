@@ -1,8 +1,12 @@
 package com.gimnasio.api.suscripciones;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gimnasio.api.clientes.Cliente;
 
 import jakarta.persistence.Column;
@@ -12,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -57,6 +62,10 @@ public class Suscripcion {
     @NotNull 
     @Column (nullable=false)
     private estadoSuscripcion estado = estadoSuscripcion.activa;
+
+    @OneToMany (mappedBy = "suscripcion")
+    @JsonManagedReference 
+    private List<Suscripcion> suscripciones = new ArrayList<>();
 
     public Integer getIdSuscripcion() {
         return idSuscripcion;
