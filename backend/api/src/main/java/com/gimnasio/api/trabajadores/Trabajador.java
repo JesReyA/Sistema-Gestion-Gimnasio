@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gimnasio.api.auth.Cuenta;
 import com.gimnasio.api.sucursales.Sucursal;
 
 import jakarta.persistence.Column;
@@ -15,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -98,6 +101,10 @@ public class Trabajador {
     @JoinColumn (name="sucursal_id", nullable=false)
     private Sucursal sucursal;
 
+    @OneToOne (mappedBy = "trabajador")
+    @JsonManagedReference
+    private Cuenta cuenta;
+
     public Integer getIdTrabajador() {
         return idTrabajador;
     }
@@ -176,5 +183,13 @@ public class Trabajador {
 
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Cuenta getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
     }
 }

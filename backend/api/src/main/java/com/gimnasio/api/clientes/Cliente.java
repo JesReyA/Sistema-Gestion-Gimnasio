@@ -5,12 +5,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gimnasio.api.auth.Cuenta;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
@@ -91,6 +93,10 @@ public class Cliente {
     @OneToMany (mappedBy = "cliente")
     @JsonManagedReference 
     private List<ClienteInvitado> clientesInvitados;
+
+    @OneToOne (mappedBy = "cliente")
+    @JsonManagedReference
+    private Cuenta cuenta;
 
     public Integer getIdCliente() {
         return idCliente;
@@ -187,5 +193,15 @@ public class Cliente {
     public void setClientesInvitados(List<ClienteInvitado> clientesInvitados) {
         this.clientesInvitados = clientesInvitados;
     }
+
+    public Cuenta getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
+    }
+
+    
   
 }
