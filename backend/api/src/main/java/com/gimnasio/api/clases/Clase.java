@@ -1,10 +1,16 @@
 package com.gimnasio.api.clases;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -40,6 +46,10 @@ public class Clase {
     @Column(nullable=false)
     private Integer aforo;
 
+    @OneToMany (mappedBy = "clase")
+    @JsonManagedReference 
+    private List<SesionClase> sesionesClase = new ArrayList<>();
+
     public Integer getIdClase() {
         return idClase;
     }
@@ -72,5 +82,14 @@ public class Clase {
         this.aforo = aforo;
     }
 
+    public List<SesionClase> getSesionesClase() {
+        return sesionesClase;
+    }
+
+    public void setSesionesClase(List<SesionClase> sesionesClase) {
+        this.sesionesClase = sesionesClase;
+    }
+
+    
     
 }

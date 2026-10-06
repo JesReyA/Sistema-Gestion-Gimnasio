@@ -1,6 +1,11 @@
 package com.gimnasio.api.sucursales;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gimnasio.api.clases.SesionClase;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -44,6 +50,12 @@ public class Salon {
 
     //Falta indexar sucursal_id con numoer_salon para que su conjunto sea unico
 
+
+    @OneToMany (mappedBy = "salon")
+    @JsonManagedReference 
+    private List<SesionClase> sesionesClase = new ArrayList<>();
+
+    
     public Integer getIdSalon() {
         return idSalon;
     }
@@ -74,6 +86,14 @@ public class Salon {
 
     public void setCapacidad(Integer capacidad) {
         this.capacidad = capacidad;
+    }
+
+    public List<SesionClase> getSesionesClase() {
+        return sesionesClase;
+    }
+
+    public void setSesionesClase(List<SesionClase> sesionesClase) {
+        this.sesionesClase = sesionesClase;
     }
 
     
