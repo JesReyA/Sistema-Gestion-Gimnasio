@@ -2,10 +2,12 @@ package com.gimnasio.api.clientes;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gimnasio.api.auth.Cuenta;
+import com.gimnasio.api.suscripciones.Suscripcion;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -93,11 +95,15 @@ public class Cliente {
 
     @OneToMany (mappedBy = "cliente")
     @JsonManagedReference 
-    private List<ClienteInvitado> clientesInvitados;
+    private List<ClienteInvitado> clientesInvitados = new ArrayList<>();
 
     @OneToOne (mappedBy = "cliente")
     @JsonManagedReference
     private Cuenta cuenta;
+
+    @OneToMany (mappedBy = "cliente")
+    @JsonManagedReference 
+    private List<Suscripcion> suscripciones = new ArrayList<>();
 
     public Integer getIdCliente() {
         return idCliente;
@@ -203,6 +209,15 @@ public class Cliente {
         this.cuenta = cuenta;
     }
 
+    public List<Suscripcion> getSuscripciones() {
+        return suscripciones;
+    }
+
+    public void setSuscripciones(List<Suscripcion> suscripciones) {
+        this.suscripciones = suscripciones;
+    }
+
     
-  
+
+    
 }

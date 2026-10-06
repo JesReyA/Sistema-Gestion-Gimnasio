@@ -62,6 +62,10 @@ public class PlanSuscripcion {
     @JsonManagedReference 
     private List<PlanServicio> planesServicios = new ArrayList<>();
 
+    @OneToMany (mappedBy="planSuscripcion")
+    @JsonManagedReference 
+    private List<Suscripcion> suscripciones = new ArrayList<>();
+
     public Integer getIdPlan() {
         return idPlan;
     }
@@ -117,5 +121,15 @@ public class PlanSuscripcion {
     public void setPlanesServicios(List<PlanServicio> planesServicios) {
         this.planesServicios = planesServicios;
     }
+
+    public List<Suscripcion> getSuscripciones() {
+        return suscripciones;
+    }
+
+    public void setSuscripciones(List<Suscripcion> suscripciones) {
+        this.suscripciones = suscripciones;
+    }
+
+    
   
 }
