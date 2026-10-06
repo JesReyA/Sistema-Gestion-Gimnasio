@@ -1,11 +1,17 @@
 package com.gimnasio.api.suscripciones;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +20,10 @@ import jakarta.validation.constraints.Size;
 @Entity 
 @Table (name="servicios")
 public class Servicio {
+
+    public Servicio(){
+
+    }
 
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -29,6 +39,10 @@ public class Servicio {
     @Lob 
     @Column (columnDefinition="TEXT")
     private String descripcion;
+
+    @OneToMany (mappedBy="servicio")
+    @JsonManagedReference 
+    private List<PlanServicio> planesServicios = new ArrayList<>();
 
     public Integer getIdServicio() {
         return idServicio;
@@ -54,5 +68,12 @@ public class Servicio {
         this.descripcion = descripcion;
     }
 
-    
+    public List<PlanServicio> getPlanesServicios() {
+        return planesServicios;
+    }
+
+    public void setPlanesServicios(List<PlanServicio> planesServicios) {
+        this.planesServicios = planesServicios;
+    }
+
 }

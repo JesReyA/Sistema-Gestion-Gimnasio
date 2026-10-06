@@ -1,11 +1,17 @@
 package com.gimnasio.api.suscripciones;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -14,6 +20,10 @@ import jakarta.validation.constraints.PositiveOrZero;
 @Entity 
 @Table (name="planes_suscripcion")
 public class PlanSuscripcion {
+
+    public PlanSuscripcion(){
+
+    }
 
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
@@ -47,6 +57,10 @@ public class PlanSuscripcion {
     @NotNull 
     @Column (nullable=false)
     private estadoPlan estado = estadoPlan.disponible;
+
+    @OneToMany (mappedBy="planSuscripcion")
+    @JsonManagedReference 
+    private List<PlanServicio> planesServicios = new ArrayList<>();
 
     public Integer getIdPlan() {
         return idPlan;
@@ -96,5 +110,12 @@ public class PlanSuscripcion {
         this.estado = estado;
     }
 
-    
+    public List<PlanServicio> getPlanesServicios() {
+        return planesServicios;
+    }
+
+    public void setPlanesServicios(List<PlanServicio> planesServicios) {
+        this.planesServicios = planesServicios;
+    }
+  
 }

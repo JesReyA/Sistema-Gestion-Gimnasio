@@ -18,6 +18,10 @@ import jakarta.validation.constraints.NotNull;
 @Entity 
 @Table (name = "entidades_federativas")
 public class EntidadFederativa {
+    public EntidadFederativa(){
+        
+    }
+
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)// Auto-increment
     @Column (name = "id_estado", nullable=false)

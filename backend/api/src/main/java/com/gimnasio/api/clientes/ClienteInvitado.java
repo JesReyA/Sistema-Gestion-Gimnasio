@@ -10,6 +10,10 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table (name = "clientes_invitados")
 public class ClienteInvitado {
+
+    public ClienteInvitado(){
+        
+    }
     
     // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
     @ManyToOne 
