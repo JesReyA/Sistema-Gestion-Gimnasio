@@ -7,6 +7,7 @@ import com.gimnasio.api.trabajadores.Trabajador;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -24,7 +25,7 @@ public class Cuenta {
     
     @Id 
     @Column(name = "id_cuenta", nullable = false)
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)  // Auto-increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment
     private Integer idCuenta;
 
     @OneToOne 
