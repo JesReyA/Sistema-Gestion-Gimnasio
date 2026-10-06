@@ -82,6 +82,10 @@ public class Sucursal {
     @JsonManagedReference
     private List<Trabajador> trabajadores = new ArrayList<>();
 
+    @OneToMany (mappedBy="sucursal")
+    @JsonManagedReference 
+    private List<Salon> salones = new ArrayList<>();
+
     public Integer getIdSucursal() {
         return idSucursal;
     }
@@ -161,5 +165,15 @@ public class Sucursal {
     public void setTrabajadores(List<Trabajador> trabajadores) {
         this.trabajadores = trabajadores;
     }
+
+    public List<Salon> getSalones() {
+        return salones;
+    }
+
+    public void setSalones(List<Salon> salones) {
+        this.salones = salones;
+    }
+
+    
 
 }
