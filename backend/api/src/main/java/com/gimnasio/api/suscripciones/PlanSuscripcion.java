@@ -13,7 +13,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity 
 @Table (name="planes_suscripcion")
-public class PlanesSuscripcion {
+public class PlanSuscripcion {
 
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
