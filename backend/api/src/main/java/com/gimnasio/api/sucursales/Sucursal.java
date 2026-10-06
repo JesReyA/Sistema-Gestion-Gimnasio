@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gimnasio.api.asistencias.Asistencia;
 import com.gimnasio.api.trabajadores.Trabajador;
 
 import jakarta.persistence.Column;
@@ -85,6 +86,10 @@ public class Sucursal {
     @OneToMany (mappedBy="sucursal")
     @JsonManagedReference 
     private List<Salon> salones = new ArrayList<>();
+
+    @OneToMany (mappedBy="sucursal")
+    @JsonManagedReference 
+    private List<Asistencia> asistencias = new ArrayList<>();
 
     public Integer getIdSucursal() {
         return idSucursal;
@@ -174,6 +179,14 @@ public class Sucursal {
         this.salones = salones;
     }
 
-    
+    public List<Asistencia> getAsistencias() {
+        return asistencias;
+    }
 
+    public void setAsistencias(List<Asistencia> asistencias) {
+        this.asistencias = asistencias;
+    }
+
+    
+    
 }

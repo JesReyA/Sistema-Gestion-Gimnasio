@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gimnasio.api.asistencias.Asistencia;
 import com.gimnasio.api.auth.Cuenta;
 import com.gimnasio.api.suscripciones.Suscripcion;
 
@@ -104,6 +105,10 @@ public class Cliente {
     @OneToMany (mappedBy = "cliente")
     @JsonManagedReference 
     private List<Suscripcion> suscripciones = new ArrayList<>();
+
+    @OneToMany (mappedBy = "cliente")
+    @JsonManagedReference 
+    private List<Asistencia> asistencias = new ArrayList<>();
 
     public Integer getIdCliente() {
         return idCliente;
@@ -215,6 +220,14 @@ public class Cliente {
 
     public void setSuscripciones(List<Suscripcion> suscripciones) {
         this.suscripciones = suscripciones;
+    }
+
+    public List<Asistencia> getAsistencias() {
+        return asistencias;
+    }
+
+    public void setAsistencias(List<Asistencia> asistencias) {
+        this.asistencias = asistencias;
     }
 
     
