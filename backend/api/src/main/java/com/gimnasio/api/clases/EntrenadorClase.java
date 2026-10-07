@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "entrenadores_clases")
-public class EntrenadoresClases {
+public class EntrenadorClase {
 
     @ManyToOne
     @JoinColumn(name = "entrenador_id")
@@ -14,7 +14,7 @@ public class EntrenadoresClases {
 
     @ManyToOne
     @JoinColumn(name = "clase_id")
-    private Clases clase;
+    private Clase clase;
 
 
     public Entrenador getEntrenadorId() {
@@ -25,11 +25,11 @@ public class EntrenadoresClases {
         this.entrenadorId = entrenadorId;
     }
 
-    public Clases getClase() {
+    public Clase getClase() {
         return clase;
     }
 
-    public void setClase(Clases clase) {
+    public void setClase(Clase clase) {
         this.clase = clase;
     }
 }

@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "salones_eventos")
-public class SalonesEventos {
+public class SalonEvento {
 
     @ManyToOne
     @JoinColumn(name = "salon_id")
@@ -18,7 +18,7 @@ public class SalonesEventos {
     @ManyToOne
     @JoinColumn(name = "evento_id")
     @NotNull
-    private Eventos evento;
+    private Evento evento;
 
 
 }

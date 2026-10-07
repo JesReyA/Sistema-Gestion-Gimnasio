@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "entrenadores_clase")
-public class EntrenadoresClase {
+public class EntrenadorClase {
 
     @ManyToOne
     @JoinColumn(name = "entrenador_id")

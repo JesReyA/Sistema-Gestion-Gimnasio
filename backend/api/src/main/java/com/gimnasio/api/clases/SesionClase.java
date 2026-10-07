@@ -1,4 +1,4 @@
 package com.gimnasio.api.clases;
 
-public class SesionesClase {
+public class SesionClase {
 }

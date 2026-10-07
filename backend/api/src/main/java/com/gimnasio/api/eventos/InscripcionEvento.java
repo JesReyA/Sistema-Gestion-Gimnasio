@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "incripciones_eventos")
-public class InscripcionesEvento {
+public class InscripcionEvento {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -16,7 +16,7 @@ public class InscripcionesEvento {
 
     @ManyToOne
     @JoinColumn(name = "evento_id")
-    private  Eventos evento;
+    private Evento evento;
 
 
     @NotNull

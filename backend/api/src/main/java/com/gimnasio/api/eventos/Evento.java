@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "eventos")
-public class Eventos {
+public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_evento", nullable = false)
@@ -28,10 +28,10 @@ public class Eventos {
     LocalDate fechaEvento;
 
     @OneToMany(mappedBy = "evento")
-    private List<InscripcionesEvento> inscripcionesEventos;
+    private List<InscripcionEvento> inscripcionesEventos;
 
     @OneToMany(mappedBy = "evento")
-    private List<SalonesEventos> salonesEventos;
+    private List<SalonEvento> salonesEventos;
 
     public Integer getIdEvento() {
         return idEvento;
