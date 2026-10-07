@@ -5,26 +5,30 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "entrenadores")
-public class Entrenadores {
-
-
+public class Entrenador {
+    //
     //queda pendiente de ver como unir la relacion con Trabajadores
-    @OneToOne(mappedBy = "idTrabajador")
-    Integer trabajadorId;
+    @OneToOne(mappedBy = "trabajador")
+    private Trabajador trabajador;
 
-    @Column(name = "certificaciones")
-    String certificaciones;
+    @NotNull
+    @Lob
+    @Column(name = "certificaciones", columnDefinition = "text")
+    private String certificaciones;
 
     @NotNull
     @Column(name = "especialidad", nullable = false, length = 100)
-    String especialidad;
+    private String especialidad;
 
-    public Integer getTrabajadorId() {
-        return trabajadorId;
+    public Entrenador() {
     }
 
-    public void setTrabajadorId(Integer trabajadorId) {
-        this.trabajadorId = trabajadorId;
+    public Trabajador getTrabajador() {
+        return trabajador;
+    }
+
+    public void setTrabajador(Trabajador trabajador) {
+        this.trabajador = trabajador;
     }
 
     public String getEspecialidad() {

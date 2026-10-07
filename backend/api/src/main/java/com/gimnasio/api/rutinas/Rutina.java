@@ -3,25 +3,34 @@ package com.gimnasio.api.rutinas;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
+
 @Entity
 @Table(name="rutinas")
-public class Rutinas {
+public class Rutina {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rutina")
-    Integer idRutina;
+    private Integer idRutina;
 
     @Column(name = "nombre", length = 100)
     @NotNull
-    String nombre;
+    private String nombre;
 
     @Column(name = "objetivo", length = 100)
     @NotNull
-    String objetivo;
+    private String objetivo;
 
     @Column(name = "nivel", length = 50)
     @NotNull
-    String nivel;
+    private String nivel;
+
+    @OneToMany(mappedBy = "rutina")
+    @NotNull
+    private List<RutinaEjercicio> rutinaEjercicio;
+
+    public Rutina() {
+    }
 
     public Integer getIdRutina() {
         return idRutina;

@@ -3,10 +3,8 @@ package com.gimnasio.api.eventos;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.springframework.cglib.core.Local;
-
 import java.time.LocalDate;
-
+import java.util.List;
 
 @Entity
 @Table(name = "eventos")
@@ -17,7 +15,7 @@ public class Eventos {
     Integer idEvento;
 
     @NotNull
-    @Column(name = "nombre_evento")
+    @Column(name = "nombre_evento", length = 150)
     String nombreEvento;
 
     @NotNull
@@ -28,6 +26,12 @@ public class Eventos {
     @NotNull
     @Column(name = "fecha_evento")
     LocalDate fechaEvento;
+
+    @OneToMany(mappedBy = "evento")
+    private List<InscripcionesEvento> inscripcionesEventos;
+
+    @OneToMany(mappedBy = "evento")
+    private List<SalonesEventos> salonesEventos;
 
     public Integer getIdEvento() {
         return idEvento;
