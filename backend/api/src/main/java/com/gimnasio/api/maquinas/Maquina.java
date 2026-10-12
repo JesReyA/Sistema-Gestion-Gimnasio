@@ -11,6 +11,7 @@ public class Maquina {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_maquina")
     private Integer idMaquina;
+
     //sucursal id
 
     @NotNull
