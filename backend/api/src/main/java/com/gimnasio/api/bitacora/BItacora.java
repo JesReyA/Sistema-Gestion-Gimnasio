@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "bitacora")
-public class BItacora {
+public class Bitacora {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)

@@ -24,6 +24,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+import com.gimnasio.api.common.enums.RolTrabajador;
+import com.gimnasio.api.common.enums.TurnoTrabajador;
+
+
 @Entity
 @Table(name = "trabajadores")
 public class Trabajador {
@@ -54,35 +58,15 @@ public class Trabajador {
     @Column (nullable=false, length = 13, unique = true)
     private String rfc;
 
-
-    public enum rolesTrabajador {
-        admin,
-        entrenador,
-        recepcionista,
-        nutriologo, 
-        limpieza, 
-        tecnicos
-    }
+    @NotNull 
+    @Column (nullable=false)
+    @Enumerated (EnumType.STRING)
+    private RolTrabajador rol;
 
     @NotNull 
     @Column (nullable=false)
     @Enumerated (EnumType.STRING)
-    private rolesTrabajador rol;
-
-
-    public enum turnosTrabajador {
-        admin,
-        entrenador,
-        recepcionista,
-        nutriologo, 
-        limpieza, 
-        tecnicos
-    }
-
-    @NotNull 
-    @Column (nullable=false)
-    @Enumerated (EnumType.STRING)
-    private turnosTrabajador turno;
+    private TurnoTrabajador turno;
 
     @NotNull 
     @Column (nullable=false)
@@ -145,19 +129,19 @@ public class Trabajador {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public turnosTrabajador getTurno() {
+    public TurnoTrabajador getTurno() {
         return turno;
     }
 
-    public void setTurno(turnosTrabajador turno) {
+    public void setTurno(TurnoTrabajador turno) {
         this.turno = turno;
     }
 
-    public rolesTrabajador getRol() {
+    public RolTrabajador getRol() {
         return rol;
     }
 
-    public void setRol(rolesTrabajador rol) {
+    public void setRol(RolTrabajador rol) {
         this.rol = rol;
     }
 
