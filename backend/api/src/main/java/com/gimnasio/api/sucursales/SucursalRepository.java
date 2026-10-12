@@ -8,8 +8,6 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Integer> {
 
     List<Sucursal> findByCodigoPostal(String codigoPostal);
 
-    List<Sucursal> findByEstado(EntidadFederativa estado);
-
     boolean existsByNombre(String nombre);
 
 }

@@ -10,8 +10,6 @@ public interface SalonRepository extends JpaRepository<Salon, Integer> {
 
     List<Salon> getByNumeroSalon(String numeroSalon);
 
-    List<Salon> getBySucursal(Sucursal sucursal);
-
     boolean existsByNumeroSalon(String numeroSalon);
 
 }
