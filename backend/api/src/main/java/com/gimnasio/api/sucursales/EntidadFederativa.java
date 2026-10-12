@@ -52,11 +52,11 @@ public class EntidadFederativa {
         this.nombre = nombre;
     }
 
-    public Integer getIdEntidad() {
-        return idEntidad;
+    public List<Sucursal> getSucursales() {
+        return sucursales;
     }
 
-    public void setIdEntidad(Integer idEntidad) {
-        this.idEntidad = idEntidad;
+    public void setSucursales(List<Sucursal> sucursales) {
+        this.sucursales = sucursales;
     }
 }
