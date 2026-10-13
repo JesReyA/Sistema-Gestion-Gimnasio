@@ -46,27 +46,25 @@ public class CuentaUserDetails implements UserDetails{
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return estado == EstadoCuenta.activa || estado == EstadoCuenta.pendiente;
     }
 
     public Integer getIdCuenta() {
         return idCuenta;
     }
-
-    
 }
