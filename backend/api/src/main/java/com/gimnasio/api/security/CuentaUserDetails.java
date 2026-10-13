@@ -15,7 +15,7 @@ public class CuentaUserDetails implements UserDetails{
     }
 
     @Override
-    public @Nullable String getPassword() {
+    public String getPassword() {
         return "";
     }
 
