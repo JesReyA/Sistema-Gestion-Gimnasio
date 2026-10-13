@@ -3,6 +3,7 @@ package com.gimnasio.api.auth;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gimnasio.api.clientes.Cliente;
 import com.gimnasio.api.trabajadores.Trabajador;
+import com.gimnasio.api.common.enums.EstadoCuenta;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,17 +49,9 @@ public class Cuenta {
     @Column (name="contrasena_hash", nullable=false, length = 255)
     private String contrasena;
 
-
-    public enum estadoCuenta{
-        activa, 
-        inactiva, 
-        suspendida,
-        pendiente
-    }
-
     @NotNull
     @Column (nullable=false)
-    private estadoCuenta estado = estadoCuenta.pendiente;
+    private EstadoCuenta estado = EstadoCuenta.pendiente;
 
     public Integer getIdCuenta() {
         return idCuenta;
@@ -100,11 +93,11 @@ public class Cuenta {
         this.contrasena = contrasena;
     }
 
-    public estadoCuenta getEstado() {
+    public EstadoCuenta getEstado() {
         return estado;
     }
 
-    public void setEstado(estadoCuenta estado) {
+    public void setEstado(EstadoCuenta estado) {
         this.estado = estado;
     }
 

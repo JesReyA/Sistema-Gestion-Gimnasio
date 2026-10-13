@@ -16,13 +16,13 @@ public class AuthController {
     //Por ahora
     @PostMapping("login")
     public String login(){
-        return "Registrate lol";
+        return "Inicia sesion";
     }
 
     //Por ahora
     @PostMapping("registro")
     public String registro(){
-        return "Registrate lol";
+        return "Registrate";
     }
 
 }
