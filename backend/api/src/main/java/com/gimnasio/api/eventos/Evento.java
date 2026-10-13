@@ -22,7 +22,7 @@ public class Evento {
     @Column(name = "duracion_minutos")
     @Size(min = 1)
     Integer duracionMinutos;
-
+    
     @NotNull
     @Column(name = "fecha_evento")
     LocalDate fechaEvento;

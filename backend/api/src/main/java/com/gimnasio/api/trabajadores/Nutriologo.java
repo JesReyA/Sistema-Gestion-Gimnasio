@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name ="nutriologos")
 public class Nutriologo {
-
     //id trabajador
 
     @NotNull
