@@ -1,6 +1,7 @@
 package com.gimnasio.api.security;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.gimnasio.api.common.enums.EstadoCuenta;
@@ -26,12 +27,14 @@ public class CuentaUserDetails implements UserDetails{
         this.correo = correo;
         this.passwordHash = passwordHash;
         this.estado = estado;
-        this.roles = roles;
+        // Se busca que la lista de roles original no se pueda modificar
+        this.roles = List.copyOf(roles);
     }
 
+    // Recorre la lista de roles que se le da, y convierte cada uno en un SimpleGrantedAuthority, al finalizar, crea una lista de todos los simple granted authority y la regresa
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return roles.stream().map(SimpleGrantedAuthority::new).toList();
     }
 
     @Override
