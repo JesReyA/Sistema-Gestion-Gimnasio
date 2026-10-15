@@ -61,14 +61,25 @@ public class SesionClase {
     @NotNull 
     @ManyToOne 
     @JoinColumn (name="clase_id")
-    @JsonBackReference 
+    @JsonBackReference ("clase-sesionClase")
     private Clase clase;
 
     @NotNull 
     @ManyToOne 
     @JoinColumn (name="salon_id")
-    @JsonBackReference 
+    @JsonBackReference ("salon-sesionClase")
     private Salon salon;
+
+    public SesionClase(Integer idSesion, Salon salon, Clase clase, estadoSesion estado, Integer aforo, LocalTime horaFin, LocalTime horaInicio, LocalDate fecha) {
+        this.idSesion = idSesion;
+        this.salon = salon;
+        this.clase = clase;
+        this.estado = estado;
+        this.aforo = aforo;
+        this.horaFin = horaFin;
+        this.horaInicio = horaInicio;
+        this.fecha = fecha;
+    }
 
     public Integer getIdSesion() {
         return idSesion;

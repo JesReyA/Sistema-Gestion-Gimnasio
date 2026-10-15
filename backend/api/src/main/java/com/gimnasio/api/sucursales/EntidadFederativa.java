@@ -3,6 +3,7 @@ package com.gimnasio.api.sucursales;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -19,7 +20,6 @@ import jakarta.validation.constraints.NotNull;
 @Table (name = "entidades_federativas")
 public class EntidadFederativa {
     public EntidadFederativa(){
-        
     }
 
     @Id 
@@ -32,9 +32,16 @@ public class EntidadFederativa {
     @Column (nullable=false, length = 50)
     private String nombre;
 
-    @JsonManagedReference     // Se usa en la traducción a JSON y para evitar referencias circulares
+    @JsonBackReference    // Se usa en la traducción a JSON y para evitar referencias circulares
     @OneToMany (mappedBy = "estado")
     private List<Sucursal> sucursales = new ArrayList<>();
+
+
+    public EntidadFederativa(Integer idEstado, String nombre, List<Sucursal> sucursales) {
+        this.idEstado = idEstado;
+        this.nombre = nombre;
+        this.sucursales = sucursales;
+    }
 
     public Integer getIdEstado() {
         return idEstado;

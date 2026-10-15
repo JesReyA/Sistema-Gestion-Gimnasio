@@ -47,8 +47,16 @@ public class Clase {
     private Integer aforo;
 
     @OneToMany (mappedBy = "clase")
-    @JsonManagedReference 
+    @JsonManagedReference("clase-sesionClase")
     private List<SesionClase> sesionesClase = new ArrayList<>();
+
+    public Clase(Integer idClase, List<SesionClase> sesionesClase, Integer aforo, String tematica, String nombre) {
+        this.idClase = idClase;
+        this.sesionesClase = sesionesClase;
+        this.aforo = aforo;
+        this.tematica = tematica;
+        this.nombre = nombre;
+    }
 
     public Integer getIdClase() {
         return idClase;

@@ -8,6 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gimnasio.api.asistencias.Asistencia;
 import com.gimnasio.api.auth.Cuenta;
+import com.gimnasio.api.eventos.InscripcionEvento;
 import com.gimnasio.api.suscripciones.Suscripcion;
 
 import jakarta.persistence.Column;
@@ -27,6 +28,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import org.aspectj.lang.reflect.InitializerSignature;
 
 
 @Entity 
@@ -95,20 +97,49 @@ public class Cliente {
     private BigDecimal pesoObjetivoKg;
 
     @OneToMany (mappedBy = "cliente")
-    @JsonManagedReference 
+    @JsonManagedReference("cliente-invitados")
     private List<ClienteInvitado> clientesInvitados = new ArrayList<>();
 
     @OneToOne (mappedBy = "cliente")
-    @JsonManagedReference
+    @JsonManagedReference("cliente-trabajador")
     private Cuenta cuenta;
 
     @OneToMany (mappedBy = "cliente")
-    @JsonManagedReference 
+    @JsonManagedReference ("cliente-suscripciones")
     private List<Suscripcion> suscripciones = new ArrayList<>();
 
     @OneToMany (mappedBy = "cliente")
-    @JsonManagedReference 
+    @JsonManagedReference ("cliente-asistencias")
     private List<Asistencia> asistencias = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-inscripcionesEvento")
+    private List<InscripcionEvento> inscripcionesEvento = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-medicionPeso")
+    private List<MedicionPeso> medicionPeso = new ArrayList<>();
+
+
+    public Cliente(Integer idCliente, String nombres, String apellidoPaterno, String apellidoMaterno, String curp, String numeroCelular, String correoElectronico, LocalDate fechaNacimiento, BigDecimal estaturaMetros, String codigoAcceso, BigDecimal pesoObjetivoKg, List<ClienteInvitado> clientesInvitados, Cuenta cuenta, List<Suscripcion> suscripciones, List<Asistencia> asistencias, List<InscripcionEvento> inscripcionesEvento, List<MedicionPeso> medicionPeso) {
+        this.idCliente = idCliente;
+        this.nombres = nombres;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.curp = curp;
+        this.numeroCelular = numeroCelular;
+        this.correoElectronico = correoElectronico;
+        this.fechaNacimiento = fechaNacimiento;
+        this.estaturaMetros = estaturaMetros;
+        this.codigoAcceso = codigoAcceso;
+        this.pesoObjetivoKg = pesoObjetivoKg;
+        this.clientesInvitados = clientesInvitados;
+        this.cuenta = cuenta;
+        this.suscripciones = suscripciones;
+        this.asistencias = asistencias;
+        this.inscripcionesEvento = inscripcionesEvento;
+        this.medicionPeso = medicionPeso;
+    }
 
     public Integer getIdCliente() {
         return idCliente;
@@ -230,7 +261,19 @@ public class Cliente {
         this.asistencias = asistencias;
     }
 
-    
+    public List<InscripcionEvento> getInscripcionesEvento() {
+        return inscripcionesEvento;
+    }
 
-    
+    public void setInscripcionesEvento(List<InscripcionEvento> inscripcionesEvento) {
+        this.inscripcionesEvento = inscripcionesEvento;
+    }
+
+    public List<MedicionPeso> getMedicionPeso() {
+        return medicionPeso;
+    }
+
+    public void setMedicionPeso(List<MedicionPeso> medicionPeso) {
+        this.medicionPeso = medicionPeso;
+    }
 }

@@ -1,6 +1,7 @@
 package com.gimnasio.api.bitacora;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gimnasio.api.auth.Cuenta;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -20,8 +21,10 @@ public class Bitacora {
     private BigInteger idBitacora;
 
 
-    @JoinColumn(name = "cuenta_id")
+
     @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "cuenta_id", nullable = false)
     private Cuenta cuenta;
 
 
@@ -62,6 +65,16 @@ public class Bitacora {
     }
 
     public Bitacora() {
+    }
+
+    public Bitacora(BigInteger idBitacora, Map<String, Object> detalle, Integer entidadId, String entidad, LocalDate fecha, accionBitacora accion, Cuenta cuenta) {
+        this.idBitacora = idBitacora;
+        this.detalle = detalle;
+        this.entidadId = entidadId;
+        this.entidad = entidad;
+        this.fecha = fecha;
+        this.accion = accion;
+        this.cuenta = cuenta;
     }
 
     public BigInteger getIdBitacora() {
@@ -110,5 +123,13 @@ public class Bitacora {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public Cuenta getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
     }
 }

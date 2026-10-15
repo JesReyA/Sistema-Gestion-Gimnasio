@@ -1,5 +1,6 @@
 package com.gimnasio.api.trabajadores;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -8,10 +9,18 @@ import jakarta.validation.constraints.NotNull;
 public class Entrenador {
     //
     //queda pendiente de ver como unir la relacion con Trabajadores
-    @OneToOne(mappedBy = "trabajador")
+
+    @Id
+    @Column(name = "trabajador_id")
+    private Integer trabajadorId;
+
+    //completo
+    @OneToOne
+    @MapsId
+    @JoinColumn (name = "trabajador_id")
+    @JsonBackReference("trabajador-entrenador")
     private Trabajador trabajador;
 
-    @NotNull
     @Lob
     @Column(name = "certificaciones", columnDefinition = "text")
     private String certificaciones;
@@ -23,12 +32,19 @@ public class Entrenador {
     public Entrenador() {
     }
 
-    public Trabajador getTrabajador() {
-        return trabajador;
+    public Entrenador(Integer trabajadorId, String especialidad, String certificaciones, Trabajador trabajador) {
+        this.trabajadorId = trabajadorId;
+        this.especialidad = especialidad;
+        this.certificaciones = certificaciones;
+        this.trabajador = trabajador;
     }
 
-    public void setTrabajador(Trabajador trabajador) {
-        this.trabajador = trabajador;
+    public Integer getTrabajadorId() {
+        return trabajadorId;
+    }
+
+    public void setTrabajadorId(Integer trabajadorId) {
+        this.trabajadorId = trabajadorId;
     }
 
     public String getEspecialidad() {
@@ -45,5 +61,13 @@ public class Entrenador {
 
     public void setCertificaciones(String certificaciones) {
         this.certificaciones = certificaciones;
+    }
+
+    public Trabajador getTrabajador() {
+        return trabajador;
+    }
+
+    public void setTrabajador(Trabajador trabajador) {
+        this.trabajador = trabajador;
     }
 }

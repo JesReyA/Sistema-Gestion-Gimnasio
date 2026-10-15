@@ -1,6 +1,10 @@
 package com.gimnasio.api.sucursales;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -34,7 +38,23 @@ public class Proveedor {
     @Column(name = "descripcion_servicio", columnDefinition = "text")
     private String descripcionServicio;
 
+
+    @OneToMany(mappedBy = "proveedor")
+    @JsonManagedReference("proovedor-SucursalProveedor")
+    private List<SucursalProveedor> sucursalProveedor = new ArrayList<>();
+
     public Proveedor() {
+    }
+
+    public Proveedor(Integer idProveedor, String descripcionServicio, List<SucursalProveedor> sucursalProveedor, String tipoServicio, String apellidoMaterno, String razonSocial, String apellidoPaterno, String nombre) {
+        this.idProveedor = idProveedor;
+        this.descripcionServicio = descripcionServicio;
+        this.sucursalProveedor = sucursalProveedor;
+        this.tipoServicio = tipoServicio;
+        this.apellidoMaterno = apellidoMaterno;
+        this.razonSocial = razonSocial;
+        this.apellidoPaterno = apellidoPaterno;
+        this.nombre = nombre;
     }
 
     public Integer getIdProveedor() {
@@ -45,20 +65,20 @@ public class Proveedor {
         this.idProveedor = idProveedor;
     }
 
-    public String getNombre() {
-        return nombre;
+    public List<SucursalProveedor> getSucursalProveedor() {
+        return sucursalProveedor;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setSucursalProveedor(List<SucursalProveedor> sucursalProveedor) {
+        this.sucursalProveedor = sucursalProveedor;
     }
 
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
+    public String getDescripcionServicio() {
+        return descripcionServicio;
     }
 
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
+    public void setDescripcionServicio(String descripcionServicio) {
+        this.descripcionServicio = descripcionServicio;
     }
 
     public String getTipoServicio() {
@@ -85,11 +105,19 @@ public class Proveedor {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public String getDescripcionServicio() {
-        return descripcionServicio;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setDescripcionServicio(String descripcionServicio) {
-        this.descripcionServicio = descripcionServicio;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
     }
 }

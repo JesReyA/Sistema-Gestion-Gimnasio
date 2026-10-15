@@ -81,13 +81,35 @@ public class Trabajador {
     // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
     @NotNull 
     @ManyToOne 
-    @JsonBackReference
+    @JsonBackReference("sucursal-cuenta")
     @JoinColumn (name="sucursal_id", nullable=false)
     private Sucursal sucursal;
 
+
+
     @OneToOne (mappedBy = "trabajador")
-    @JsonManagedReference
+    @JsonManagedReference("trabajador-cuenta")
     private Cuenta cuenta;
+
+
+    @OneToOne(mappedBy = "trabajador-entrenador")
+    @JsonManagedReference
+    private Entrenador entrenador;
+
+    public Trabajador(Integer idTrabajador, Entrenador entrenador, Cuenta cuenta, Sucursal sucursal, LocalDate fechaNacimiento, BigDecimal sueldo, TurnoTrabajador turno, RolTrabajador rol, String rfc, String apellidoMaterno, String apellidoPaterno, String nombres) {
+        this.idTrabajador = idTrabajador;
+        this.entrenador = entrenador;
+        this.cuenta = cuenta;
+        this.sucursal = sucursal;
+        this.fechaNacimiento = fechaNacimiento;
+        this.sueldo = sueldo;
+        this.turno = turno;
+        this.rol = rol;
+        this.rfc = rfc;
+        this.apellidoMaterno = apellidoMaterno;
+        this.apellidoPaterno = apellidoPaterno;
+        this.nombres = nombres;
+    }
 
     public Integer getIdTrabajador() {
         return idTrabajador;
@@ -97,60 +119,20 @@ public class Trabajador {
         this.idTrabajador = idTrabajador;
     }
 
-    public String getNombres() {
-        return nombres;
+    public Cuenta getCuenta() {
+        return cuenta;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
     }
 
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
+    public Entrenador getEntrenador() {
+        return entrenador;
     }
 
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
-    }
-
-    public String getRfc() {
-        return rfc;
-    }
-
-    public void setRfc(String rfc) {
-        this.rfc = rfc;
-    }
-
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
-    }
-
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
-    }
-
-    public TurnoTrabajador getTurno() {
-        return turno;
-    }
-
-    public void setTurno(TurnoTrabajador turno) {
-        this.turno = turno;
-    }
-
-    public RolTrabajador getRol() {
-        return rol;
-    }
-
-    public void setRol(RolTrabajador rol) {
-        this.rol = rol;
-    }
-
-    public BigDecimal getSueldo() {
-        return sueldo;
-    }
-
-    public void setSueldo(BigDecimal sueldo) {
-        this.sueldo = sueldo;
+    public void setEntrenador(Entrenador entrenador) {
+        this.entrenador = entrenador;
     }
 
     public Sucursal getSucursal() {
@@ -169,11 +151,59 @@ public class Trabajador {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Cuenta getCuenta() {
-        return cuenta;
+    public BigDecimal getSueldo() {
+        return sueldo;
     }
 
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
+    public void setSueldo(BigDecimal sueldo) {
+        this.sueldo = sueldo;
+    }
+
+    public TurnoTrabajador getTurno() {
+        return turno;
+    }
+
+    public void setTurno(TurnoTrabajador turno) {
+        this.turno = turno;
+    }
+
+    public RolTrabajador getRol() {
+        return rol;
+    }
+
+    public void setRol(RolTrabajador rol) {
+        this.rol = rol;
+    }
+
+    public String getRfc() {
+        return rfc;
+    }
+
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 }

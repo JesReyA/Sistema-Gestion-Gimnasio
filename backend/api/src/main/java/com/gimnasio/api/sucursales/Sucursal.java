@@ -33,33 +33,46 @@ public class Sucursal {
     @Column (name = "id_sucursal", nullable=false)
     private Integer idSucursal;
 
-    @NotNull 
+    // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
+    @NotNull
+    @ManyToOne 
+    @JsonManagedReference
+    @JoinColumn (name="estado_id", nullable=false)
+    private EntidadFederativa estado;
+
+    // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
+    @NotNull
+    @OneToMany (mappedBy="sucursal")
+    @JsonManagedReference
+    private List<Trabajador> trabajadores = new ArrayList<>();
+
+    @OneToMany (mappedBy="sucursal")
+    @JsonManagedReference
+    private List<Salon> salones = new ArrayList<>();
+
+    @OneToMany (mappedBy="sucursal")
+    @JsonManagedReference
+    private List<Asistencia> asistencias = new ArrayList<>();
+
+    @NotNull
     @NotBlank
     @Column (nullable=false, length = 100)
     private String nombre;
 
-    @NotNull 
+    @NotNull
     @NotBlank
     @Column (nullable=false, length = 150)
     private String calle;
 
-    @NotNull 
+    @NotNull
     @NotBlank
     @Column (name = "codigo_postal", nullable=false, length = 10)
     private String codigoPostal;
 
-    @NotNull 
+    @NotNull
     @NotBlank
     @Column (name = "municipio_alcaldia", nullable=false, length = 150)
     private String municipioAlcaldia;
-
-    
-    // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
-    @NotNull
-    @ManyToOne 
-    @JsonBackReference 
-    @JoinColumn (name="estado_id", nullable=false)
-    private EntidadFederativa estado;
 
     @Column (nullable=false, length = 100)
     @NotNull
@@ -76,20 +89,22 @@ public class Sucursal {
     @Positive 
     private Integer aforo;
 
+    public Sucursal(Integer idSucursal, Integer aforo, String horario, String pais, String municipioAlcaldia, String codigoPostal, String calle, String nombre, List<Asistencia> asistencias, List<Salon> salones, List<Trabajador> trabajadores, EntidadFederativa estado) {
+        this.idSucursal = idSucursal;
+        this.aforo = aforo;
+        this.horario = horario;
+        this.pais = pais;
+        this.municipioAlcaldia = municipioAlcaldia;
+        this.codigoPostal = codigoPostal;
+        this.calle = calle;
+        this.nombre = nombre;
+        this.asistencias = asistencias;
+        this.salones = salones;
+        this.trabajadores = trabajadores;
+        this.estado = estado;
+    }
 
-    // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
-    @NotNull
-    @OneToMany (mappedBy="sucursal")
-    @JsonManagedReference
-    private List<Trabajador> trabajadores = new ArrayList<>();
 
-    @OneToMany (mappedBy="sucursal")
-    @JsonManagedReference 
-    private List<Salon> salones = new ArrayList<>();
-
-    @OneToMany (mappedBy="sucursal")
-    @JsonManagedReference 
-    private List<Asistencia> asistencias = new ArrayList<>();
 
     public Integer getIdSucursal() {
         return idSucursal;

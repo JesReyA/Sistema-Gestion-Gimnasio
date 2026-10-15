@@ -1,5 +1,6 @@
 package com.gimnasio.api.clientes;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -16,6 +17,12 @@ public class MedicionPeso {
     private Integer idMedicion;
 
     // cliente id
+
+    @ManyToOne
+    @JsonBackReference("cliente-medicionPeso")
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
     @NotNull
     @Column(name = "fecha")
     private LocalDate fecha;
@@ -27,12 +34,19 @@ public class MedicionPeso {
     public MedicionPeso() {
     }
 
-    public BigDecimal getPesoKg() {
-        return pesoKg;
+    public MedicionPeso(Integer idMedicion, BigDecimal pesoKg, Cliente cliente, LocalDate fecha) {
+        this.idMedicion = idMedicion;
+        this.pesoKg = pesoKg;
+        this.cliente = cliente;
+        this.fecha = fecha;
     }
 
-    public void setPesoKg(BigDecimal pesoKg) {
-        this.pesoKg = pesoKg;
+    public Integer getIdMedicion() {
+        return idMedicion;
+    }
+
+    public void setIdMedicion(Integer idMedicion) {
+        this.idMedicion = idMedicion;
     }
 
     public LocalDate getFecha() {
@@ -43,11 +57,19 @@ public class MedicionPeso {
         this.fecha = fecha;
     }
 
-    public Integer getIdMedicion() {
-        return idMedicion;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setIdMedicion(Integer idMedicion) {
-        this.idMedicion = idMedicion;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public BigDecimal getPesoKg() {
+        return pesoKg;
+    }
+
+    public void setPesoKg(BigDecimal pesoKg) {
+        this.pesoKg = pesoKg;
     }
 }
