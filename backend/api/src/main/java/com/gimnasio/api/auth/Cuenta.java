@@ -1,19 +1,15 @@
 package com.gimnasio.api.auth;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.gimnasio.api.bitacora.Bitacora;
 import com.gimnasio.api.clientes.Cliente;
 import com.gimnasio.api.trabajadores.Trabajador;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.util.List;
 
 
 @Entity
@@ -28,6 +24,11 @@ public class Cuenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment
     private Integer idCuenta;
 
+    @OneToMany(mappedBy = "cuenta")
+    private List<Bitacora> bitacora;
+
+
+    
     @OneToOne 
     @JoinColumn (name ="cliente_id", nullable = true)
     @JsonBackReference 

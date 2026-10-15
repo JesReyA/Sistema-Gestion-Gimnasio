@@ -1,6 +1,7 @@
 package com.gimnasio.api.bitacora;
 
 
+import com.gimnasio.api.auth.Cuenta;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -17,6 +18,12 @@ public class Bitacora {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "id_bitacora")
     private BigInteger idBitacora;
+
+
+    @JoinColumn(name = "cuenta_id")
+    @ManyToOne
+    private Cuenta cuenta;
+
 
     @NotNull
     @Column(name = "fecha")
@@ -41,7 +48,7 @@ public class Bitacora {
     private Map<String, Object> detalle;
 
 
-    //cuenta id
+
     private enum accionBitacora{
         codigo_regenerado,
         rol_cambiado,
