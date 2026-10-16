@@ -284,7 +284,7 @@ export default function RoutinesView() {
                   </h4>
                   <p className="text-[10px] text-gray-400">
                     {exercise.sets} series × {exercise.reps}
-                  </p>
+                  </p>  
                 </div>
               </div>
             ))}
