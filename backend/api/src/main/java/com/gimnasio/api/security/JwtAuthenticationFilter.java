@@ -1,6 +1,5 @@
 package com.gimnasio.api.security;
 
-import com.gimnasio.api.auth.AuthController;
 import java.io.IOException;
 
 import org.jspecify.annotations.NonNull;
@@ -36,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
     // Método incluido con OncePerRequestFilter
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull  HttpServletResponse response, @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         // Cuando se hace una petición, junto con el token se intercepta el header de Authorization, 
         // el cual es parte de una estructura típica de peticiones HTTP, este se intercepta con getHeader
