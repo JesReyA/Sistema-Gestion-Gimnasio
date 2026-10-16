@@ -22,7 +22,7 @@ export default function ClienteLayout({
         </main>
 
         {/* Barra de navegación inferior fija */}
-        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#0d0e12]/95 backdrop-blur-md border-t border-white/[0.06] py-2 px-6 max-w-sm mx-auto flex justify-around items-center">
+        <nav className="fixed bottom-4 left-4 right-4 z-50 bg-[#0d0e12]/95 backdrop-blur-md border border-white/[0.08] rounded-2xl py-2.5 px-6 max-w-sm mx-auto flex justify-around items-center shadow-2xl shadow-black/50">
           
           {/* 1. Inicio */}
           <Link
