@@ -2,295 +2,282 @@
 
 import React, { useState, useMemo } from 'react';
 
-// 1. Tipos de datos
+// --- 1. MODELO DE DATOS Y TIPOS ---
 export type DaysPerWeek = 3 | 4 | 5 | 6;
-export type RoutineGoal = 'hipertrofia_general' | 'enfoque_tren_inferior' | 'avanzado_estetica' | 'fuerza_base';
+export type LegPreference = 'completa' | 'dividida';
 
 export interface Exercise {
   id: string;
   name: string;
-  sets: number;
-  reps: string;
+  setsReps: string;
 }
 
 export interface WorkoutDay {
   dayNumber: number;
   title: string;
-  estimatedMinutes: number;
+  focus: string;
   exercises: Exercise[];
 }
 
-export interface WorkoutRoutine {
-  id: string;
-  name: string;
-  subtitle: string;
-  daysPerWeek: DaysPerWeek;
-  goal: RoutineGoal;
-  level: string;
-  schedule: WorkoutDay[];
-}
-
-// 2. Catálogo de Rutinas (Soluciona el ReferenceError)
-export const ROUTINES_CATALOG: WorkoutRoutine[] = [
-  {
-    id: 'rut-push-pull-legs-4',
-    name: 'Push / Pull / Legs + Core',
-    subtitle: 'Desarrollo muscular balanceado y fuerza',
-    daysPerWeek: 4,
-    goal: 'hipertrofia_general',
-    level: 'Intermedio',
-    schedule: [
-      {
-        dayNumber: 1,
-        title: 'Día 1: Empuje (Pecho/Hombro/Tríceps)',
-        estimatedMinutes: 55,
-        exercises: [
-          { id: 'ex-1', name: 'Press Banca con Barra', sets: 4, reps: '8-10' },
-          { id: 'ex-2', name: 'Press Militar con Mancuernas', sets: 3, reps: '10-12' },
-          { id: 'ex-3', name: 'Fondos en Paralelas', sets: 3, reps: 'Al fallo' },
-        ],
-      },
-      {
-        dayNumber: 2,
-        title: 'Día 2: Tracción (Espalda/Bíceps)',
-        estimatedMinutes: 50,
-        exercises: [
-          { id: 'ex-4', name: 'Jalón al Pecho', sets: 4, reps: '10-12' },
-          { id: 'ex-5', name: 'Remo Gironda', sets: 3, reps: '12' },
-          { id: 'ex-6', name: 'Curl de Bíceps con Barra Z', sets: 3, reps: '10' },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'rut-lower-focus-5',
-    name: 'Glúteos & Pierna Focus',
-    subtitle: 'Especialización de tren inferior y acondicionamiento',
-    daysPerWeek: 5,
-    goal: 'enfoque_tren_inferior',
-    level: 'Avanzado',
-    schedule: [
-      {
-        dayNumber: 1,
-        title: 'Día 1: Cuádriceps & Aductores',
-        estimatedMinutes: 60,
-        exercises: [
-          { id: 'ex-7', name: 'Sentadilla Hack', sets: 4, reps: '10-12' },
-          { id: 'ex-8', name: 'Prensa Inclinada 45°', sets: 4, reps: '12-15' },
-          { id: 'ex-9', name: 'Extensiones de Cuádriceps', sets: 3, reps: '15 + Drop set' },
-        ],
-      },
-      {
-        dayNumber: 2,
-        title: 'Día 2: Glúteo & Isquios',
-        estimatedMinutes: 55,
-        exercises: [
-          { id: 'ex-10', name: 'Hip Thrust con Barra', sets: 4, reps: '8-10' },
-          { id: 'ex-11', name: 'Peso Muerto Rumano', sets: 4, reps: '10-12' },
-          { id: 'ex-12', name: 'Curl Femoral Tumbado', sets: 3, reps: '12' },
-        ],
-      },
-    ],
-  },
+// --- 2. BLOQUES MODULARES DE EJERCICIOS ---
+const BLOCK_PUSH: Exercise[] = [
+  { id: 'pu-1', name: 'Press horizontal con barra/mancuerna', setsReps: '4x12' },
+  { id: 'pu-2', name: 'Press inclinado con barra/mancuerna', setsReps: '4x12' },
+  { id: 'pu-3', name: 'Peck Deck', setsReps: '4x12' },
+  { id: 'pu-4', name: 'Fondos', setsReps: '4x12' },
+  { id: 'pu-5', name: 'Extensión de cuerda en polea/barra', setsReps: '4x12' },
+  { id: 'pu-6', name: 'Extensión con copa D en polea', setsReps: '4x12' },
+  { id: 'pu-7', name: 'Elevaciones laterales', setsReps: '4x12' },
+  { id: 'pu-8', name: 'Elevaciones frontales', setsReps: '4x12' },
+  { id: 'pu-9', name: 'Press Militar', setsReps: '4x12' },
+  { id: 'pu-10', name: 'Deltoides Posterior', setsReps: '4x12' },
 ];
 
-export default function RoutinesView() {
-  const [activeRoutineId, setActiveRoutineId] = useState<string>('rut-lower-focus-5');
-  const [selectedDays, setSelectedDays] = useState<DaysPerWeek | 'all'>('all');
-  
-  // Selección inicial segura para evitar caídas
-  const [inspectedRoutine, setInspectedRoutine] = useState<WorkoutRoutine>(
-    ROUTINES_CATALOG[1] || ROUTINES_CATALOG[0]
-  );
-  const [selectedDayTab, setSelectedDayTab] = useState<number>(1);
+const BLOCK_PULL: Exercise[] = [
+  { id: 'pl-1', name: 'Jalón al pecho', setsReps: '4x12' },
+  { id: 'pl-2', name: 'Pull over en polea', setsReps: '4x12' },
+  { id: 'pl-3', name: 'Remo sentado en máquina/mancuerna', setsReps: '4x12' },
+  { id: 'pl-4', name: 'Pull ups peso libre/máquina', setsReps: '4x12' },
+  { id: 'pl-5', name: 'Curl martillo con mancuerna/máquina', setsReps: '4x12' },
+  { id: 'pl-6', name: 'Curl inclinado en banco', setsReps: '4x12' },
+  { id: 'pl-7', name: 'Curl predicador', setsReps: '4x12' },
+];
 
-  const filteredRoutines = useMemo(() => {
-    return ROUTINES_CATALOG.filter((routine) => {
-      const matchDays = selectedDays === 'all' || routine.daysPerWeek === selectedDays;
-      return matchDays;
-    });
-  }, [selectedDays]);
+const BLOCK_LEG_FULL: Exercise[] = [
+  { id: 'lf-1', name: 'Sentadilla Hack / Pendular', setsReps: '4x12' },
+  { id: 'lf-2', name: 'Femoral sentado', setsReps: '4x12' },
+  { id: 'lf-3', name: 'Femoral parado', setsReps: '2x10' },
+  { id: 'lf-4', name: 'Extensión de cuádriceps', setsReps: '4x12' },
+  { id: 'lf-5', name: 'Hip thrust', setsReps: '4x12' },
+  { id: 'lf-6', name: 'Elevación de talón', setsReps: '4x12' },
+  { id: 'lf-7', name: 'Peso Muerto', setsReps: '3x10' },
+  { id: 'lf-8', name: 'Abductores en máquina', setsReps: '4x12' },
+];
 
-  const activeRoutine = useMemo(
-    () => ROUTINES_CATALOG.find((r) => r.id === activeRoutineId) || ROUTINES_CATALOG[0],
-    [activeRoutineId]
-  );
+const BLOCK_LEG_SPLIT_DAY_1: Exercise[] = [
+  { id: 'ls1-1', name: 'Patrón de sentadilla: Hack/Pendular/libre', setsReps: '4x10' },
+  { id: 'ls1-2', name: 'Prensa', setsReps: '4x8' },
+  { id: 'ls1-3', name: 'Extensión de cuádriceps', setsReps: '4x10' },
+  { id: 'ls1-4', name: 'Sentadilla Búlgara', setsReps: '4x10' },
+  { id: 'ls1-5', name: 'Abductores', setsReps: '4x12' },
+  { id: 'ls1-6', name: 'Elevación de Talón', setsReps: '4x12' },
+];
 
-  const currentWorkoutDay = useMemo(() => {
-    if (!inspectedRoutine?.schedule?.length) return null;
-    return (
-      inspectedRoutine.schedule.find((d) => d.dayNumber === selectedDayTab) ||
-      inspectedRoutine.schedule[0]
-    );
-  }, [inspectedRoutine, selectedDayTab]);
+const BLOCK_LEG_SPLIT_DAY_2: Exercise[] = [
+  { id: 'ls2-1', name: 'Femoral acostado', setsReps: '2x8' },
+  { id: 'ls2-2', name: 'Femoral sentado', setsReps: '4x8' },
+  { id: 'ls2-3', name: 'Peso Muerto', setsReps: '4x12' },
+  { id: 'ls2-4', name: 'Máquina de Glúteo', setsReps: '3x12' },
+  { id: 'ls2-5', name: 'Hip thrust', setsReps: '4x12' },
+  { id: 'ls2-6', name: 'Sentadilla V', setsReps: '3x10' },
+  { id: 'ls2-7', name: 'Elevación de talón parado', setsReps: '4x12' },
+  { id: 'ls2-8', name: 'Elevación de talón sentado', setsReps: '4x12' },
+];
 
-  const handleSelectRoutineToInspect = (routine: WorkoutRoutine) => {
-    setInspectedRoutine(routine);
-    setSelectedDayTab(1);
+const BLOCK_CORE_SHORT: Exercise[] = [
+  { id: 'cs-1', name: 'Crunches en máquina', setsReps: '4x12' },
+  { id: 'cs-2', name: 'Elevación de piernas', setsReps: '4x12' },
+];
+
+const BLOCK_CORE_FULL: Exercise[] = [
+  { id: 'cf-1', name: 'Crunches en máquina', setsReps: '4x12' },
+  { id: 'cf-2', name: 'Elevación de piernas', setsReps: '4x12' },
+  { id: 'cf-3', name: 'Plancha', setsReps: '4x60 seg' },
+  { id: 'cf-4', name: 'Oblicuos con peso', setsReps: '4x12' },
+  { id: 'cf-5', name: 'Cardio (caminadora/bicicleta/escaleras)', setsReps: '30 min' },
+];
+
+const BLOCK_FULL_BODY: Exercise[] = [
+  { id: 'fb-1', name: 'Press inclinado con barra', setsReps: '3x12' },
+  { id: 'fb-2', name: 'Peck deck', setsReps: '3x12' },
+  { id: 'fb-3', name: 'Extensión copa V', setsReps: '3x12' },
+  { id: 'fb-4', name: 'Extensión con cuerda', setsReps: '3x12' },
+  { id: 'fb-5', name: 'Elevaciones laterales', setsReps: '3x12' },
+  { id: 'fb-6', name: 'Deltoides posterior', setsReps: '3x12' },
+  { id: 'fb-7', name: 'Remo sentado', setsReps: '3x12' },
+  { id: 'fb-8', name: 'Remo vertical', setsReps: '3x12' },
+  { id: 'fb-9', name: 'Curl inclinado con mancuerna', setsReps: '3x12' },
+  { id: 'fb-10', name: 'Curl predicador', setsReps: '3x12' },
+  { id: 'fb-11', name: 'Prensa', setsReps: '3x12' },
+  { id: 'fb-12', name: 'Peso muerto', setsReps: '3x12' },
+  { id: 'fb-13', name: 'Sentadilla pendular', setsReps: '3x12' },
+  { id: 'fb-14', name: 'Femoral acostado', setsReps: '3x12' },
+  { id: 'fb-15', name: 'Abductor', setsReps: '3x12' },
+  { id: 'fb-16', name: 'Elevación de talón', setsReps: '3x12' },
+  { id: 'fb-17', name: 'Abdominal Crunch en máquina', setsReps: '3x12' },
+];
+
+// --- 3. DÍAS SEGÚN FRECUENCIA Y PREFERENCIA ---
+function buildRoutineSchedule(days: DaysPerWeek, legPref: LegPreference): WorkoutDay[] {
+  if (days === 3) {
+    return [
+      { dayNumber: 1, title: 'Día 1: Push', focus: 'Pecho, Hombro & Tríceps', exercises: BLOCK_PUSH },
+      { dayNumber: 2, title: 'Día 2: Pull', focus: 'Espalda & Bíceps', exercises: BLOCK_PULL },
+      { dayNumber: 3, title: 'Día 3: Leg + Core', focus: 'Pierna Completa & Abdomen', exercises: [...BLOCK_LEG_FULL, ...BLOCK_CORE_SHORT] },
+    ];
+  }
+
+  if (days === 4) {
+    return [
+      { dayNumber: 1, title: 'Día 1: Push', focus: 'Pecho, Hombro & Tríceps', exercises: BLOCK_PUSH },
+      { dayNumber: 2, title: 'Día 2: Pull', focus: 'Espalda & Bíceps', exercises: BLOCK_PULL },
+      { dayNumber: 3, title: 'Día 3: Leg', focus: 'Pierna Completa', exercises: BLOCK_LEG_FULL },
+      { dayNumber: 4, title: 'Día 4: Core & Cardio', focus: 'Abdomen Completo & Cardio', exercises: BLOCK_CORE_FULL },
+    ];
+  }
+
+  if (days === 5) {
+    const leg1 = legPref === 'dividida' ? BLOCK_LEG_SPLIT_DAY_1 : BLOCK_LEG_FULL;
+    const leg2 = legPref === 'dividida' ? BLOCK_LEG_SPLIT_DAY_2 : BLOCK_LEG_FULL;
+    return [
+      { dayNumber: 1, title: 'Día 1: Push', focus: 'Pecho, Hombro & Tríceps', exercises: BLOCK_PUSH },
+      { dayNumber: 2, title: 'Día 2: Pull', focus: 'Espalda & Bíceps', exercises: BLOCK_PULL },
+      { dayNumber: 3, title: 'Día 3: Leg (Sesión 1)', focus: legPref === 'dividida' ? 'Cuádriceps & Gemelo' : 'Pierna Completa', exercises: leg1 },
+      { dayNumber: 4, title: 'Día 4: Full Body', focus: 'Tren Superior Completo', exercises: BLOCK_FULL_BODY },
+      { dayNumber: 5, title: 'Día 5: Leg (Sesión 2)', focus: legPref === 'dividida' ? 'Femoral & Glúteo' : 'Pierna Completa', exercises: leg2 },
+    ];
+  }
+
+  // 6 Días (Push Pull Leg x 2)
+  const leg1 = legPref === 'dividida' ? BLOCK_LEG_SPLIT_DAY_1 : BLOCK_LEG_FULL;
+  const leg2 = legPref === 'dividida' ? BLOCK_LEG_SPLIT_DAY_2 : BLOCK_LEG_FULL;
+  return [
+    { dayNumber: 1, title: 'Día 1: Push', focus: 'Pecho, Hombro & Tríceps', exercises: BLOCK_PUSH },
+    { dayNumber: 2, title: 'Día 2: Pull', focus: 'Espalda & Bíceps', exercises: BLOCK_PULL },
+    { dayNumber: 3, title: 'Día 3: Leg (A)', focus: legPref === 'dividida' ? 'Cuádriceps & Gemelo' : 'Pierna Completa', exercises: leg1 },
+    { dayNumber: 4, title: 'Día 4: Push', focus: 'Pecho, Hombro & Tríceps', exercises: BLOCK_PUSH },
+    { dayNumber: 5, title: 'Día 5: Pull', focus: 'Espalda & Bíceps', exercises: BLOCK_PULL },
+    { dayNumber: 6, title: 'Día 6: Leg (B)', focus: legPref === 'dividida' ? 'Femoral & Glúteo' : 'Pierna Completa', exercises: leg2 },
+  ];
+}
+
+// --- 4. COMPONENTE PRINCIPAL ---
+export default function RoutinesPage() {
+  const [selectedDays, setSelectedDays] = useState<DaysPerWeek>(4);
+  const [legPreference, setLegPreference] = useState<LegPreference>('completa');
+  const [activeTab, setActiveTab] = useState<number>(1);
+
+  // Ensamblado reactivo según estado
+  const currentSchedule = useMemo(() => {
+    return buildRoutineSchedule(selectedDays, legPreference);
+  }, [selectedDays, legPreference]);
+
+  const activeDay = useMemo(() => {
+    return currentSchedule.find((d) => d.dayNumber === activeTab) || currentSchedule[0];
+  }, [currentSchedule, activeTab]);
+
+  const handleDayFilterChange = (days: DaysPerWeek) => {
+    setSelectedDays(days);
+    setActiveTab(1);
   };
 
   return (
-    <div className="w-full space-y-5">
+    <div className="w-full space-y-4">
       
-      {/* 1. Header Rutina Activa */}
-      <section className="bg-[#14151b] border border-white/5 p-4 rounded-2xl relative overflow-hidden">
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          En curso
-        </span>
-        <h1 className="text-lg font-bold text-white tracking-tight">
-          {activeRoutine.name}
-        </h1>
-        <p className="text-gray-400 text-xs mt-0.5 line-clamp-1">
-          {activeRoutine.subtitle}
+      {/* 1. Header de Frecuencia */}
+      <section className="bg-[#14151b] border border-white/5 p-4 rounded-2xl">
+        <h1 className="text-base font-bold text-white mb-1">Configura tu Rutina</h1>
+        <p className="text-xs text-gray-400 mb-3">
+          Selecciona tus días de entrenamiento semanal
         </p>
 
-        <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3">
-          <div className="text-xs text-gray-400">
-            <span className="text-sm font-bold text-white">{activeRoutine.daysPerWeek}</span> días/sem
-          </div>
-          <button
-            onClick={() => handleSelectRoutineToInspect(activeRoutine)}
-            className="px-3.5 py-1.5 bg-[#ff2a51] hover:bg-[#e02043] text-white text-xs font-semibold rounded-xl transition-all shadow-md shadow-[#ff2a51]/20"
-          >
-            Ver rutina actual
-          </button>
+        {/* Botones de Días */}
+        <div className="grid grid-cols-4 gap-2">
+          {([3, 4, 5, 6] as const).map((days) => (
+            <button
+              key={days}
+              onClick={() => handleDayFilterChange(days)}
+              className={`py-2 text-xs font-semibold rounded-xl border transition-all ${
+                selectedDays === days
+                  ? 'bg-[#ff2a51] text-white border-[#ff2a51] shadow-lg shadow-[#ff2a51]/20'
+                  : 'bg-[#090a0f] text-gray-400 border-white/5 hover:border-white/20'
+              }`}
+            >
+              {days} Días
+            </button>
+          ))}
         </div>
-      </section>
 
-      {/* 2. Filtros de días */}
-      <section className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-        {(['all', 3, 4, 5, 6] as const).map((dayOption) => {
-          const isSelected = selectedDays === dayOption;
-          return (
-            <button
-              key={dayOption}
-              onClick={() => setSelectedDays(dayOption)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
-                isSelected
-                  ? 'bg-[#ff2a51] text-white font-semibold shadow-md shadow-[#ff2a51]/20'
-                  : 'bg-[#14151b] border border-white/5 text-gray-400 hover:text-white'
-              }`}
-            >
-              {dayOption === 'all' ? 'Todas' : `${dayOption} Días`}
-            </button>
-          );
-        })}
-      </section>
-
-      {/* 3. Lista de rutinas sugeridas */}
-      <section className="space-y-2.5">
-        <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-          Explorar Rutinas ({filteredRoutines.length})
-        </h2>
-
-        {filteredRoutines.map((routine) => {
-          const isInspected = inspectedRoutine.id === routine.id;
-          const isAssigned = activeRoutineId === routine.id;
-
-          return (
-            <div
-              key={routine.id}
-              onClick={() => handleSelectRoutineToInspect(routine)}
-              className={`cursor-pointer p-3.5 rounded-2xl border transition-all flex items-center gap-3 ${
-                isInspected
-                  ? 'bg-[#181922] border-[#ff2a51]/60'
-                  : 'bg-[#14151b] border-white/5 hover:border-white/20'
-              }`}
-            >
-              <div className="w-12 h-12 rounded-xl bg-[#090a0f] border border-white/5 flex items-center justify-center shrink-0 text-lg">
-                🏋️
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xs font-bold text-white truncate">
-                    {routine.name}
-                  </h3>
-                  {isAssigned && (
-                    <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                      Activa
-                    </span>
-                  )}
-                </div>
-                <p className="text-[11px] text-gray-400 mt-0.5">
-                  {routine.daysPerWeek} días/sem • {routine.level}
-                </p>
-              </div>
-
-              <span className="text-gray-500 text-xs">→</span>
-            </div>
-          );
-        })}
-      </section>
-
-      {/* 4. Detalle de la rutina seleccionada */}
-      {currentWorkoutDay && (
-        <section className="bg-[#14151b] rounded-2xl border border-white/5 overflow-hidden">
-          <div className="p-4 border-b border-white/5 flex items-center justify-between">
-            <div>
-              <h2 className="text-sm font-bold text-white">{inspectedRoutine.name}</h2>
-              <p className="text-[11px] text-gray-400 mt-0.5">
-                {currentWorkoutDay.exercises.length} ejercicios • {currentWorkoutDay.estimatedMinutes} min
-              </p>
-            </div>
-            <button
-              onClick={() => setActiveRoutineId(inspectedRoutine.id)}
-              disabled={activeRoutineId === inspectedRoutine.id}
-              className={`px-3 py-1.5 rounded-xl text-[11px] font-semibold transition-all ${
-                activeRoutineId === inspectedRoutine.id
-                  ? 'bg-white/5 text-gray-500 cursor-not-allowed'
-                  : 'bg-[#ff2a51] hover:bg-[#e02043] text-white'
-              }`}
-            >
-              {activeRoutineId === inspectedRoutine.id ? 'Asignada' : 'Elegir'}
-            </button>
-          </div>
-
-          {/* Selector de días de la rutina */}
-          <div className="px-4 pt-2 border-b border-white/5 flex gap-3 overflow-x-auto scrollbar-none">
-            {inspectedRoutine.schedule.map((day) => {
-              const isActiveTab = currentWorkoutDay.dayNumber === day.dayNumber;
-              return (
-                <button
-                  key={day.dayNumber}
-                  onClick={() => setSelectedDayTab(day.dayNumber)}
-                  className={`pb-2.5 pt-1 px-1 text-xs font-medium border-b-2 transition-colors whitespace-nowrap ${
-                    isActiveTab
-                      ? 'border-[#ff2a51] text-white font-bold'
-                      : 'border-transparent text-gray-500 hover:text-gray-300'
-                  }`}
-                >
-                  Día {day.dayNumber}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Ejercicios del día */}
-          <div className="p-3 space-y-2">
-            {currentWorkoutDay.exercises.map((exercise, index) => (
-              <div
-                key={exercise.id}
-                className="p-2.5 bg-[#090a0f] rounded-xl border border-white/5 flex items-center gap-3"
+        {/* Toggle de pierna completa vs dividida (solo para 5 y 6 días) */}
+        {(selectedDays === 5 || selectedDays === 6) && (
+          <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-xs">
+            <span className="text-gray-400 font-medium">Modo de Pierna:</span>
+            <div className="flex bg-[#090a0f] p-1 rounded-xl border border-white/5">
+              <button
+                onClick={() => setLegPreference('completa')}
+                className={`px-3 py-1 rounded-lg text-[11px] font-semibold transition-all ${
+                  legPreference === 'completa' ? 'bg-[#ff2a51] text-white' : 'text-gray-400'
+                }`}
               >
-                <span className="text-gray-500 font-bold text-xs w-4 text-center">
+                Completa
+              </button>
+              <button
+                onClick={() => setLegPreference('dividida')}
+                className={`px-3 py-1 rounded-lg text-[11px] font-semibold transition-all ${
+                  legPreference === 'dividida' ? 'bg-[#ff2a51] text-white' : 'text-gray-400'
+                }`}
+              >
+                Dividida (2 Días)
+              </button>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* 2. Pestañas de Sesión del Día */}
+      <section className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+        {currentSchedule.map((day) => {
+          const isActive = day.dayNumber === activeDay.dayNumber;
+          return (
+            <button
+              key={day.dayNumber}
+              onClick={() => setActiveTab(day.dayNumber)}
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border ${
+                isActive
+                  ? 'bg-[#1e2029] text-white border-[#ff2a51]'
+                  : 'bg-[#14151b] text-gray-500 border-white/5 hover:text-gray-300'
+              }`}
+            >
+              {day.title.split(':')[0]}
+            </button>
+          );
+        })}
+      </section>
+
+      {/* 3. Detalle de la Sesión y Lista de Ejercicios */}
+      <section className="bg-[#14151b] border border-white/5 rounded-2xl p-4">
+        <div className="mb-4">
+          <span className="text-[10px] uppercase font-bold text-[#ff2a51] tracking-wider">
+            {activeDay.title}
+          </span>
+          <h2 className="text-sm font-bold text-white mt-0.5">{activeDay.focus}</h2>
+          <p className="text-[11px] text-gray-400 mt-0.5">
+            {activeDay.exercises.length} ejercicios planificados
+          </p>
+        </div>
+
+        {/* Lista de ejercicios */}
+        <div className="space-y-2">
+          {activeDay.exercises.map((exercise, index) => (
+            <div
+              key={exercise.id}
+              className="p-3 bg-[#090a0f] rounded-xl border border-white/5 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-3 min-w-0 pr-2">
+                <span className="text-gray-600 font-bold text-xs w-4 text-center shrink-0">
                   {index + 1}
                 </span>
-
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-xs font-semibold text-white truncate">
-                    {exercise.name}
-                  </h4>
-                  <p className="text-[10px] text-gray-400">
-                    {exercise.sets} series × {exercise.reps}
-                  </p>  
-                </div>
+                <span className="text-xs font-medium text-white truncate">
+                  {exercise.name}
+                </span>
               </div>
-            ))}
-          </div>
-        </section>
-      )}
+              <span className="text-[11px] font-semibold text-[#ff2a51] bg-[#ff2a51]/10 px-2 py-0.5 rounded-md shrink-0">
+                {exercise.setsReps}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
 
     </div>
   );
