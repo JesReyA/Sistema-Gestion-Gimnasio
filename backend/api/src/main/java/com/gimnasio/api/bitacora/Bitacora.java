@@ -54,7 +54,7 @@ public class Bitacora {
         evento_eliminado
     }
 
-    public BItacora() {
+    public Bitacora() {
     }
 
     public BigInteger getIdBitacora() {
