@@ -8,6 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gimnasio.api.asistencias.Asistencia;
 import com.gimnasio.api.auth.Cuenta;
+import com.gimnasio.api.clases.InscripcionClase;
 import com.gimnasio.api.eventos.InscripcionEvento;
 import com.gimnasio.api.suscripciones.Suscripcion;
 
@@ -95,6 +96,11 @@ public class Cliente {
     @Min (value = 1, message = "El peso objetivo debe ser mayor a 1 kg")
     @Max (value = 800, message = "El peso objetivo debe ser menor a 800 kg")
     private BigDecimal pesoObjetivoKg;
+
+
+    @OneToMany
+
+    private List<InscripcionClase> inscripcionClases = new ArrayList<>();
 
     @OneToMany (mappedBy = "cliente")
     @JsonManagedReference("cliente-invitados")
