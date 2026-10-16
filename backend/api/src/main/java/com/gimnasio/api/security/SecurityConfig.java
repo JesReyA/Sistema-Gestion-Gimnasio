@@ -42,12 +42,40 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         // 2. Replace AntPathRequestMatcher with plain strings (fixes the 2 red errors)
-                        .requestMatchers("/users/register", "/h2-console/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/users/profile").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/posts/mine").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/posts/create").hasRole("USER")
-                        .requestMatchers(HttpMethod.PUT, "/posts/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.DELETE, "/posts/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/auth/login","/auth/refresh","/auth/recuperar-password", "/auth/restablecer-password", "/h2-console/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/registro").hasRole("CLIENTE")
+
+                        //cambio de contraseña y consulta de datos del cliente
+                        .requestMatchers(HttpMethod.PATCH, "/cliente/perfil/password").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/cliente/**").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.POST, "/cliente/**").hasRole("CLIENTE")
+
+                        //consulta de eventos y sesiones
+                        .requestMatchers(HttpMethod.GET, "/sesiones").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.POST, "/eventos").hasRole("CLIENTE")
+
+                        //incripcion a eventos y sesiones por parte del cliente
+                        .requestMatchers(HttpMethod.GET, "/cliente/eventos").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.POST, "/cliente/sesiones/**").hasRole("CLIENTE")
+
+                        //Consultar clases y eventos a las que el usuario está inscrito
+                        .requestMatchers(HttpMethod.GET, "/cliente/eventos/**").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.POST, "/cliente/sesiones/**").hasRole("CLIENTE")
+
+                        //borrar inscripcion a clases y eventos
+                        .requestMatchers(HttpMethod.DELETE, "/cliente/eventos/**").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.DELETE, "/cliente/sesiones/**").hasRole("CLIENTE")
+
+                        //observar las asistencias del cliente
+                        .requestMatchers(HttpMethod.GET, "/cliente/asistencias").hasRole("CLIENTE")
+
+                        //consultar aforo de gimnasio
+                        .requestMatchers(HttpMethod.GET, "/sucursales/**/aforo").hasRole("ADMINISTRADOR")
+
+                        //Observar invitados
+                        .requestMatchers(HttpMethod.GET, "/cliente/invitados").hasRole("CLIENTE")
+
+                        //TRABAJADORES
                         .anyRequest().authenticated()
                 )
 
