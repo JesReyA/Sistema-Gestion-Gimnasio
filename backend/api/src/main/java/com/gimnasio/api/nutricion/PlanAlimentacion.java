@@ -1,6 +1,8 @@
 package com.gimnasio.api.nutricion;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.gimnasio.api.clientes.Cliente;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -8,13 +10,16 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "planes_alimentacion")
 public class PlanAlimentacion {
 
-
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "id_plan")
     private Integer idPlan;
 
-    //cliente id
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    @JsonBackReference("cliente-planAlimentacion")
+    private Cliente cliente;
+
     //nutriologo id
 
     @NotNull

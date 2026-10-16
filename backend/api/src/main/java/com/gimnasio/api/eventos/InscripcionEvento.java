@@ -37,7 +37,7 @@ public class InscripcionEvento {
     @Column(name = "estado")
     private InscripcionEstado estadoInscripcion =InscripcionEstado.inscrito;
 
-    enum InscripcionEstado{
+    private enum InscripcionEstado{
         inscrito,
         cancelado
     }

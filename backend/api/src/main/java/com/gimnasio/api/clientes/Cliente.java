@@ -10,6 +10,7 @@ import com.gimnasio.api.asistencias.Asistencia;
 import com.gimnasio.api.auth.Cuenta;
 import com.gimnasio.api.clases.InscripcionClase;
 import com.gimnasio.api.eventos.InscripcionEvento;
+import com.gimnasio.api.nutricion.PlanAlimentacion;
 import com.gimnasio.api.suscripciones.Suscripcion;
 
 import jakarta.persistence.Column;
@@ -103,6 +104,10 @@ public class Cliente {
     private List<InscripcionClase> inscripcionClases = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-planAlimentacion")
+    private List<PlanAlimentacion> planAlimentacion = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cliente")
     @JsonManagedReference("cliente-invitados")
     private List<ClienteInvitado> clientesInvitados = new ArrayList<>();
 
@@ -127,168 +132,5 @@ public class Cliente {
     private List<MedicionPeso> medicionPeso = new ArrayList<>();
 
 
-    public Cliente(Integer idCliente, String nombres, String apellidoPaterno, String apellidoMaterno, String curp, String numeroCelular, String correoElectronico, LocalDate fechaNacimiento, String codigoAcceso, BigDecimal estaturaMetros, BigDecimal pesoObjetivoKg, List<InscripcionClase> inscripcionClases, List<ClienteInvitado> clientesInvitados, Cuenta cuenta, List<Suscripcion> suscripciones, List<Asistencia> asistencias, List<InscripcionEvento> inscripcionesEvento, List<MedicionPeso> medicionPeso) {
-        this.idCliente = idCliente;
-        this.nombres = nombres;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.curp = curp;
-        this.numeroCelular = numeroCelular;
-        this.correoElectronico = correoElectronico;
-        this.fechaNacimiento = fechaNacimiento;
-        this.codigoAcceso = codigoAcceso;
-        this.estaturaMetros = estaturaMetros;
-        this.pesoObjetivoKg = pesoObjetivoKg;
-        this.inscripcionClases = inscripcionClases;
-        this.clientesInvitados = clientesInvitados;
-        this.cuenta = cuenta;
-        this.suscripciones = suscripciones;
-        this.asistencias = asistencias;
-        this.inscripcionesEvento = inscripcionesEvento;
-        this.medicionPeso = medicionPeso;
-    }
-
-    public Integer getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public String getNombres() {
-        return nombres;
-    }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
-    }
-
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
-    }
-
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
-    }
-
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
-    }
-
-    public String getCurp() {
-        return curp;
-    }
-
-    public void setCurp(String curp) {
-        this.curp = curp;
-    }
-
-    public String getNumeroCelular() {
-        return numeroCelular;
-    }
-
-    public void setNumeroCelular(String numeroCelular) {
-        this.numeroCelular = numeroCelular;
-    }
-
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public String getCodigoAcceso() {
-        return codigoAcceso;
-    }
-
-    public void setCodigoAcceso(String codigoAcceso) {
-        this.codigoAcceso = codigoAcceso;
-    }
-
-    public BigDecimal getEstaturaMetros() {
-        return estaturaMetros;
-    }
-
-    public void setEstaturaMetros(BigDecimal estaturaMetros) {
-        this.estaturaMetros = estaturaMetros;
-    }
-
-    public BigDecimal getPesoObjetivoKg() {
-        return pesoObjetivoKg;
-    }
-
-    public void setPesoObjetivoKg(BigDecimal pesoObjetivoKg) {
-        this.pesoObjetivoKg = pesoObjetivoKg;
-    }
-
-    public List<InscripcionClase> getInscripcionClases() {
-        return inscripcionClases;
-    }
-
-    public void setInscripcionClases(List<InscripcionClase> inscripcionClases) {
-        this.inscripcionClases = inscripcionClases;
-    }
-
-    public List<ClienteInvitado> getClientesInvitados() {
-        return clientesInvitados;
-    }
-
-    public void setClientesInvitados(List<ClienteInvitado> clientesInvitados) {
-        this.clientesInvitados = clientesInvitados;
-    }
-
-    public Cuenta getCuenta() {
-        return cuenta;
-    }
-
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
-    }
-
-    public List<Suscripcion> getSuscripciones() {
-        return suscripciones;
-    }
-
-    public void setSuscripciones(List<Suscripcion> suscripciones) {
-        this.suscripciones = suscripciones;
-    }
-
-    public List<Asistencia> getAsistencias() {
-        return asistencias;
-    }
-
-    public void setAsistencias(List<Asistencia> asistencias) {
-        this.asistencias = asistencias;
-    }
-
-    public List<InscripcionEvento> getInscripcionesEvento() {
-        return inscripcionesEvento;
-    }
-
-    public void setInscripcionesEvento(List<InscripcionEvento> inscripcionesEvento) {
-        this.inscripcionesEvento = inscripcionesEvento;
-    }
-
-    public List<MedicionPeso> getMedicionPeso() {
-        return medicionPeso;
-    }
-
-    public void setMedicionPeso(List<MedicionPeso> medicionPeso) {
-        this.medicionPeso = medicionPeso;
-    }
+    //generar getters, setters y constructures una vez terminado
 }
