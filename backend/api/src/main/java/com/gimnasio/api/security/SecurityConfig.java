@@ -52,7 +52,6 @@ public class SecurityConfig {
 
                 // 3. Connect your injected AuthenticationProvider and JwtAuthenticationFilter
                 .authenticationProvider(authenticationProvider)
-                // falta agregar el jwtauthenticationfilter
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
