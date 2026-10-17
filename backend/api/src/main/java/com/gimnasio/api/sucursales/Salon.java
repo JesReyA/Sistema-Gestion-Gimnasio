@@ -16,12 +16,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 @Entity 
-@Table (name="salon")
+@Table (name="salon", 
+    uniqueConstraints = {
+        @UniqueConstraint (
+            columnNames = {"sucursal_id", "numero_salon"}
+        )
+    }
+)
 public class Salon {
     public Salon (){
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, {useState} from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {Qr} from "@/components/icons/Qr";
@@ -8,13 +8,15 @@ import {IconoPerfil} from "@/components/icons/IconoPerfil";
 import {IconoCalendario} from "@/components/icons/IconoCalendario";
 import {IconoRutinas} from "@/components/icons/IconoRutinas";
 import {IconoHome} from "@/components/icons/IconoHome";
-
+import { AnimatePresence } from 'motion/react';
+import AccesoQr from '@/components/AccesoQr';
 
 export default function ClienteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+    const [qrOpen, setQrOpen] = useState(false);
     const pathname = usePathname();
 
     const activeColor = 'text-[#ff3355]';
@@ -22,7 +24,7 @@ export default function ClienteLayout({
 
   return (
     <div className="min-h-screen bg-[#090a0f] text-white flex justify-center selection:bg-[#ff2a51]/30">
-      {/* Contenedor tipo móvil centrado */}
+      {/* Contenedor */}
       <div className="w-full max-w-sm flex flex-col min-h-screen pb-24 px-4 pt-4 relative">
         
         {/* Contenido de cada página */}
@@ -30,7 +32,7 @@ export default function ClienteLayout({
           {children}
         </main>
 
-        {/* Barra de navegación inferior fija */}
+        {/* Barra de navegación inferior*/}
         <nav className="fixed bottom-2 left-0 right-0 z-50 bg-[#0d0e12]/95 backdrop-blur-md border-t border-white/20 py-2 px-6 max-w-sm mx-auto flex justify-around items-center rounded-full">
           
           {/* 1. Inicio */}
@@ -86,15 +88,25 @@ export default function ClienteLayout({
             <span className="text-[10px] font-semibold tracking-wide">Perfil</span>
           </Link>
 
-            <div className='absolute bottom-19 right-6 sm:right-9 w-13 h-13 bg-[#0d0e12]/95 backdrop-blur-md border-t border-white/20 rounded-xl'>
-                <button className='absolute  inset-0 w-full h-full p-1 rounded-xl shadow-[0_0_20px_rgba(255,51,85,0.6)] transition-all'>
-                    <Qr 
-                        className={`w-full h-full ${activeColor}`}
-                    />
-                </button>
-            </div>
+          {/* Botón Qr */}
+          <div className='absolute bottom-19 right-6 sm:right-9 w-13 h-13 bg-[#0d0e12]/95 backdrop-blur-md border-t border-white/20 rounded-xl'>
+            <button onClick={() => setQrOpen(true)} className='absolute  inset-0 w-full h-full p-1 rounded-xl shadow-[0_0_20px_rgba(255,51,85,0.6)] transition-all'>
+              <Qr 
+                className={`w-full h-full ${activeColor}`}
+              />
+            </button>
+          </div>
         </nav>
-
+        
+        {/* Animación qr para cerrarse */}
+        <AnimatePresence>
+          {qrOpen && (
+          <AccesoQr
+            key="acceso-qr"
+            onClose={() => setQrOpen(false)}
+          />
+          )}
+        </AnimatePresence>
         
       </div>
     </div>
