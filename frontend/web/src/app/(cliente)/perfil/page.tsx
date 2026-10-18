@@ -2,8 +2,9 @@ import { IconoPerfil } from "@/components/icons/IconoPerfil";
 import { IconoTarjetaCredito } from "@/components/icons/IconoTarjetaCredito";
 import Link from "next/link";
 import Image from "next/image";
-import { IconoPesoKg } from "@/components/icons/IconoTarjetaCredito copy";
+import { IconoPesoKg } from "@/components/icons/IconoPesoKg";
 import { IconoCalendario } from "@/components/icons/IconoCalendario";
+import { IconoObjetivos } from "@/components/icons/IconoObjetivos";
 
 export default function Perfil() {
   return (
@@ -113,8 +114,24 @@ export default function Perfil() {
 
           </Link>
         </div>
-        <div className="w-full h-1/4 flex items-center justify-center text-2xl">
-          <Link href="/">
+        <div className=" relative w-full h-1/4 flex-none items-center gap-3 justify-center text-2xl border-b border-white/5 text-left">
+          <Link href="/" className="w-full h-full flex items-center gap-3 px-3 rounded-t-2xl">
+            <div className="w-9 h-9 rounded-xl bg-[#1b1e2d] border border-white/4 flex items-center justify-center text-2xl shadow-lg">
+              <IconoObjetivos
+                className='w-5 h-5 text-[#717684]'
+              />
+            </div>
+
+            <div className="min-w-0 flex-1">
+              <h2 className="text-xs font-bold text-white truncate">
+                Objetivos
+              </h2>
+
+              <p className="text-[10px] text-[#717684] mt-1">
+                Peso
+              </p>
+            </div>
+
           </Link>
         </div>
 
