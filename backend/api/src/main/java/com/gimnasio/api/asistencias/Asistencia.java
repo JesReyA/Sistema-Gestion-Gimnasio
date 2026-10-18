@@ -1,6 +1,7 @@
 package com.gimnasio.api.asistencias;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -43,7 +44,7 @@ public class Asistencia {
     @NotNull 
     @ManyToOne
     @JoinColumn (name="cliente_id")
-    @JsonBackReference 
+    @JsonBackReference("cliente-asistencia")
     private Cliente cliente;
 
     @NotNull 
@@ -55,17 +56,17 @@ public class Asistencia {
 
     @NotNull 
     @Column (nullable=false)
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
     @NotNull 
     @Column (name="hora_entrada", nullable=false)
-    private LocalTime horaEntrada;
+    private LocalDateTime horaEntrada;
 
     @Size (max=32)
     @Column (name="codigo_entrada", length=32)
     private String codigoEntrada;
 
-    
+
     public Integer getIdAsistencia() {
         return idAsistencia;
     }
@@ -74,12 +75,28 @@ public class Asistencia {
         this.idAsistencia = idAsistencia;
     }
 
-    public Sucursal getSucursal() {
-        return sucursal;
+    public String getCodigoEntrada() {
+        return codigoEntrada;
     }
 
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
+    public void setCodigoEntrada(String codigoEntrada) {
+        this.codigoEntrada = codigoEntrada;
+    }
+
+    public LocalDateTime getHoraEntrada() {
+        return horaEntrada;
+    }
+
+    public void setHoraEntrada(LocalDateTime horaEntrada) {
+        this.horaEntrada = horaEntrada;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
     }
 
     public Cliente getCliente() {
@@ -98,31 +115,11 @@ public class Asistencia {
         this.invitado = invitado;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public Sucursal getSucursal() {
+        return sucursal;
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
-
-    public LocalTime getHoraEntrada() {
-        return horaEntrada;
-    }
-
-    public void setHoraEntrada(LocalTime horaEntrada) {
-        this.horaEntrada = horaEntrada;
-    }
-
-    public String getCodigoEntrada() {
-        return codigoEntrada;
-    }
-
-    public void setCodigoEntrada(String codigoEntrada) {
-        this.codigoEntrada = codigoEntrada;
-    }
-
-    
-    
-    
 }

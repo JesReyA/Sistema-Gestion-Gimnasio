@@ -98,17 +98,19 @@ public class Cliente {
     @Max(value = 800, message = "El peso objetivo debe ser menor a 800 kg")
     private BigDecimal pesoObjetivoKg;
 
-
+    //mapeada
     @OneToMany(mappedBy = "cliente")
     @JsonManagedReference("cliente-inscripcionesClase")
     private List<InscripcionClase> inscripcionClases = new ArrayList<>();
 
+    //mapeada
     @OneToMany(mappedBy = "cliente")
     @JsonManagedReference("cliente-planAlimentacion")
     private List<PlanAlimentacion> planAlimentacion = new ArrayList<>();
 
+    //mapeada
     @OneToMany(mappedBy = "cliente")
-    @JsonManagedReference("cliente-invitados")
+    @JsonManagedReference("cliente-clienteInvitado")
     private List<ClienteInvitado> clientesInvitados = new ArrayList<>();
 
     @OneToOne(mappedBy = "cliente")
@@ -120,9 +122,10 @@ public class Cliente {
     private List<Suscripcion> suscripciones = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
-    @JsonManagedReference("cliente-asistencias")
+    @JsonManagedReference("cliente-asistencia")
     private List<Asistencia> asistencias = new ArrayList<>();
 
+    //mapeada
     @OneToMany(mappedBy = "cliente")
     @JsonManagedReference("cliente-inscripcionesEvento")
     private List<InscripcionEvento> inscripcionesEvento = new ArrayList<>();
