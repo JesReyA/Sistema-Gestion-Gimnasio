@@ -27,9 +27,11 @@ public class Cuenta {
     @OneToMany(mappedBy = "cuenta")
     private List<Bitacora> bitacora = new ArrayList<>();
 
+
+    //mapeada
     @OneToOne 
     @JoinColumn (name ="cliente_id", nullable = true)
-    @JsonBackReference("cliente-trabajador")
+    @JsonBackReference("cliente-cuenta")
     private Cliente cliente;
 
     @OneToOne 

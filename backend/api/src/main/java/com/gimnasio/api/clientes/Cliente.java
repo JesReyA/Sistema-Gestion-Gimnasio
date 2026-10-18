@@ -113,14 +113,19 @@ public class Cliente {
     @JsonManagedReference("cliente-clienteInvitado")
     private List<ClienteInvitado> clientesInvitados = new ArrayList<>();
 
+
+    //mapeada
     @OneToOne(mappedBy = "cliente")
-    @JsonManagedReference("cliente-trabajador")
+    @JsonManagedReference("cliente-cuenta")
     private Cuenta cuenta;
 
+
+    //mapeada
     @OneToMany(mappedBy = "cliente")
     @JsonManagedReference("cliente-suscripciones")
     private List<Suscripcion> suscripciones = new ArrayList<>();
 
+    //mapeada
     @OneToMany(mappedBy = "cliente")
     @JsonManagedReference("cliente-asistencia")
     private List<Asistencia> asistencias = new ArrayList<>();

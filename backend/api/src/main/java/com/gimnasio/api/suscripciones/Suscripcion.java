@@ -33,10 +33,10 @@ public class Suscripcion {
     @Column(name ="id_suscripcion", nullable=false)
     private Integer idSuscripcion;
 
+    //mapeada
     @ManyToOne 
     @JoinColumn (name="cliente_id", nullable = false)
-    @JsonBackReference 
-    @NotNull 
+    @JsonBackReference ("cliente-suscripciones")
     private Cliente cliente;
 
     @ManyToOne 
