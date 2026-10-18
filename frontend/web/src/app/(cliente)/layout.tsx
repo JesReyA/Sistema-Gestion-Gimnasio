@@ -25,7 +25,7 @@ export default function ClienteLayout({
   return (
     <div className="min-h-screen bg-[#090a0f] text-white flex justify-center selection:bg-[#ff2a51]/30">
       {/* Contenedor */}
-      <div className="w-full max-w-sm flex flex-col min-h-screen pb-24 px-4 pt-4 relative">
+      <div className="w-full max-w-sm flex flex-col min-h-dvh pb-24 px-4 pt-4 relative">
         
         {/* Contenido de cada página */}
         <main className="flex-1 w-full">
