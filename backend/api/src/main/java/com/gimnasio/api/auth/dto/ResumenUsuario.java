@@ -9,4 +9,10 @@ public record ResumenUsuario(
     String email,
     List<String> roles
 ) {
+    //Solo se muestran los roles, sin datos extras
+    @Override
+    public String toString() {
+        return "ResumenUsuario [roles" + roles + "]";
+    }
+    
 } 
