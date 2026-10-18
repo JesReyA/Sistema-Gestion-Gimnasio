@@ -3,10 +3,7 @@ package com.gimnasio.api.suscripciones;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity 
 @Table (name="planes_servicios")
@@ -14,8 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PlanServicio {
 
+    @EqualsAndHashCode.Include
     @EmbeddedId
     private PlanServicioId id = new PlanServicioId();
 
@@ -33,5 +32,4 @@ public class PlanServicio {
     @JoinColumn (name="servicio_id")
     private Servicio servicio;
 
-    
 }

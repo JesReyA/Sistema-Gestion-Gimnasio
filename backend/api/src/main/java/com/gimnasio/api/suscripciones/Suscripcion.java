@@ -21,12 +21,19 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Entity
 @Table (name="suscripciones")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Suscripcion {
 
     //mapeada
+    @EqualsAndHashCode.Include
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name ="id_suscripcion", nullable=false)
@@ -41,7 +48,7 @@ public class Suscripcion {
     //mapeada
     @ManyToOne 
     @JoinColumn (name="plan_id", nullable = false)
-    @JsonBackReference("plan-suscripcion")
+    @JsonBackReference("planSuscripcion-suscripcion")
     private PlanSuscripcion planSuscripcion;
 
     //mapeada

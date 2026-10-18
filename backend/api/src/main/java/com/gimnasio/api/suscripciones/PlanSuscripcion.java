@@ -16,17 +16,22 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.*;
 
 @Entity 
 @Table (name="planes_suscripcion")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PlanSuscripcion {
 
-
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment
     @Column(name = "id_plan", nullable = false)
     private Integer idPlan;
-
 
     @NotNull
     @Column(name = "nombre", nullable = false, length = 100, unique = true)
@@ -55,82 +60,15 @@ public class PlanSuscripcion {
     @Column(nullable = false)
     private estadoPlan estado = estadoPlan.disponible;
 
+    //mapeada
     @OneToMany(mappedBy = "planSuscripcion")
-    @JsonManagedReference
+    @JsonManagedReference("planSuscripcion-planServicio")
     private List<PlanServicio> planesServicios = new ArrayList<>();
-
 
     //mapeada
     @OneToMany (mappedBy="planSuscripcion")
-    @JsonManagedReference("plan-suscripcion")
+    @JsonManagedReference("planSuscripcion-suscripcion")
     private List<Suscripcion> suscripciones = new ArrayList<>();
 
 
-
-    public Integer getIdPlan() {
-        return idPlan;
-    }
-
-    public void setIdPlan(Integer idPlan) {
-        this.idPlan = idPlan;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDefinicion() {
-        return definicion;
-    }
-
-    public void setDefinicion(String definicion) {
-        this.definicion = definicion;
-    }
-
-    public Integer getDuracionDias() {
-        return duracionDias;
-    }
-
-    public void setDuracionDias(Integer duracionDias) {
-        this.duracionDias = duracionDias;
-    }
-
-    public Integer getCosto() {
-        return costo;
-    }
-
-    public void setCosto(Integer costo) {
-        this.costo = costo;
-    }
-
-    public estadoPlan getEstado() {
-        return estado;
-    }
-
-    public void setEstado(estadoPlan estado) {
-        this.estado = estado;
-    }
-
-    public List<PlanServicio> getPlanesServicios() {
-        return planesServicios;
-    }
-
-    public void setPlanesServicios(List<PlanServicio> planesServicios) {
-        this.planesServicios = planesServicios;
-    }
-
-    public List<Suscripcion> getSuscripciones() {
-        return suscripciones;
-    }
-
-    public void setSuscripciones(List<Suscripcion> suscripciones) {
-        this.suscripciones = suscripciones;
-    }
-
-    
-  
 }
