@@ -57,7 +57,7 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* 3. Formulario principal omg*/}
+        {/* 3. Formulario principal*/}
         <form onSubmit={handleSubmit} className="w-full space-y-4">
           
           {/* Campo: Correo o Número de Membresía */}
@@ -83,7 +83,7 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Campo: contlaseña blodel */}
+          {/* Campo: contraseña */}
           <div className="space-y-1.5">
             <label className="text-xs text-gray-400 block font-medium">
               Contraseña
