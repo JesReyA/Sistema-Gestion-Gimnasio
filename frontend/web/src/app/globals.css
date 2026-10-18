@@ -19,11 +19,13 @@
   }
 }
 
-html {
-  scrollbar-width: none;
-}
-html::-webkit-scrollbar {
-  display: none;
+@media (max-width: 640px) {
+  html {
+    scrollbar-width: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 body {
