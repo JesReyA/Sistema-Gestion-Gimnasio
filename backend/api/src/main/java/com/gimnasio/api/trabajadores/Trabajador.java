@@ -26,13 +26,20 @@ import jakarta.validation.constraints.Positive;
 
 import com.gimnasio.api.common.enums.RolTrabajador;
 import com.gimnasio.api.common.enums.TurnoTrabajador;
+import lombok.*;
 
 
 @Entity
 @Table(name = "trabajadores")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Trabajador {
 
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
     @Column (name = "id_trabajador", nullable=false)
     private Integer idTrabajador;
