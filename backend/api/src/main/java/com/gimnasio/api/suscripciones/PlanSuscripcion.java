@@ -21,32 +21,29 @@ import jakarta.validation.constraints.PositiveOrZero;
 @Table (name="planes_suscripcion")
 public class PlanSuscripcion {
 
-    public PlanSuscripcion(){
 
-    }
-
-    @Id 
-    @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
-    @Column (name="id_plan", nullable=false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment
+    @Column(name = "id_plan", nullable = false)
     private Integer idPlan;
 
 
     @NotNull
-    @Column (name="nombre", nullable=false, length=100, unique=true)
+    @Column(name = "nombre", nullable = false, length = 100, unique = true)
     private String nombre;
 
-    @Lob 
-    @Column (columnDefinition ="TEXT")
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String definicion;
 
     @NotNull
-    @Positive 
-    @Column (name="duracion_dias", nullable=false)
+    @Positive
+    @Column(name = "duracion_dias", nullable = false)
     private Integer duracionDias;
 
     @NotNull
     @PositiveOrZero
-    @Column (nullable=false)
+    @Column(nullable = false)
     private Integer costo;
 
     public enum estadoPlan {
@@ -54,17 +51,21 @@ public class PlanSuscripcion {
         no_disponible
     }
 
-    @NotNull 
-    @Column (nullable=false)
+    @NotNull
+    @Column(nullable = false)
     private estadoPlan estado = estadoPlan.disponible;
 
-    @OneToMany (mappedBy="planSuscripcion")
-    @JsonManagedReference 
+    @OneToMany(mappedBy = "planSuscripcion")
+    @JsonManagedReference
     private List<PlanServicio> planesServicios = new ArrayList<>();
 
+
+    //mapeada
     @OneToMany (mappedBy="planSuscripcion")
-    @JsonManagedReference 
+    @JsonManagedReference("plan-suscripcion")
     private List<Suscripcion> suscripciones = new ArrayList<>();
+
+
 
     public Integer getIdPlan() {
         return idPlan;

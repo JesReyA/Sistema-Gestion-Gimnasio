@@ -59,7 +59,7 @@ public class Cliente {
     @Column(name = "apellido_paterno", nullable = false, length = 100)
     private String apellidoPaterno;
 
-    @Column(name = "apellido_materno", nullable = true, length = 100)
+    @Column(name = "apellido_materno", length = 100)
     private String apellidoMaterno;
 
     @NotNull

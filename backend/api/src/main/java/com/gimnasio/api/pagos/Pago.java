@@ -27,19 +27,15 @@ import jakarta.persistence.Column;
 @Entity 
 @Table (name="pagos")
 public class Pago {
-    public Pago (){
-
-    }
-
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column (name="id_pago", nullable=false)
     private Integer idPago;
 
-    @NotNull 
+    //mapeada
     @ManyToOne 
-    @JoinColumn (name="suscripcion_id")
-    @JsonBackReference 
+    @JoinColumn (name="suscripcion_id", nullable = false)
+    @JsonBackReference("suscripcion-pago")
     private Suscripcion suscripcion;
 
     @NotNull 
@@ -52,7 +48,7 @@ public class Pago {
     private LocalDateTime fechaPago;
 
     @Column (name="proximo_pago")
-    private LocalDate proximoPago;
+    private LocalDateTime proximoPago;
 
     @NotNull 
     @Positive 

@@ -2,44 +2,36 @@ package com.gimnasio.api.suscripciones;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity 
 @Table (name="planes_servicios")
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 public class PlanServicio {
-    public PlanServicio(){
-    }
 
+    @EmbeddedId
+    private PlanServicioId id = new PlanServicioId();
+
+    //mapeada
     @ManyToOne 
-    @JsonBackReference 
+    @JsonBackReference("planSuscripcion-planServicio")
+    @MapsId("planSuscripcion")
     @JoinColumn (name="plan_id")
     private PlanSuscripcion planSuscripcion;
 
+    //mapeada
     @ManyToOne
-    @JsonBackReference 
+    @JsonBackReference("servicio-planServicio")
+    @MapsId("servicio")
     @JoinColumn (name="servicio_id")
     private Servicio servicio;
-
-    //Falta indexar ambos FK como un sólo PK
-
-    public PlanSuscripcion getPlanSuscripcion() {
-        return planSuscripcion;
-    }
-
-    public void setPlanSuscripcion(PlanSuscripcion planSuscripcion) {
-        this.planSuscripcion = planSuscripcion;
-    }
-
-    public Servicio getServicio() {
-        return servicio;
-    }
-
-    public void setServicio(Servicio servicio) {
-        this.servicio = servicio;
-    }
 
     
 }
