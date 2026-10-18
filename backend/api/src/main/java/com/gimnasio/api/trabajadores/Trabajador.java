@@ -32,9 +32,6 @@ import com.gimnasio.api.common.enums.TurnoTrabajador;
 @Table(name = "trabajadores")
 public class Trabajador {
 
-    public Trabajador() {
-    }
-
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
     @Column (name = "id_trabajador", nullable=false)
@@ -79,131 +76,21 @@ public class Trabajador {
     private LocalDate fechaNacimiento;
 
     // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
-    @NotNull 
+
+    //mapeada
+    @NotNull
     @ManyToOne 
-    @JsonBackReference("sucursal-cuenta")
+    @JsonBackReference("sucursal-trabajador")
     @JoinColumn (name="sucursal_id", nullable=false)
     private Sucursal sucursal;
-
-
 
     @OneToOne (mappedBy = "trabajador")
     @JsonManagedReference("trabajador-cuenta")
     private Cuenta cuenta;
 
-
     @OneToOne(mappedBy = "trabajador-entrenador")
     @JsonManagedReference
     private Entrenador entrenador;
 
-    public Trabajador(Integer idTrabajador, Entrenador entrenador, Cuenta cuenta, Sucursal sucursal, LocalDate fechaNacimiento, BigDecimal sueldo, TurnoTrabajador turno, RolTrabajador rol, String rfc, String apellidoMaterno, String apellidoPaterno, String nombres) {
-        this.idTrabajador = idTrabajador;
-        this.entrenador = entrenador;
-        this.cuenta = cuenta;
-        this.sucursal = sucursal;
-        this.fechaNacimiento = fechaNacimiento;
-        this.sueldo = sueldo;
-        this.turno = turno;
-        this.rol = rol;
-        this.rfc = rfc;
-        this.apellidoMaterno = apellidoMaterno;
-        this.apellidoPaterno = apellidoPaterno;
-        this.nombres = nombres;
-    }
 
-    public Integer getIdTrabajador() {
-        return idTrabajador;
-    }
-
-    public void setIdTrabajador(Integer idTrabajador) {
-        this.idTrabajador = idTrabajador;
-    }
-
-    public Cuenta getCuenta() {
-        return cuenta;
-    }
-
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
-    }
-
-    public Entrenador getEntrenador() {
-        return entrenador;
-    }
-
-    public void setEntrenador(Entrenador entrenador) {
-        this.entrenador = entrenador;
-    }
-
-    public Sucursal getSucursal() {
-        return sucursal;
-    }
-
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
-    }
-
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public BigDecimal getSueldo() {
-        return sueldo;
-    }
-
-    public void setSueldo(BigDecimal sueldo) {
-        this.sueldo = sueldo;
-    }
-
-    public TurnoTrabajador getTurno() {
-        return turno;
-    }
-
-    public void setTurno(TurnoTrabajador turno) {
-        this.turno = turno;
-    }
-
-    public RolTrabajador getRol() {
-        return rol;
-    }
-
-    public void setRol(RolTrabajador rol) {
-        this.rol = rol;
-    }
-
-    public String getRfc() {
-        return rfc;
-    }
-
-    public void setRfc(String rfc) {
-        this.rfc = rfc;
-    }
-
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
-    }
-
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
-    }
-
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
-    }
-
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
-    }
-
-    public String getNombres() {
-        return nombres;
-    }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
 }

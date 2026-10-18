@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import com.gimnasio.api.asistencias.Asistencia;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,14 +17,18 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Entity
 @Table (name = "invitados")
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Invitado {
 
-    public Invitado() {
-    }
-
+    @EqualsAndHashCode.Include
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
     @Column (name = "id_invitado", nullable=false)
@@ -57,74 +62,14 @@ public class Invitado {
     @Column (name="fecha_nacimiento", nullable=false)
     private LocalDate fechaNacimiento;
 
+    //mapeado
+    @NotNull
     @OneToMany (mappedBy="invitado")
-    @JsonManagedReference 
-    private List<ClienteInvitado> clientesInvitados = new ArrayList<>();
+    @JsonManagedReference("invitado-clienteInvitado")
+    private List<ClienteInvitado> clienteInvitado = new ArrayList<>();
 
-    public Integer getIdInvitado() {
-        return idInvitado;
-    }
+    @OneToMany (mappedBy="invitado")
+    @JsonManagedReference("invitado-asistencia")
+    private List<Asistencia> asistencia = new ArrayList<>();
 
-    public void setIdInvitado(Integer idInvitado) {
-        this.idInvitado = idInvitado;
-    }
-
-    public String getNombres() {
-        return nombres;
-    }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
-    }
-
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
-    }
-
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
-    }
-
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
-    }
-
-    public String getNumeroCelular() {
-        return numeroCelular;
-    }
-
-    public void setNumeroCelular(String numeroCelular) {
-        this.numeroCelular = numeroCelular;
-    }
-
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public List<ClienteInvitado> getClientesInvitados() {
-        return clientesInvitados;
-    }
-
-    public void setClientesInvitados(List<ClienteInvitado> clientesInvitados) {
-        this.clientesInvitados = clientesInvitados;
-    }
-
-    
-    
 }

@@ -1,18 +1,31 @@
 package com.gimnasio.api.maquinas;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.gimnasio.api.sucursales.Sucursal;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Entity
 @Table(name = "maquinas")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Maquina {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_maquina")
     private Integer idMaquina;
 
     //sucursal id
+    @ManyToOne
+    @JoinColumn(name = "sucursal_id", nullable = false)
+    @JsonBackReference("sucursal-maquina")
+    private Sucursal sucursal;
 
     @NotNull
     @Column(name = "nombre", length = 100)
@@ -44,64 +57,5 @@ public class Maquina {
         disponible,
         en_reparacion,
         fuera_de_servicio
-    }
-
-    public Maquina() {
-    }
-
-    public Integer getIdMaquina() {
-        return idMaquina;
-    }
-
-    public void setIdMaquina(Integer idMaquina) {
-        this.idMaquina = idMaquina;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getGrupoMuscular() {
-        return grupoMuscular;
-    }
-
-    public void setGrupoMuscular(String grupoMuscular) {
-        this.grupoMuscular = grupoMuscular;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public estadoFuncional getEstado() {
-        return estado;
-    }
-
-    public void setEstado(estadoFuncional estado) {
-        this.estado = estado;
-    }
-
-    public String getNumeroSerie() {
-        return numeroSerie;
-    }
-
-    public void setNumeroSerie(String numeroSerie) {
-        this.numeroSerie = numeroSerie;
     }
 }
