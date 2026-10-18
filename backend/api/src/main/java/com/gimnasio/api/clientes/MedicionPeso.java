@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "mediciones_peso")
@@ -16,16 +17,15 @@ public class MedicionPeso {
     @Column(name = "id_medicion")
     private Integer idMedicion;
 
-    // cliente id
-
+    //mapeada
     @ManyToOne
     @JsonBackReference("cliente-medicionPeso")
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
     @NotNull
     @Column(name = "fecha")
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
     @NotNull
     @Column(name = "peso_kg", precision = 7, scale = 2)
@@ -34,7 +34,7 @@ public class MedicionPeso {
     public MedicionPeso() {
     }
 
-    public MedicionPeso(Integer idMedicion, BigDecimal pesoKg, Cliente cliente, LocalDate fecha) {
+    public MedicionPeso(Integer idMedicion, BigDecimal pesoKg, Cliente cliente, LocalDateTime fecha) {
         this.idMedicion = idMedicion;
         this.pesoKg = pesoKg;
         this.cliente = cliente;
@@ -49,11 +49,11 @@ public class MedicionPeso {
         this.idMedicion = idMedicion;
     }
 
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 

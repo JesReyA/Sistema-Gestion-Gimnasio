@@ -10,7 +10,9 @@ import com.gimnasio.api.asistencias.Asistencia;
 import com.gimnasio.api.auth.Cuenta;
 import com.gimnasio.api.clases.InscripcionClase;
 import com.gimnasio.api.eventos.InscripcionEvento;
+import com.gimnasio.api.nutricion.Nutricion;
 import com.gimnasio.api.nutricion.PlanAlimentacion;
+import com.gimnasio.api.rutinas.ClienteRutina;
 import com.gimnasio.api.suscripciones.Suscripcion;
 
 import jakarta.persistence.Column;
@@ -30,15 +32,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
-import org.aspectj.lang.reflect.InitializerSignature;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-@Entity 
+//Getters, setters y constructores generados con Lombok para evitar codigo boilerplate
+@Entity
 @Table (name = "clientes")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cliente {
-
-    public Cliente() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment
@@ -113,12 +117,10 @@ public class Cliente {
     @JsonManagedReference("cliente-clienteInvitado")
     private List<ClienteInvitado> clientesInvitados = new ArrayList<>();
 
-
     //mapeada
     @OneToOne(mappedBy = "cliente")
     @JsonManagedReference("cliente-cuenta")
     private Cuenta cuenta;
-
 
     //mapeada
     @OneToMany(mappedBy = "cliente")
@@ -135,10 +137,18 @@ public class Cliente {
     @JsonManagedReference("cliente-inscripcionesEvento")
     private List<InscripcionEvento> inscripcionesEvento = new ArrayList<>();
 
+    //mapeada
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-nutricion")
+    private List<Nutricion> nutricion = new ArrayList<>();
+
+    //mapeada
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-clienteRutina")
+    private List<ClienteRutina> clienteRutina = new ArrayList<>();
+
+    //mapeada
     @OneToMany(mappedBy = "cliente")
     @JsonManagedReference("cliente-medicionPeso")
     private List<MedicionPeso> medicionPeso = new ArrayList<>();
-
-
-    //generar getters, setters y constructures una vez terminado
 }
