@@ -11,6 +11,4 @@ public record AuthResponse(
     public String toString() {
         return "AuthResponse[usuario=" + usuario + "]";
     }
-
-    // Agregar método de fábrica Bearer
 }
