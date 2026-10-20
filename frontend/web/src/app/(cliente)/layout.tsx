@@ -11,6 +11,9 @@ export default function ClienteLayout({
 }) {
   const pathname = usePathname();
 
+  const activeColor = 'text-[#ff2a51]';
+  const inactiveColor = 'text-[#717684] hover:text-white';
+
   return (
     <div className="min-h-screen bg-[#090a0f] text-white flex justify-center selection:bg-[#ff2a51]/30">
       {/* Contenedor tipo móvil centrado */}
@@ -40,11 +43,11 @@ export default function ClienteLayout({
             <span className="text-[10px] font-semibold tracking-wide">Inicio</span>
           </Link>
 
-          {/* 2. Rutinas (Mancuerna*/}
+          {/* 2. Rutinas (Mancuerna) */}
           <Link
             href="/rutinas"
             className={`flex flex-col items-center gap-1 transition-colors ${
-              pathname === '/rutinas' ? 'text-[#ff2a51]' : 'text-[#717684] hover:text-white'
+              pathname === '/rutinas' ? activeColor : inactiveColor
             }`}
           >
             <svg
@@ -64,7 +67,7 @@ export default function ClienteLayout({
           <Link
             href="/entrenar"
             className={`flex flex-col items-center gap-1 transition-colors ${
-              pathname === '/entrenar' ? 'text-[#ff2a51]' : 'text-[#717684] hover:text-white'
+              pathname === '/entrenar' ? activeColor : inactiveColor
             }`}
           >
             <svg
@@ -82,7 +85,7 @@ export default function ClienteLayout({
           <Link
             href="/perfil"
             className={`flex flex-col items-center gap-1 transition-colors ${
-              pathname === '/perfil' ? 'text-[#ff2a51]' : 'text-[#717684] hover:text-white'
+              pathname === '/perfil' ? activeColor : inactiveColor
             }`}
           >
             <svg
