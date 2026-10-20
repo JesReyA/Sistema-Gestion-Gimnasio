@@ -26,9 +26,10 @@ public class JwtService {
     @Value("${security.jwt.expiration-time}")
     private Long jwtExpiration;
 
+    // Se agregó para usar refresh por medio de cookies en un futuro
     @Value("${security.jwt.refresh-expiration-time}") 
     private long refreshExpiration;
-    
+
 
     // Recibe el token de JWT y extrae el username mediante otro método dentro de la clase y uno de JWT
     public String extractUsername(String token){
