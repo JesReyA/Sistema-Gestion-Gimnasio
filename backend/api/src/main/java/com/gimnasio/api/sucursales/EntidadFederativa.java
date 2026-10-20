@@ -15,12 +15,16 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Entity 
 @Table (name = "entidades_federativas")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class EntidadFederativa {
-    public EntidadFederativa(){
-    }
 
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)// Auto-increment
@@ -32,38 +36,11 @@ public class EntidadFederativa {
     @Column (nullable=false, length = 50)
     private String nombre;
 
-    @JsonBackReference    // Se usa en la traducción a JSON y para evitar referencias circulares
-    @OneToMany (mappedBy = "estado")
+    // Se usa en la traducción a JSON y para evitar referencias circulares
+    //mapeada
+    @OneToMany (mappedBy = "entidadFederativa")
+    @JsonManagedReference("entidadFederativa-sucursal")
     private List<Sucursal> sucursales = new ArrayList<>();
 
 
-    public EntidadFederativa(Integer idEstado, String nombre, List<Sucursal> sucursales) {
-        this.idEstado = idEstado;
-        this.nombre = nombre;
-        this.sucursales = sucursales;
-    }
-
-    public Integer getIdEstado() {
-        return idEstado;
-    }
-
-    public void setIdEstado(Integer idEstado) {
-        this.idEstado = idEstado;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public List<Sucursal> getSucursales() {
-        return sucursales;
-    }
-
-    public void setSucursales(List<Sucursal> sucursales) {
-        this.sucursales = sucursales;
-    }
 }

@@ -2,42 +2,33 @@ package com.gimnasio.api.sucursales;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.*;
 
-//clase intermedia, do not touch
+@Entity
+@Table(name = "sucursales_proveedores")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class SucursalProveedor {
+
+    @EmbeddedId
+    @EqualsAndHashCode.Include
+    private SucursalProveedorId sucursalProveedorId = new SucursalProveedorId();
+
+    //mapeada
     @ManyToOne
-    @Column (name = "sucursal_id")
+    @JoinColumn(name = "sucursal_id")
+    @MapsId("sucursal")
     @JsonBackReference ("sucursal-sucursalProveedor")
     private Sucursal sucursal;
 
     @ManyToOne
-    @Column (name = "proveedor_id")
-    @JsonBackReference("proveedor-SucusalProveedor")
+    @JoinColumn(name = "proveedor_id")
+    @MapsId("proveedor")
+    @JsonBackReference("proveedor-SucursalProveedor")
     private Proveedor proveedor;
 
-    public SucursalProveedor(Sucursal sucursal, Proveedor proveedor) {
-        this.sucursal = sucursal;
-        this.proveedor = proveedor;
-    }
-
-    public SucursalProveedor() {
-    }
-
-    public Sucursal getSucursal() {
-        return sucursal;
-    }
-
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
-    }
-
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }
 }

@@ -20,9 +20,15 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 @Entity 
 @Table (name="salon")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Salon {
 
     @Id
@@ -37,7 +43,7 @@ public class Salon {
     @ManyToOne 
     @NotNull 
     @JoinColumn (name="sucursal_id", nullable=false)
-    @JsonBackReference 
+    @JsonBackReference("sucursal-salon")
     private Sucursal sucursal;
 
     @NotNull 
@@ -56,63 +62,4 @@ public class Salon {
     @JsonManagedReference ("salon-sesionClase")
     private List<SesionClase> sesionesClase = new ArrayList<>();
 
-    public Salon() {
-    }
-
-    public Salon(Integer idSalon, Integer capacidad, List<SesionClase> sesionesClase, String numeroSalon, Sucursal sucursal, List<SalonEvento> salonEvento) {
-        this.idSalon = idSalon;
-        this.capacidad = capacidad;
-        this.sesionesClase = sesionesClase;
-        this.numeroSalon = numeroSalon;
-        this.sucursal = sucursal;
-        this.salonEvento = salonEvento;
-    }
-
-    public Integer getIdSalon() {
-        return idSalon;
-    }
-
-    public void setIdSalon(Integer idSalon) {
-        this.idSalon = idSalon;
-    }
-
-    public List<SesionClase> getSesionesClase() {
-        return sesionesClase;
-    }
-
-    public void setSesionesClase(List<SesionClase> sesionesClase) {
-        this.sesionesClase = sesionesClase;
-    }
-
-    public Sucursal getSucursal() {
-        return sucursal;
-    }
-
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
-    }
-
-    public List<SalonEvento> getSalonEvento() {
-        return salonEvento;
-    }
-
-    public void setSalonEvento(List<SalonEvento> salonEvento) {
-        this.salonEvento = salonEvento;
-    }
-
-    public Integer getCapacidad() {
-        return capacidad;
-    }
-
-    public void setCapacidad(Integer capacidad) {
-        this.capacidad = capacidad;
-    }
-
-    public String getNumeroSalon() {
-        return numeroSalon;
-    }
-
-    public void setNumeroSalon(String numeroSalon) {
-        this.numeroSalon = numeroSalon;
-    }
 }

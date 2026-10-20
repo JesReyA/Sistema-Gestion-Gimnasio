@@ -39,11 +39,18 @@ public class Sucursal {
     private Integer idSucursal;
 
     // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
+
+    //mapeada
     @NotNull
-    @ManyToOne 
-    @JsonManagedReference
-    @JoinColumn (name="estado_id", nullable=false)
-    private EntidadFederativa estado;
+    @OneToMany (mappedBy="sucursal")
+    @JsonManagedReference("sucursal-sucursalProveedor")
+    private List<SucursalProveedor> sucursalProveedor = new ArrayList<>();
+
+    //mapeada
+    @ManyToOne
+    @JoinColumn(name = "estado_id", nullable = false)
+    @JsonBackReference("entidadFederativa-sucursal")
+    private EntidadFederativa entidadFederativa;
 
     // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
 
@@ -58,10 +65,17 @@ public class Sucursal {
     @JsonManagedReference("sucursal-maquina")
     private List<Maquina> maquina = new ArrayList<>();
 
+    //mapeada
+    @OneToMany (mappedBy = "sucursal")
+    @JsonManagedReference("sucursal-sucursalAccesorio")
+    private List<SucursalAccesorio> sucursalAccesorio = new ArrayList<>();
+
+    //mapeada
     @OneToMany (mappedBy="sucursal")
-    @JsonManagedReference
+    @JsonManagedReference("sucursal-salon")
     private List<Salon> salones = new ArrayList<>();
 
+    //mapeada
     @OneToMany (mappedBy="sucursal")
     @JsonManagedReference
     private List<Asistencia> asistencias = new ArrayList<>();

@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Embeddable
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlanServicioId {
+public class PlanServicioId implements Serializable {
 
     @Column(name = "plan_id", nullable = false)
     private Integer planSuscripcion;

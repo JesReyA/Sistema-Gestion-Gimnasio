@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 //mapeada y corregida
@@ -14,7 +15,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClienteInvitadoId {
+public class ClienteInvitadoId implements Serializable {
 
     @Column(name = "cliente_id")
     private Integer clienteId;
