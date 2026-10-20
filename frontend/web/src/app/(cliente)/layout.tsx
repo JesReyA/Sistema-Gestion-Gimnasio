@@ -1,22 +1,30 @@
 'use client';
 
-import React from 'react';
+import React, {useState} from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import {Qr} from "@/components/icons/Qr";
+import {IconoPerfil} from "@/components/icons/IconoPerfil";
+import {IconoCalendario} from "@/components/icons/IconoCalendario";
+import {IconoRutinas} from "@/components/icons/IconoRutinas";
+import {IconoHome} from "@/components/icons/IconoHome";
+import { AnimatePresence } from 'motion/react';
+import AccesoQr from '@/components/AccesoQr';
 
 export default function ClienteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
+    const [qrOpen, setQrOpen] = useState(false);
+    const pathname = usePathname();
 
-  const activeColor = 'text-[#ff2a51]';
-  const inactiveColor = 'text-[#717684] hover:text-white';
+    const activeColor = 'text-[#ff3355]';
+    const inactiveColor = 'text-[#717684] hover:text-white';
 
   return (
     <div className="min-h-screen bg-[#090a0f] text-white flex justify-center selection:bg-[#ff2a51]/30">
-      {/* Contenedor tipo móvil centrado */}
+      {/* Contenedor */}
       <div className="w-full max-w-sm flex flex-col min-h-screen pb-24 px-4 pt-4 relative">
         
         {/* Contenido de cada página */}
@@ -24,22 +32,19 @@ export default function ClienteLayout({
           {children}
         </main>
 
-        {/* Barra de navegación inferior fija */}
-        <nav className="fixed bottom-4 left-4 right-4 z-50 bg-[#0d0e12]/95 backdrop-blur-md border border-white/[0.08] rounded-2xl py-2.5 px-6 max-w-sm mx-auto flex justify-around items-center shadow-2xl shadow-black/50">
+        {/* Barra de navegación inferior*/}
+        <nav className="fixed bottom-2 left-0 right-0 z-50 bg-[#0d0e12]/95 backdrop-blur-md border-t border-white/20 py-2 px-6 max-w-sm mx-auto flex justify-around items-center rounded-full">
           
-          {/* 1. Inicio */}
+          {/* 1. Inicio (Lleva a /home pero se llama Inicio) */}
           <Link
             href="/home"
             className={`flex flex-col items-center gap-1 transition-colors ${
               pathname === '/home' ? activeColor : inactiveColor
             }`}
           >
-            <svg
-              className="w-5 h-5 fill-current"
-              viewBox="0 0 24 24"
-            >
-              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-            </svg>
+            <IconoHome
+                className="w-5 h-5 fill-current"
+            />
             <span className="text-[10px] font-semibold tracking-wide">Inicio</span>
           </Link>
 
@@ -50,35 +55,24 @@ export default function ClienteLayout({
               pathname === '/rutinas' ? activeColor : inactiveColor
             }`}
           >
-            <svg
-              className="w-5 h-5 fill-current"
-              viewBox="0 0 24 24"
-            >
-              <rect x="2" y="7.5" width="2" height="9" rx="1" />
-              <rect x="4.5" y="4.5" width="3.5" height="15" rx="1.5" />
-              <rect x="8" y="10.5" width="8" height="3" rx="0.5" />
-              <rect x="16" y="4.5" width="3.5" height="15" rx="1.5" />
-              <rect x="20" y="7.5" width="2" height="9" rx="1" />
-            </svg>
+            <IconoRutinas
+                className="w-5 h-5 fill-current"
+            />
+
             <span className="text-[10px] font-semibold tracking-wide">Rutinas</span>
           </Link>
 
-          {/* 3. Entrenar */}
+          {/* 3. Clases */}
           <Link
-            href="/entrenar"
+            href="/clases"
             className={`flex flex-col items-center gap-1 transition-colors ${
-              pathname === '/entrenar' ? activeColor : inactiveColor
+              pathname === '/clases' ? activeColor : inactiveColor
             }`}
           >
-            <svg
-              className="w-5 h-5 fill-current"
-              viewBox="0 0 24 24"
-            >
-              <rect x="3" y="12" width="4" height="9" rx="1.5" />
-              <rect x="10" y="5" width="4" height="16" rx="1.5" />
-              <rect x="17" y="9" width="4" height="12" rx="1.5" />
-            </svg>
-            <span className="text-[10px] font-semibold tracking-wide">Entrenar</span>
+            <IconoCalendario
+                className="w-5 h-5 fill-current"
+            />
+            <span className="text-[10px] font-semibold tracking-wide">Clases</span>
           </Link>
 
           {/* 4. Perfil */}
@@ -88,22 +82,32 @@ export default function ClienteLayout({
               pathname === '/perfil' ? activeColor : inactiveColor
             }`}
           >
-            <svg
-              className="w-5 h-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
+            <IconoPerfil
+                className='w-5 h-5'
+            />
             <span className="text-[10px] font-semibold tracking-wide">Perfil</span>
           </Link>
 
+          {/* Botón Qr */}
+          <div className='absolute bottom-19 right-6 sm:right-9 w-13 h-13 bg-[#0d0e12]/95 backdrop-blur-md border-t border-white/20 rounded-xl'>
+            <button onClick={() => setQrOpen(true)} className='absolute  inset-0 w-full h-full p-1 rounded-xl shadow-[0_0_20px_rgba(255,51,85,0.6)] transition-all'>
+              <Qr 
+                className={`w-full h-full ${activeColor}`}
+              />
+            </button>
+          </div>
         </nav>
+        
+        {/* Animación qr para cerrarse */}
+        <AnimatePresence>
+          {qrOpen && (
+          <AccesoQr
+            key="acceso-qr"
+            onClose={() => setQrOpen(false)}
+          />
+          )}
+        </AnimatePresence>
+        
       </div>
     </div>
   );
