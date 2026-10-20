@@ -26,9 +26,9 @@ export default function ClienteLayout({
           
           {/* 1. Inicio */}
           <Link
-            href="/"
+            href="/home"
             className={`flex flex-col items-center gap-1 transition-colors ${
-              pathname === '/' ? 'text-[#ff2a51]' : 'text-[#717684] hover:text-white'
+              pathname === '/home' ? activeColor : inactiveColor
             }`}
           >
             <svg
