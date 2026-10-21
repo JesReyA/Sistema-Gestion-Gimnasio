@@ -10,3 +10,6 @@ Thumbs.db
 #Archivos de entorno
 .env
 .env.local
+
+#ignorar .sql
+*.sql

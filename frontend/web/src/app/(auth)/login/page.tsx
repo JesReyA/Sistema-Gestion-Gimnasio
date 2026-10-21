@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { IconoMancuerna } from '@/components/icons/IconoMancuerna';
 
 export default function LoginPage() {
   const [identifier, setIdentifier] = useState('');
@@ -26,21 +27,9 @@ export default function LoginPage() {
           
           <div className="relative w-16 h-16 rounded-2xl bg-[#141518] border border-white/5 flex items-center justify-center shadow-lg">
             {/* Ícono de Mancuerna jeje */}
-            <svg 
+            <IconoMancuerna
               className="w-7 h-7 text-[#ff3355]" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2.5" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <path d="m6.5 6.5 11 11" />
-              <path d="m21 21-1-1a2.8 2.8 0 0 0-4 0l-1 1" />
-              <path d="m9 9-1-1a2.8 2.8 0 0 0-4 0l-1 1" />
-              <path d="m3 3 1 1a2.8 2.8 0 0 0 4 0l1-1" />
-              <path d="m15 15 1 1a2.8 2.8 0 0 0 4 0l1-1" />
-            </svg>
+            />
           </div>
           <span className="text-[11px] tracking-[0.25em] font-semibold text-gray-400 mt-3 uppercase">
             IRON FIT

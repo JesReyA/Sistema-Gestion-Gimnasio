@@ -25,7 +25,7 @@ export default function ClienteLayout({
   return (
     <div className="min-h-screen bg-[#090a0f] text-white flex justify-center selection:bg-[#ff2a51]/30">
       {/* Contenedor */}
-      <div className="w-full max-w-sm flex flex-col min-h-screen pb-24 px-4 pt-4 relative">
+      <div className="w-full max-w-sm flex flex-col min-h-dvh pb-24 px-4 pt-4 relative">
         
         {/* Contenido de cada página */}
         <main className="flex-1 w-full">
@@ -35,11 +35,11 @@ export default function ClienteLayout({
         {/* Barra de navegación inferior*/}
         <nav className="fixed bottom-2 left-0 right-0 z-50 bg-[#0d0e12]/95 backdrop-blur-md border-t border-white/20 py-2 px-6 max-w-sm mx-auto flex justify-around items-center rounded-full">
           
-          {/* 1. Inicio (Lleva a /home pero se llama Inicio) */}
+          {/* 1. Inicio */}
           <Link
-            href="/home"
+            href="/"
             className={`flex flex-col items-center gap-1 transition-colors ${
-              pathname === '/home' ? activeColor : inactiveColor
+              pathname === '/' ? activeColor : inactiveColor
             }`}
           >
             <IconoHome
@@ -48,7 +48,7 @@ export default function ClienteLayout({
             <span className="text-[10px] font-semibold tracking-wide">Inicio</span>
           </Link>
 
-          {/* 2. Rutinas (Mancuerna) */}
+          {/* 2. Rutinas (Mancuerna*/}
           <Link
             href="/rutinas"
             className={`flex flex-col items-center gap-1 transition-colors ${
