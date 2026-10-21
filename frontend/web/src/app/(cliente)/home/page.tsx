@@ -94,7 +94,7 @@ const Iconos = {
 export default function PaginaInicioCliente() {
   const [datosUsuario, setDatosUsuario] = useState<DatosUsuario>({
     nombre: 'usuario',
-    fotoPerfil: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    fotoPerfil: '/home/alexandersue/Escritorio/Escuela/Admin_Proyectos/Sistema-Gestion-Gimnasio/frontend/web/public/sisi.jpg',
     idMembresia: '#IF-8941',
     planActivo: true,
     objetivo: 'Objetivo definición',
