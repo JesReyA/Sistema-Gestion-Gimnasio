@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 // al llamar este DTO siempre se debe pasar con null en el parámetro del refreshToken (para web) 
 // ya que se manejará con cookies. Por eso solo aplica al refreshToken
 
+// Datos que se regresan al pedir ingreso/autorizacion
 @JsonInclude (JsonInclude.Include.NON_NULL)
 public record AuthResponse(
     String accessToken, 

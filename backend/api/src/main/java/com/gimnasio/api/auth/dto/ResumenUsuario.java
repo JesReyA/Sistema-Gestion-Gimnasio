@@ -2,6 +2,7 @@ package com.gimnasio.api.auth.dto;
 
 import java.util.List;
 
+// Datos del usuario sin datos sensibles
 public record ResumenUsuario(
     String nombres, 
     String apellidoPaterno, 

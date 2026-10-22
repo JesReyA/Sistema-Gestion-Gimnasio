@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+// Datos necesarios para completar el registro de un usuario
 public record RegistroRequest (
     @NotBlank(message="El nombre es obligatorio") 
     @Size(max=100)
