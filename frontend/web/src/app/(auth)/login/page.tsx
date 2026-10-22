@@ -52,7 +52,7 @@ export default function LoginPage() {
           {/* Campo: Correo o Número de Membresía */}
           <div className="space-y-1.5">
             <label className="text-xs text-gray-400 block font-medium">
-              Correo
+              Correo o Número de Membresía
             </label>
             <div className="relative flex items-center">
               <span className="absolute left-3.5 text-gray-500">
