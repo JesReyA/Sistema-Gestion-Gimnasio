@@ -345,7 +345,7 @@ export default function PaginaInicioCliente() {
             </p>
           </div>
           <Link
-            href="/clases"
+            href="/rutinas"
             className="px-4 py-2.5 bg-gradient-to-r from-red-500 to-orange-500 hover:opacity-90 rounded-xl font-semibold text-xs flex items-center gap-1.5 shadow-lg shadow-orange-500/20 active:scale-95 transition"
           >
             Ver detalles <Iconos.FlechaDerecha />
