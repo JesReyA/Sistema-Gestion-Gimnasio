@@ -41,29 +41,36 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
+    // Servicio para el registro de usuarios
     @Transactional 
     public ResumenUsuario registro (RegistroRequest input){
 
+        // Revisa si la cuenta ya existe
         if(cuentaRepository.existsByCorreoElectronico(input.email())){
             throw new IllegalStateException("Correo ya registrado");
         }
 
+        // Crea una nueva instancia de cliente
         Cliente cliente = new Cliente();
         cliente.setNombres(input.nombres());
         cliente.setApellidoPaterno(input.apellidoPaterno());
         cliente.setApellidoMaterno(input.apellidoMaterno());
         cliente.setCorreoElectronico(input.email());
 
+        // Guarda el cliente
         clienteRepository.save(cliente);
 
+        // Crea una nueva instancia de cuenta
         Cuenta cuenta = new Cuenta();
         cuenta.setCorreoElectronico(input.email());
         cuenta.setContrasena(passwordEncoder.encode(input.password()));
         cuenta.setEstado(EstadoCuenta.pendiente);
         cuenta.setCliente(cliente);
 
+        // Guarda la cuenta
         cuentaRepository.save(cuenta);
 
+        // Regresa una instancia del Dto de resumen del usuario con el Rol de cliente predeterminado
         return new ResumenUsuario(
             cliente.getNombres(),
             cliente.getApellidoPaterno(), 
@@ -74,6 +81,7 @@ public class AuthService {
         
     }
 
+    // Metodo para crear el resumen de el usuario basado en su tipo de cuenta
     private ResumenUsuario armarResumenUsuario (Cuenta cuenta, List<String> roles){
             String nombres;
             String paterno;
@@ -94,6 +102,8 @@ public class AuthService {
             return new ResumenUsuario(nombres, paterno, materno, cuenta.getCorreoElectronico(), roles);
         }
 
+
+    // Metodo para el login
     @Transactional (readOnly = true)
     public AuthResponse login (LoginRequest input){
 
