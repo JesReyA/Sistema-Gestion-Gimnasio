@@ -283,7 +283,7 @@ export default function PaginaInicioCliente() {
         <div className="flex items-center gap-3">
           <Link href="/perfil" className="relative block group">
             <img
-              src={datosUsuario.fotoPerfil}
+              src="/sisi.jpg"
               alt={datosUsuario.nombre}
               className="w-12 h-12 rounded-full object-cover border-2 border-orange-500/40 group-hover:opacity-80 transition"
             />
