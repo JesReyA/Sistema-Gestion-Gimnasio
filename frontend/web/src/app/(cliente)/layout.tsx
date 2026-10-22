@@ -46,9 +46,9 @@ export default function ClienteLayout({
           
           {/* 1. Inicio */}
           <Link
-            href="/"
+            href="/home"
             className={`flex flex-col items-center gap-1 transition-colors ${
-              pathname === '/' ? activeColor : inactiveColor
+              pathname === '/home' ? activeColor : inactiveColor
             }`}
           >
             <IconoHome
