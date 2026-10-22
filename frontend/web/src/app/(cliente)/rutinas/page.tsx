@@ -19,6 +19,15 @@ export interface WorkoutDay {
   exercises: Exercise[];
 }
 
+export interface GroupActivity {
+  id: string;
+  name: string;
+  description: string;
+  days: string;
+  schedules: string[];
+  intensity?: string;
+}
+
 // --- 2. BLOQUES MODULARES DE EJERCICIOS ---
 const BLOCK_PUSH: Exercise[] = [
   { id: 'pu-1', name: 'Press horizontal con barra/mancuerna', setsReps: '4x12' },
@@ -105,6 +114,42 @@ const BLOCK_FULL_BODY: Exercise[] = [
   { id: 'fb-15', name: 'Abductor', setsReps: '3x12' },
   { id: 'fb-16', name: 'Elevación de talón', setsReps: '3x12' },
   { id: 'fb-17', name: 'Abdominal Crunch en máquina', setsReps: '3x12' },
+];
+
+// --- 2.5 ACTIVIDADES Y CLASES GRUPALES ---
+const GROUP_ACTIVITIES: GroupActivity[] = [
+  {
+    id: 'act-1',
+    name: 'Yoga',
+    description: 'Sesiones enfocadas en flexibilidad, control de respiración y movilidad articular.',
+    days: 'Lunes, Miércoles y Viernes',
+    schedules: ['7:00 AM - 7:50 AM'],
+    intensity: 'Recomendado 2x/semana',
+  },
+  {
+    id: 'act-2',
+    name: 'Zumba',
+    description: 'Entrenamiento cardiovascular rítmico de baile para quema calórica y coordinación.',
+    days: 'Lunes, Miércoles y Viernes',
+    schedules: ['11:00 AM - 11:50 AM'],
+    intensity: 'Recomendado 2x/semana',
+  },
+  {
+    id: 'act-3',
+    name: 'Balance',
+    description: 'Clase integral que combina técnicas de Yoga, Pilates y ejercicios Hipopresivos.',
+    days: 'Martes, Jueves y Sábado',
+    schedules: ['8:00 AM - 8:50 AM', '7:00 PM - 7:50 PM'],
+    intensity: 'Recomendado 2x/semana',
+  },
+  {
+    id: 'act-4',
+    name: 'Iron Fit Core',
+    description: 'Actividad de fortalecimiento de la zona abdominal con ejercicios de poca intensidad.',
+    days: 'Domingos',
+    schedules: ['8:00 AM - 8:50 AM', '10:00 AM - 10:50 AM'],
+    intensity: 'Baja intensidad',
+  },
 ];
 
 // --- 3. DÍAS SEGÚN FRECUENCIA Y PREFERENCIA ---
@@ -274,6 +319,63 @@ export default function RoutinesPage() {
               <span className="text-[11px] font-semibold text-[#ff2a51] bg-[#ff2a51]/10 px-2 py-0.5 rounded-md shrink-0">
                 {exercise.setsReps}
               </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 4. Actividades y Clases Grupales Complementarias */}
+      <section className="bg-[#14151b] border border-white/5 rounded-2xl p-4">
+        <div className="mb-4">
+          <span className="text-[10px] uppercase font-bold text-[#ff2a51] tracking-wider">
+            CLASES GRUPALES
+          </span>
+          <h2 className="text-sm font-bold text-white mt-0.5">
+            Actividades Complementarias
+          </h2>
+          <p className="text-[11px] text-gray-400 mt-0.5">
+            Ideales para repartir 2 veces por semana junto a tu entrenamiento
+          </p>
+        </div>
+
+        <div className="space-y-2.5">
+          {GROUP_ACTIVITIES.map((activity) => (
+            <div
+              key={activity.id}
+              className="p-3.5 bg-[#090a0f] rounded-xl border border-white/5 flex flex-col gap-2"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <h3 className="text-xs font-bold text-white flex items-center gap-2">
+                    {activity.name}
+                  </h3>
+                  <p className="text-[11px] text-gray-400 mt-0.5 leading-relaxed">
+                    {activity.description}
+                  </p>
+                </div>
+                {activity.intensity && (
+                  <span className="text-[10px] font-semibold text-gray-300 bg-[#1e2029] border border-white/5 px-2 py-0.5 rounded-md shrink-0">
+                    {activity.intensity}
+                  </span>
+                )}
+              </div>
+
+              <div className="pt-2 border-t border-white/5 flex flex-wrap items-center justify-between gap-2">
+                <span className="text-[11px] font-medium text-gray-300">
+                  <strong className="text-[#ff2a51] font-semibold">Días:</strong> {activity.days}
+                </span>
+
+                <div className="flex flex-wrap gap-1.5">
+                  {activity.schedules.map((time, idx) => (
+                    <span
+                      key={idx}
+                      className="text-[10px] font-semibold text-[#ff2a51] bg-[#ff2a51]/10 px-2 py-0.5 rounded-md"
+                    >
+                      {time}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           ))}
         </div>
