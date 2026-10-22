@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {Qr} from "@/components/icons/Qr";
 import {IconoPerfil} from "@/components/icons/IconoPerfil";
-import {IconoCalendario} from "@/components/icons/IconoCalendario";
+import {IconoCalorias} from "@/components/icons/IconoCalorias";
 import {IconoRutinas} from "@/components/icons/IconoRutinas";
 import {IconoHome} from "@/components/icons/IconoHome";
 import { AnimatePresence } from 'motion/react';
@@ -62,17 +62,17 @@ export default function ClienteLayout({
             <span className="text-[10px] font-semibold tracking-wide">Rutinas</span>
           </Link>
 
-          {/* 3. Clases */}
+          {/* 3. Nutrición */}
           <Link
-            href="/clases"
+            href="/nutricion"
             className={`flex flex-col items-center gap-1 transition-colors ${
-              pathname === '/clases' ? activeColor : inactiveColor
+              pathname === '/nutricion' ? activeColor : inactiveColor
             }`}
           >
-            <IconoCalendario
+            <IconoCalorias
                 className="w-5 h-5 fill-current"
             />
-            <span className="text-[10px] font-semibold tracking-wide">Clases</span>
+            <span className="text-[10px] font-semibold tracking-wide">Nutrición</span>
           </Link>
 
           {/* 4. Perfil */}
