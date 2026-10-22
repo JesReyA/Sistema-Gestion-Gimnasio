@@ -36,9 +36,15 @@ public class Salon {
     @Column (name="id_salon", nullable= false)
     private Integer idSalon;
 
+    //mapeada
     @OneToMany(mappedBy = "salon")
     @JsonManagedReference("salon-salonEvento")
     private List<SalonEvento> salonEvento = new ArrayList<>();
+
+    //mapeada
+    @OneToMany (mappedBy = "salon")
+    @JsonManagedReference ("salon-sesionClase")
+    private List<SesionClase> sesionesClase = new ArrayList<>();
 
     @ManyToOne 
     @NotNull 
@@ -55,11 +61,5 @@ public class Salon {
     @Positive 
     @Column (nullable=false)
     private Integer capacidad;
-
-    //Falta indexar sucursal_id con numoer_salon para que su conjunto sea unico
-
-    @OneToMany (mappedBy = "salon")
-    @JsonManagedReference ("salon-sesionClase")
-    private List<SesionClase> sesionesClase = new ArrayList<>();
 
 }

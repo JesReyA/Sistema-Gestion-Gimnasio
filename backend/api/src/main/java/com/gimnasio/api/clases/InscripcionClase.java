@@ -3,10 +3,22 @@ package com.gimnasio.api.clases;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gimnasio.api.clientes.Cliente;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
+
+//mapeada
+@Entity
+@Table(name = "inscripciones_clase")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class InscripcionClase {
 
+    @EqualsAndHashCode.Include
     @EmbeddedId
     private InscripcionClaseId id = new InscripcionClaseId();
 
@@ -34,56 +46,6 @@ public class InscripcionClase {
         cancelado
     }
 
-    public InscripcionClase() {
-    }
-
-    public InscripcionClase(InscripcionClaseId id, Cliente cliente, SesionClase sesionClase, LocalDateTime fechaInscripcion, estadoInscripcion estadoInscripcion) {
-        this.id = id;
-        this.cliente = cliente;
-        this.sesionClase = sesionClase;
-        this.fechaInscripcion = fechaInscripcion;
-        this.estadoInscripcion = estadoInscripcion;
-    }
-
-    public InscripcionClaseId getId() {
-        return id;
-    }
-
-    public void setId(InscripcionClaseId id) {
-        this.id = id;
-    }
-
-    public estadoInscripcion getEstadoInscripcion() {
-        return estadoInscripcion;
-    }
-
-    public void setEstadoInscripcion(estadoInscripcion estadoInscripcion) {
-        this.estadoInscripcion = estadoInscripcion;
-    }
-
-    public LocalDateTime getFechaInscripcion() {
-        return fechaInscripcion;
-    }
-
-    public void setFechaInscripcion(LocalDateTime fechaInscripcion) {
-        this.fechaInscripcion = fechaInscripcion;
-    }
-
-    public SesionClase getSesionClase() {
-        return sesionClase;
-    }
-
-    public void setSesionClase(SesionClase sesionClase) {
-        this.sesionClase = sesionClase;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
 }
 
 

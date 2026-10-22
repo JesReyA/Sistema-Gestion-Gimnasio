@@ -39,6 +39,7 @@ public class Proveedor {
     private String descripcionServicio;
 
 
+    //mapeada
     @OneToMany(mappedBy = "proveedor")
     @JsonManagedReference("proovedor-SucursalProveedor")
     private List<SucursalProveedor> sucursalProveedor = new ArrayList<>();
