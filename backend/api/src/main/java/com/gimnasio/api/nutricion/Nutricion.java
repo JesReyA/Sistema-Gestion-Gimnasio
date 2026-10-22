@@ -27,10 +27,11 @@ public class Nutricion {
 
     @NotNull
     @Column(name = "fecha")
-    private LocalDateTime fecha;
+    private LocalDate fecha;
 
     @NotNull
     @Column(name = "tipo_comida")
+    @Enumerated(EnumType.STRING)
     private tipoComida comida;
 
     @NotNull

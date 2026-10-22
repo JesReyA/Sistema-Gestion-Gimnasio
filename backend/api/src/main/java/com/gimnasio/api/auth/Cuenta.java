@@ -65,8 +65,7 @@ public class Cuenta {
     }
 
     @NotNull
-    @Column (nullable=false)
+    @Enumerated(EnumType.STRING)
+    @Column (name = "estado", nullable=false)
     private estadoCuenta estado = estadoCuenta.pendiente;
-
-
 }

@@ -28,7 +28,7 @@ public class EntidadFederativa {
 
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)// Auto-increment
-    @Column (name = "id_estado", nullable=false)
+    @Column (name = "id_entidad", nullable=false)
     private Integer idEstado;
 
     @NotNull 

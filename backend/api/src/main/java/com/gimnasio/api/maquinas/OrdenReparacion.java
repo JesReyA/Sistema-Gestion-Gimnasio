@@ -32,9 +32,9 @@ public class OrdenReparacion {
     @JsonBackReference("maquina-ordenReparacion")
     private Maquina maquina;
 
-    @OneToMany
+    @OneToOne(mappedBy = "ordenReparacion")
     @JsonManagedReference("ordenReparacion-procesoReparacion")
-    private List<ProcesoReparacion> procesoReparacion = new ArrayList<>();
+    private ProcesoReparacion procesoReparacion;
 
     @NotNull
     @Column(name = "folio", length = 50)
@@ -42,7 +42,7 @@ public class OrdenReparacion {
 
     @NotNull
     @Column(name = "fecha_reporte")
-    private LocalDateTime fechaReporte;
+    private LocalDate fechaReporte;
 
     @Lob
     @NotNull

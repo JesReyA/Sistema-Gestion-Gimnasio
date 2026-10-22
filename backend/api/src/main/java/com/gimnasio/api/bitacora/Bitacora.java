@@ -10,6 +10,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Entity
@@ -24,8 +25,8 @@ public class Bitacora {
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "id_bitacora")
-    private BigInteger idBitacora;
+    @Column(name = "id_bitacora", columnDefinition = "BIGINT UNSIGNED")
+    private Long idBitacora;
 
     @ManyToOne
     @JsonBackReference("cuenta-bitacora")
@@ -34,7 +35,7 @@ public class Bitacora {
 
     @NotNull
     @Column(name = "fecha")
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -44,7 +45,6 @@ public class Bitacora {
     @NotNull
     @Column(name = "entidad", length = 50)
     private String entidad;
-
 
     @NotNull
     @Column(name = "entidad_id")

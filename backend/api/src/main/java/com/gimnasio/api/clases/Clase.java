@@ -20,7 +20,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity 
-@Table (name="clase")
+@Table (name="clases")
 @Getter
 @Setter
 @NoArgsConstructor

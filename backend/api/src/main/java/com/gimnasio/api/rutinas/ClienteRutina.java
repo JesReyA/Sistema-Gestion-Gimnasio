@@ -5,6 +5,7 @@ import com.gimnasio.api.clientes.Cliente;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -35,10 +36,10 @@ public class ClienteRutina {
     private Rutina rutina;
 
     @Column(name = "fecha_asignacion", nullable = false)
-    private LocalDateTime fechaAsignacion;
+    private LocalDate fechaAsignacion;
 
     @Column(name = "fecha_fin")
-    private LocalDateTime fechaFin;
+    private LocalDate fechaFin;
 
 }
 

@@ -1,18 +1,12 @@
 package com.gimnasio.api.suscripciones;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -38,8 +32,8 @@ public class PlanSuscripcion {
     private String nombre;
 
     @Lob
-    @Column(columnDefinition = "TEXT")
-    private String definicion;
+    @Column(name = "descripcion",columnDefinition = "TEXT")
+    private String descripcion;
 
     @NotNull
     @Positive
@@ -48,8 +42,8 @@ public class PlanSuscripcion {
 
     @NotNull
     @PositiveOrZero
-    @Column(nullable = false)
-    private Integer costo;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal costo;
 
     public enum estadoPlan {
         disponible,
@@ -58,6 +52,7 @@ public class PlanSuscripcion {
 
     @NotNull
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private estadoPlan estado = estadoPlan.disponible;
 
     //mapeada

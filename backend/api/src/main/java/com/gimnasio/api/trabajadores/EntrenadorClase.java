@@ -6,14 +6,16 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "entrenadores_clase")
+@Table(name = "entrenadores_clases")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class EntrenadorClase {
+
     @EmbeddedId
+    @EqualsAndHashCode.Include
     private EntrenadorClaseId id = new EntrenadorClaseId();
 
     @ManyToOne

@@ -36,6 +36,7 @@ public class PlanAlimentacion {
 
     @NotNull
     @Column(name = "tipo_comida")
+    @Enumerated(EnumType.STRING)
     private tipoComida comida;
 
     @NotNull

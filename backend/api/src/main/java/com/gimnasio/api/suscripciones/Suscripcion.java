@@ -11,15 +11,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gimnasio.api.clientes.Cliente;
 
 import com.gimnasio.api.pagos.Pago;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -59,12 +51,12 @@ public class Suscripcion {
     //mapeada
     @NotNull 
     @Column (name="fecha_inicio", nullable=false)
-    private LocalDateTime fechaInicio;
+    private LocalDate fechaInicio;
 
     //mapeada
     @NotNull 
     @Column (name="fecha_fin", nullable=false)
-    private LocalDateTime fechaFin;
+    private LocalDate fechaFin;
 
     public enum estadoSuscripcion{
         activa, 
@@ -74,6 +66,7 @@ public class Suscripcion {
 
     @NotNull 
     @Column (nullable=false)
+    @Enumerated(EnumType.STRING)
     private estadoSuscripcion estado = estadoSuscripcion.activa;
 
 }

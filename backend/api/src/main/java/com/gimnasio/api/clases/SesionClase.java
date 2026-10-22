@@ -54,6 +54,7 @@ public class SesionClase {
 
     @NotNull 
     @Column (nullable = false)
+    @Enumerated(EnumType.STRING)
     private estadoSesion estado = estadoSesion.programada;
 
     //mapeada

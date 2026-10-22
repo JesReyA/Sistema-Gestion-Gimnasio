@@ -1,13 +1,7 @@
 package com.gimnasio.api.pagos;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
 
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,8 +14,6 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gimnasio.api.suscripciones.Suscripcion;
-
-import jakarta.persistence.Column;
 
 
 @Entity 
@@ -48,7 +40,7 @@ public class Pago {
     private LocalDateTime fechaPago;
 
     @Column (name="proximo_pago")
-    private LocalDateTime proximoPago;
+    private LocalDate proximoPago;
 
     @NotNull 
     @Positive 
@@ -62,6 +54,7 @@ public class Pago {
         transferencia
     }
 
+    @Enumerated(EnumType.STRING)
     @Column (name="metodo_pago")
     private metodoPago metodoPago;
 
@@ -72,6 +65,7 @@ public class Pago {
 
     @NotNull 
     @Column (name="estado_pago", nullable = false)
+    @Enumerated(EnumType.STRING)
     private estadoPago estado = estadoPago.no_pagado;
     
 }

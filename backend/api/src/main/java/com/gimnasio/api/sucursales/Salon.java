@@ -23,7 +23,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity 
-@Table (name="salon")
+@Table (name="salones")
 @Getter
 @Setter
 @NoArgsConstructor

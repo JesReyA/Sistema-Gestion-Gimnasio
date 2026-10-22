@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -22,20 +23,20 @@ public class Evento {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_evento", nullable = false)
-    Integer idEvento;
+    private Integer idEvento;
 
     @NotNull
     @Column(name = "nombre_evento", length = 150)
-    String nombreEvento;
+    private String nombreEvento;
 
     @NotNull
     @Column(name = "duracion_minutos")
     @Size(min = 1)
-    Integer duracionMinutos;
+    private Integer duracionMinutos;
     
     @NotNull
     @Column(name = "fecha_evento")
-    LocalDate fechaEvento;
+    private LocalDateTime fechaEvento;
 
     @OneToMany(mappedBy = "evento")
     @JsonManagedReference("evento-inscripcionEvento")
