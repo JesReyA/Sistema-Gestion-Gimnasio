@@ -1,7 +1,9 @@
 package com.gimnasio.api.asistencias;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +34,8 @@ public class Asistencia {
     private Integer idAsistencia;
 
 
-    @OneToMany()
-    private List<Trabajador> trabajador = new ArrayList<>();
+    //@OneToMany(mappedBy = "")
+    //private List<Trabajador> trabajador = new ArrayList<>();
 
     @NotNull 
     @ManyToOne
@@ -57,11 +59,11 @@ public class Asistencia {
 
     @NotNull 
     @Column (nullable=false)
-    private LocalDateTime fecha;
+    private LocalDate fecha;
 
     @NotNull 
     @Column (name="hora_entrada", nullable=false)
-    private LocalDateTime horaEntrada;
+    private LocalTime horaEntrada;
 
     @Size (max=32)
     @Column (name="codigo_entrada", length=32)

@@ -29,6 +29,7 @@ public class SucursalAccesorio {
     @ManyToOne
     @MapsId("accesorio")
     @JoinColumn(name  = "accesorio_id", nullable = false)
+    @JsonBackReference("accesorio-sucursalAccesorio")
     private Accesorio accesorio;
 
     @Column(name = "cantidad", nullable = false)

@@ -9,6 +9,7 @@ import com.gimnasio.api.trabajadores.Trabajador;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,17 +17,22 @@ import java.util.List;
 
 @Entity
 @Table(name = "cuentas")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cuenta {
     
-    @Id 
+    @Id
+    @EqualsAndHashCode.Include
     @Column(name = "id_cuenta", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment
     private Integer idCuenta;
 
-    @JsonManagedReference
+    @JsonManagedReference("cuenta-bitacora")
     @OneToMany(mappedBy = "cuenta")
     private List<Bitacora> bitacora = new ArrayList<>();
-
 
     //mapeada
     @OneToOne 
@@ -34,6 +40,7 @@ public class Cuenta {
     @JsonBackReference("cliente-cuenta")
     private Cliente cliente;
 
+    //mapeada
     @OneToOne 
     @JoinColumn (name ="trabajador_id", unique = true)
     @JsonBackReference("trabajador-cuenta")
@@ -61,72 +68,5 @@ public class Cuenta {
     @Column (nullable=false)
     private estadoCuenta estado = estadoCuenta.pendiente;
 
-    public Cuenta(Integer idCuenta, String contrasena, estadoCuenta estado, String correoElectronico, Trabajador trabajador, Cliente cliente, List<Bitacora> bitacora) {
-        this.idCuenta = idCuenta;
-        this.contrasena = contrasena;
-        this.estado = estado;
-        this.correoElectronico = correoElectronico;
-        this.trabajador = trabajador;
-        this.cliente = cliente;
-        this.bitacora = bitacora;
-    }
 
-    public Cuenta() {
-    }
-
-    public Integer getIdCuenta() {
-        return idCuenta;
-    }
-
-    public void setIdCuenta(Integer idCuenta) {
-        this.idCuenta = idCuenta;
-    }
-
-    public estadoCuenta getEstado() {
-        return estado;
-    }
-
-    public void setEstado(estadoCuenta estado) {
-        this.estado = estado;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-
-    public Trabajador getTrabajador() {
-        return trabajador;
-    }
-
-    public void setTrabajador(Trabajador trabajador) {
-        this.trabajador = trabajador;
-    }
-
-    public List<Bitacora> getBitacora() {
-        return bitacora;
-    }
-
-    public void setBitacora(List<Bitacora> bitacora) {
-        this.bitacora = bitacora;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
 }

@@ -1,20 +1,40 @@
 package com.gimnasio.api.maquinas;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name= "ordenes_reparacion")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class OrdenReparacion {
 
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_orden")
     private Integer idOrden;
 
-    //maquina id
+    //mapeada
+    @ManyToOne
+    @JoinColumn(name = "maquina_id")
+    @JsonBackReference("maquina-ordenReparacion")
+    private Maquina maquina;
+
+    @OneToMany
+    @JsonManagedReference("ordenReparacion-procesoReparacion")
+    private List<ProcesoReparacion> procesoReparacion = new ArrayList<>();
 
     @NotNull
     @Column(name = "folio", length = 50)
@@ -22,7 +42,7 @@ public class OrdenReparacion {
 
     @NotNull
     @Column(name = "fecha_reporte")
-    private LocalDate fechaReporte;
+    private LocalDateTime fechaReporte;
 
     @Lob
     @NotNull
@@ -30,38 +50,4 @@ public class OrdenReparacion {
     private String razonReparacion;
 
 
-    public OrdenReparacion() {
-    }
-
-    public Integer getIdOrden() {
-        return idOrden;
-    }
-
-    public void setIdOrden(Integer idOrden) {
-        this.idOrden = idOrden;
-    }
-
-    public String getRazonReparacion() {
-        return razonReparacion;
-    }
-
-    public void setRazonReparacion(String razonReparacion) {
-        this.razonReparacion = razonReparacion;
-    }
-
-    public LocalDate getFechaReporte() {
-        return fechaReporte;
-    }
-
-    public void setFechaReporte(LocalDate fechaReporte) {
-        this.fechaReporte = fechaReporte;
-    }
-
-    public String getFolio() {
-        return folio;
-    }
-
-    public void setFolio(String folio) {
-        this.folio = folio;
-    }
 }

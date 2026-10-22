@@ -3,13 +3,21 @@ package com.gimnasio.api.rutinas;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gimnasio.api.clientes.Cliente;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "clientes_rutinas")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ClienteRutina {
 
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cliente_rutina")
     private Integer idClienteRutina;
@@ -20,7 +28,11 @@ public class ClienteRutina {
     @JsonBackReference("cliente-clienteRutina")
     private Cliente cliente;
 
-    //rutina id
+    //mapeada
+    @ManyToOne
+    @JsonBackReference("rutina-clienteRutina")
+    @JoinColumn(name = "rutina_id")
+    private Rutina rutina;
 
     @Column(name = "fecha_asignacion", nullable = false)
     private LocalDateTime fechaAsignacion;
@@ -28,46 +40,5 @@ public class ClienteRutina {
     @Column(name = "fecha_fin")
     private LocalDateTime fechaFin;
 
-    public ClienteRutina() {
-    }
-
-    public ClienteRutina(Integer idClienteRutina, LocalDateTime fechaFin, LocalDateTime fechaAsignacion, Cliente cliente) {
-        this.idClienteRutina = idClienteRutina;
-        this.fechaFin = fechaFin;
-        this.fechaAsignacion = fechaAsignacion;
-        this.cliente = cliente;
-    }
-
-    public Integer getIdClienteRutina() {
-        return idClienteRutina;
-    }
-
-    public void setIdClienteRutina(Integer idClienteRutina) {
-        this.idClienteRutina = idClienteRutina;
-    }
-
-    public LocalDateTime getFechaFin() {
-        return fechaFin;
-    }
-
-    public void setFechaFin(LocalDateTime fechaFin) {
-        this.fechaFin = fechaFin;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public LocalDateTime getFechaAsignacion() {
-        return fechaAsignacion;
-    }
-
-    public void setFechaAsignacion(LocalDateTime fechaAsignacion) {
-        this.fechaAsignacion = fechaAsignacion;
-    }
 }
 

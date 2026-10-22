@@ -32,19 +32,20 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 //Getters, setters y constructores generados con Lombok para evitar codigo boilerplate
 @Entity
 @Table (name = "clientes")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cliente {
 
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment
     @Column(name = "id_cliente", nullable = false)
     private Integer idCliente;
@@ -134,7 +135,7 @@ public class Cliente {
 
     //mapeada
     @OneToMany(mappedBy = "cliente")
-    @JsonManagedReference("cliente-inscripcionesEvento")
+    @JsonManagedReference("cliente-inscripcionEvento")
     private List<InscripcionEvento> inscripcionesEvento = new ArrayList<>();
 
     //mapeada

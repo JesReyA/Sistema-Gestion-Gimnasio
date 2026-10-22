@@ -3,14 +3,22 @@ package com.gimnasio.api.nutricion;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gimnasio.api.clientes.Cliente;
+import com.gimnasio.api.trabajadores.Nutriologo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Entity
 @Table(name = "planes_alimentacion")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PlanAlimentacion {
 
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "id_plan")
     private Integer idPlan;
@@ -20,7 +28,11 @@ public class PlanAlimentacion {
     @JsonBackReference("cliente-planAlimentacion")
     private Cliente cliente;
 
-    //nutriologo id
+    //mapeada
+    @ManyToOne
+    @JoinColumn(name = "nutriologo_id")
+    @JsonBackReference("nutriologo-planAlimentacion")
+    private Nutriologo nutriologo;
 
     @NotNull
     @Column(name = "tipo_comida")
@@ -41,40 +53,5 @@ public class PlanAlimentacion {
         comida,
         cena,
         colacion
-    }
-
-    public PlanAlimentacion() {
-    }
-
-    public Integer getIdPlan() {
-        return idPlan;
-    }
-
-    public void setIdPlan(Integer idPlan) {
-        this.idPlan = idPlan;
-    }
-
-    public String getRazones() {
-        return razones;
-    }
-
-    public void setRazones(String razones) {
-        this.razones = razones;
-    }
-
-    public String getRecomendacion() {
-        return recomendacion;
-    }
-
-    public void setRecomendacion(String recomendacion) {
-        this.recomendacion = recomendacion;
-    }
-
-    public tipoComida getComida() {
-        return comida;
-    }
-
-    public void setComida(tipoComida comida) {
-        this.comida = comida;
     }
 }

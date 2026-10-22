@@ -1,14 +1,24 @@
 package com.gimnasio.api.accesorios;
 
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gimnasio.api.sucursales.SucursalAccesorio;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "accesorios")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Accesorio {
-
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_accesorio")
     private Integer idAccesorio;
@@ -32,38 +42,12 @@ public class Accesorio {
         prestado
     }
 
-    public Accesorio() {
-    }
+    @OneToMany(mappedBy = "accesorio")
+    @JsonManagedReference("accesorio-accesorioEjercicio")
+    private List<AccesorioEjercicio> accesorioEjercicio = new ArrayList<>();
 
-    public Integer getIdAccesorio() {
-        return idAccesorio;
-    }
+    @OneToMany(mappedBy = "accesorio")
+    @JsonManagedReference("accesorio-sucursalAccesorio")
+    private List<SucursalAccesorio> sucursalAccesorio = new ArrayList<>();
 
-    public void setIdAccesorio(Integer idAccesorio) {
-        this.idAccesorio = idAccesorio;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcionUso() {
-        return descripcionUso;
-    }
-
-    public void setDescripcionUso(String descripcionUso) {
-        this.descripcionUso = descripcionUso;
-    }
-
-    public estadoPrestamo getPrestamo() {
-        return prestamo;
-    }
-
-    public void setPrestamo(estadoPrestamo prestamo) {
-        this.prestamo = prestamo;
-    }
 }

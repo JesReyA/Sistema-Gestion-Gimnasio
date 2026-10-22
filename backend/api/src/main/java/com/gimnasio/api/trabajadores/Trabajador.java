@@ -91,13 +91,20 @@ public class Trabajador {
     @JoinColumn (name="sucursal_id", nullable=false)
     private Sucursal sucursal;
 
+    //mapeada
     @OneToOne (mappedBy = "trabajador")
     @JsonManagedReference("trabajador-cuenta")
     private Cuenta cuenta;
 
-    @OneToOne(mappedBy = "trabajador-entrenador")
-    @JsonManagedReference
+    //mapeada
+    @OneToOne(mappedBy = "trabajador")
+    @JsonManagedReference("trabajador-entrenador")
     private Entrenador entrenador;
+
+    //mapeada
+    @OneToOne(mappedBy = "trabajador")
+    @JsonManagedReference("trabajador-nutriologo")
+    private Nutriologo nutriologo;
 
 
 }

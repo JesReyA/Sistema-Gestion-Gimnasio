@@ -1,10 +1,15 @@
 package com.gimnasio.api.maquinas;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gimnasio.api.rutinas.Ejercicio;
 import com.gimnasio.api.sucursales.Sucursal;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "maquinas")
@@ -26,6 +31,16 @@ public class Maquina {
     @JoinColumn(name = "sucursal_id", nullable = false)
     @JsonBackReference("sucursal-maquina")
     private Sucursal sucursal;
+
+    //mapeada
+    @OneToMany(mappedBy = "maquina")
+    @JsonManagedReference("maquina-ejercicio")
+    private List<Ejercicio> ejercicio = new ArrayList<>();
+
+    //mapeada
+    @OneToMany(mappedBy = "maquina")
+    @JsonManagedReference("maquina-ordenReparacion")
+    private List<OrdenReparacion> ordenReparacion = new ArrayList<>();
 
     @NotNull
     @Column(name = "nombre", length = 100)
@@ -51,7 +66,6 @@ public class Maquina {
     @Column(name = "estado_funcional")
     @Enumerated(EnumType.STRING)
     private estadoFuncional estado = estadoFuncional.disponible;
-
 
     enum estadoFuncional{
         disponible,

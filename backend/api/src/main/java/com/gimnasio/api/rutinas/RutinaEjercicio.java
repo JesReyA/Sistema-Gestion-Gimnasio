@@ -1,22 +1,37 @@
 package com.gimnasio.api.rutinas;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 @Entity
 @Table(name = "rutinas_ejercicio")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class RutinaEjercicio {
-    //rutinaId
+
+    @EmbeddedId
+    @EqualsAndHashCode.Include
+    private RutinaEjercicioId id = new RutinaEjercicioId();
+
+    //mapeada
     @ManyToOne
+    @MapsId("rutina")
     @JoinColumn(name = "rutina_id")
+    @JsonBackReference("rutina-rutinaEjercicio")
     private Rutina rutina;
 
     //ejercicioId
     @ManyToOne
+    @MapsId("ejercicio")
     @JoinColumn(name = "ejercicio_id")
+    @JsonBackReference("ejercicio-rutinaEjercicio")
     private Ejercicio ejercicio;
-
 
     @NotNull
     @Size(min = 1)
@@ -33,30 +48,4 @@ public class RutinaEjercicio {
     @Column(name = "repeticiones")
     private Integer repeticiones;
 
-    public RutinaEjercicio() {
-    }
-
-    public Integer getRepeticiones() {
-        return repeticiones;
-    }
-
-    public void setRepeticiones(Integer repeticiones) {
-        this.repeticiones = repeticiones;
-    }
-
-    public Integer getSeries() {
-        return series;
-    }
-
-    public void setSeries(Integer series) {
-        this.series = series;
-    }
-
-    public Integer getOrden() {
-        return orden;
-    }
-
-    public void setOrden(Integer orden) {
-        this.orden = orden;
-    }
 }
