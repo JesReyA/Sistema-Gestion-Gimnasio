@@ -3,6 +3,16 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import React, {useState} from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {Qr} from "@/components/icons/Qr";
+import {IconoPerfil} from "@/components/icons/IconoPerfil";
+import {IconoCalendario} from "@/components/icons/IconoCalendario";
+import {IconoRutinas} from "@/components/icons/IconoRutinas";
+import {IconoHome} from "@/components/icons/IconoHome";
+import { AnimatePresence } from 'motion/react';
+import AccesoQr from '@/components/AccesoQr';
 
 export default function ClienteLayout({
   children,
@@ -15,28 +25,35 @@ export default function ClienteLayout({
     <div className="min-h-screen bg-[#090a0f] text-white flex justify-center selection:bg-[#ff2a51]/30">
       {/* Contenedor tipo móvil centrado */}
       <div className="w-full max-w-sm flex flex-col min-h-screen pb-24 px-4 pt-4 relative">
+    const [qrOpen, setQrOpen] = useState(false);
+    const pathname = usePathname();
+
+    const activeColor = 'text-[#ff3355]';
+    const inactiveColor = 'text-[#717684] hover:text-white';
+
+  return (
+    <div className="min-h-screen bg-[#090a0f] text-white flex justify-center selection:bg-[#ff2a51]/30">
+      {/* Contenedor */}
+      <div className="w-full max-w-sm flex flex-col min-h-dvh pb-24 px-4 pt-4 relative">
         
         {/* Contenido de cada página */}
         <main className="flex-1 w-full">
           {children}
         </main>
 
-        {/* Barra de navegación inferior fija */}
-        <nav className="fixed bottom-4 left-4 right-4 z-50 bg-[#0d0e12]/95 backdrop-blur-md border border-white/[0.08] rounded-2xl py-2.5 px-6 max-w-sm mx-auto flex justify-around items-center shadow-2xl shadow-black/50">
+        {/* Barra de navegación inferior*/}
+        <nav className="fixed bottom-2 left-0 right-0 z-50 bg-[#0d0e12]/95 backdrop-blur-md border-t border-white/20 py-2 px-6 max-w-sm mx-auto flex justify-around items-center rounded-full">
           
           {/* 1. Inicio */}
           <Link
             href="/"
             className={`flex flex-col items-center gap-1 transition-colors ${
-              pathname === '/' ? 'text-[#ff2a51]' : 'text-[#717684] hover:text-white'
+              pathname === '/' ? activeColor : inactiveColor
             }`}
           >
-            <svg
-              className="w-5 h-5 fill-current"
-              viewBox="0 0 24 24"
-            >
-              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-            </svg>
+            <IconoHome
+                className="w-5 h-5 fill-current"
+            />
             <span className="text-[10px] font-semibold tracking-wide">Inicio</span>
           </Link>
 
