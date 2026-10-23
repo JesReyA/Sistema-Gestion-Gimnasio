@@ -207,9 +207,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
       </aside>
 
-      <div className="min-h-screen lg:pl-72">
-        <header className="border-b border-white/[0.08] bg-[#0d0e12]/95 px-4 py-5 backdrop-blur-md sm:px-6 lg:px-10">
-          <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
+      <div className="flex min-h-screen flex-col lg:pl-72">
+        <header className="border-b border-white/[0.08] bg-[#0d0e12]/95 px-4 py-5 backdrop-blur-md sm:px-6 lg:px-14">
+          <div className="flex w-full min-w-0 items-center justify-between gap-4">
             <div className="min-w-0">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#ff4964]">IRONFIT</p>
               <h1 className="mt-1 truncate text-xl font-bold tracking-tight text-white">Panel administrativo</h1>
@@ -228,7 +228,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-7xl p-4 sm:p-6 lg:p-10">{children}</main>
+        <main className="min-w-0 w-full flex-1">{children}</main>
       </div>
     </div>
   );
