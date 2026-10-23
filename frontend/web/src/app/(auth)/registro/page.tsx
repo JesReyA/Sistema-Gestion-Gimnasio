@@ -6,7 +6,8 @@ import { IconoMancuerna } from '@/components/icons/IconoMancuerna';
 
 type RegistrationValues = {
   nombre: string;
-  apellidos: string;
+  apellidoPaterno: string;
+  apellidoMaterno: string;
   correo: string;
   password: string;
   confirmPassword: string;
@@ -16,7 +17,8 @@ type RegistrationErrors = Partial<Record<keyof RegistrationValues, string>>;
 
 const initialValues: RegistrationValues = {
   nombre: '',
-  apellidos: '',
+  apellidoPaterno: '',
+  apellidoMaterno: '',
   correo: '',
   password: '',
   confirmPassword: '',
@@ -26,7 +28,7 @@ function validate(values: RegistrationValues): RegistrationErrors {
   const errors: RegistrationErrors = {};
 
   if (!values.nombre.trim()) errors.nombre = 'Escribe tu nombre.';
-  if (!values.apellidos.trim()) errors.apellidos = 'Escribe tus apellidos.';
+  if (!values.apellidoPaterno.trim()) errors.apellidoPaterno = 'Escribe tu apellido paterno.';
 
   if (!values.correo.trim()) {
     errors.correo = 'Escribe tu correo electrónico.';
@@ -100,7 +102,7 @@ export default function RegistroPage() {
 
         <form onSubmit={handleSubmit} noValidate className="space-y-5">
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <div className="space-y-2">
+            <div className="space-y-2 sm:col-span-2">
               <label htmlFor="nombre" className="block text-sm font-medium text-gray-300">
                 Nombre
               </label>
@@ -124,24 +126,48 @@ export default function RegistroPage() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="apellidos" className="block text-sm font-medium text-gray-300">
-                Apellidos
+              <label htmlFor="apellidoPaterno" className="block text-sm font-medium text-gray-300">
+                Apellido paterno
               </label>
               <input
-                id="apellidos"
-                name="apellidos"
+                id="apellidoPaterno"
+                name="apellidoPaterno"
                 type="text"
                 autoComplete="family-name"
-                value={values.apellidos}
-                onChange={(event) => handleChange('apellidos', event.target.value)}
+                value={values.apellidoPaterno}
+                onChange={(event) => handleChange('apellidoPaterno', event.target.value)}
                 className={inputClassName}
-                placeholder="Tus apellidos"
-                aria-invalid={Boolean(errors.apellidos)}
-                aria-describedby={fieldError('apellidos')}
+                placeholder="Tu apellido paterno"
+                maxLength={100}
+                aria-invalid={Boolean(errors.apellidoPaterno)}
+                aria-describedby={fieldError('apellidoPaterno')}
               />
-              {errors.apellidos && (
-                <p id="apellidos-error" role="alert" className="text-sm text-rose-400">
-                  {errors.apellidos}
+              {errors.apellidoPaterno && (
+                <p id="apellidoPaterno-error" role="alert" className="text-sm text-rose-400">
+                  {errors.apellidoPaterno}
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="apellidoMaterno" className="block text-sm font-medium text-gray-300">
+                Apellido materno
+              </label>
+              <input
+                id="apellidoMaterno"
+                name="apellidoMaterno"
+                type="text"
+                value={values.apellidoMaterno}
+                onChange={(event) => handleChange('apellidoMaterno', event.target.value)}
+                className={inputClassName}
+                placeholder="Tu apellido materno"
+                maxLength={100}
+                aria-invalid={Boolean(errors.apellidoMaterno)}
+                aria-describedby={fieldError('apellidoMaterno')}
+              />
+              {errors.apellidoMaterno && (
+                <p id="apellidoMaterno-error" role="alert" className="text-sm text-rose-400">
+                  {errors.apellidoMaterno}
                 </p>
               )}
             </div>
