@@ -218,7 +218,7 @@ export default function RoutinesPage() {
 
   return (
     <div className="w-full space-y-4">
-      
+      <div className="pointer-events-none fixed -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[340px] bg-[#ff2a55]/15 blur-[140px] rounded-full -z-0" />
       {/* 1. Header de Frecuencia */}
       <section className="bg-[#14151b] border border-white/5 p-4 rounded-2xl">
         <h1 className="text-base font-bold text-white mb-1">Configura tu Rutina</h1>

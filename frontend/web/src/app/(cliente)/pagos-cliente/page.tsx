@@ -52,6 +52,7 @@ const cardClassName = 'min-w-0 rounded-2xl border border-white/[0.07] bg-[#12131
 export default function PagosClientePage() {
   return (
     <div className="flex w-full min-w-0 flex-col gap-5 py-4 pb-8">
+      <div className="pointer-events-none fixed -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[340px] bg-[#ff2a55]/15 blur-[140px] rounded-full -z-0" />
       <header className="flex min-w-0 flex-col items-start gap-2 border-b border-white/[0.08] pb-4">
         <div className="min-w-0">
           <div className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-gray-400">

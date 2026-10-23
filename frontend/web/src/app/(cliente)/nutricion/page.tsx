@@ -71,6 +71,7 @@ export default function NutricionPage() {
   return (
     <div className="space-y-5 py-3 pb-5">
       <header className="space-y-1">
+        <div className="pointer-events-none fixed -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[340px] bg-[#ff2a55]/15 blur-[140px] rounded-full -z-0" />
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#ff4964]">Mi bienestar</p>
         <div className="flex items-end justify-between gap-2">
           <h1 className="text-2xl font-bold tracking-tight text-white">Nutrición</h1>
