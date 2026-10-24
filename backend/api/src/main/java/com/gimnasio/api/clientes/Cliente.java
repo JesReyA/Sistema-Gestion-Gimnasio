@@ -8,6 +8,11 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gimnasio.api.asistencias.Asistencia;
 import com.gimnasio.api.auth.Cuenta;
+import com.gimnasio.api.clases.InscripcionClase;
+import com.gimnasio.api.eventos.InscripcionEvento;
+import com.gimnasio.api.nutricion.Nutricion;
+import com.gimnasio.api.nutricion.PlanAlimentacion;
+import com.gimnasio.api.rutinas.ClienteRutina;
 import com.gimnasio.api.suscripciones.Suscripcion;
 
 import jakarta.persistence.Column;
@@ -27,210 +32,124 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
-
-@Entity 
+//Getters, setters y constructores generados con Lombok para evitar codigo boilerplate
+@Entity
 @Table (name = "clientes")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cliente {
 
-    public Cliente() {
-    }
+    @Id
+    @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment
+    @Column(name = "id_cliente", nullable = false)
+    private Integer idCliente;
 
-    @Id  
-    @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
-    @Column (name = "id_cliente", nullable = false)
-    private Integer idCliente; 
-
-    @NotNull 
+    @NotNull
     @NotBlank
-    @Column (nullable=false, length = 100)
+    @Column(nullable = false, length = 100)
     private String nombres;
 
-    @NotNull 
+    @NotNull
     @NotBlank
-    @Column (name = "apellido_paterno", nullable=false, length = 100)
+    @Column(name = "apellido_paterno", nullable = false, length = 100)
     private String apellidoPaterno;
 
-    @Column (name = "apellido_materno", nullable=true, length = 100)
+    @Column(name = "apellido_materno", length = 100)
     private String apellidoMaterno;
 
-    @NotNull 
+    @NotNull
     @NotBlank
-    @Size (min = 18, max = 18, message = "CURP debe tener exactamente 18 caracteres")
-    @Column (nullable=false, length = 18, unique = true)
+    @Size(min = 18, max = 18, message = "CURP debe tener exactamente 18 caracteres")
+    @Column(nullable = false, length = 18, unique = true)
     private String curp;
 
-    @NotNull 
+    @NotNull
     @NotBlank
-    @Column (name ="numero_celular", nullable=false, length = 20)
+    @Column(name = "numero_celular", nullable = false, length = 20)
     private String numeroCelular;
 
-    @NotNull 
+    @NotNull
     @NotBlank
-    @Email (message = "El correo electrónico no es válido")
-    @Column (name = "correo_electronico", nullable=false, length = 150, unique = true)
+    @Email(message = "El correo electrónico no es válido")
+    @Column(name = "correo_electronico", nullable = false, length = 150, unique = true)
     private String correoElectronico;
 
-    @NotNull 
-    @Column (nullable=false)
+    @NotNull
+    @Column(nullable = false)
     private LocalDate fechaNacimiento;
 
-    @NotNull 
+    @NotNull
     @NotBlank
-    @Column (name ="codigo_acceso", nullable=false, length = 32, unique = true)
+    @Column(name = "codigo_acceso", nullable = false, length = 32, unique = true)
     private String codigoAcceso;
 
-    @Column (name = "estatura_m")
-    @Digits (integer = 1, fraction = 2, message = "La estatura debe escribirse en metros y con dos decimales")
+    @Column(name = "estatura_m")
+    @Digits(integer = 1, fraction = 2, message = "La estatura debe escribirse en metros y con dos decimales")
     @Positive
-    @DecimalMin (value = "0.50", message = "La estatura debe ser mayor a 0.5 metros")
-    @Max (value = 3, message = "La estatura debe ser menor a 3 metros")
+    @DecimalMin(value = "0.50", message = "La estatura debe ser mayor a 0.5 metros")
+    @Max(value = 3, message = "La estatura debe ser menor a 3 metros")
     private BigDecimal estaturaMetros;
 
-    @Column (name = "peso_objetivo_kg")
-    @Digits (integer = 3, fraction = 2, message = "El peso objetivo debe escribirse en kilogramos y con dos decimales")
+    @Column(name = "peso_objetivo_kg")
+    @Digits(integer = 3, fraction = 2, message = "El peso objetivo debe escribirse en kilogramos y con dos decimales")
     @Positive
-    @Min (value = 1, message = "El peso objetivo debe ser mayor a 1 kg")
-    @Max (value = 800, message = "El peso objetivo debe ser menor a 800 kg")
+    @Min(value = 1, message = "El peso objetivo debe ser mayor a 1 kg")
+    @Max(value = 800, message = "El peso objetivo debe ser menor a 800 kg")
     private BigDecimal pesoObjetivoKg;
 
-    @OneToMany (mappedBy = "cliente")
-    @JsonManagedReference 
+    //mapeada
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-inscripcionesClase")
+    private List<InscripcionClase> inscripcionClases = new ArrayList<>();
+
+    //mapeada
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-planAlimentacion")
+    private List<PlanAlimentacion> planAlimentacion = new ArrayList<>();
+
+    //mapeada
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-clienteInvitado")
     private List<ClienteInvitado> clientesInvitados = new ArrayList<>();
 
-    @OneToOne (mappedBy = "cliente")
-    @JsonManagedReference
+    //mapeada
+    @OneToOne(mappedBy = "cliente")
+    @JsonManagedReference("cliente-cuenta")
     private Cuenta cuenta;
 
-    @OneToMany (mappedBy = "cliente")
-    @JsonManagedReference 
+    //mapeada
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-suscripciones")
     private List<Suscripcion> suscripciones = new ArrayList<>();
 
-    @OneToMany (mappedBy = "cliente")
-    @JsonManagedReference 
+    //mapeada
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-asistencia")
     private List<Asistencia> asistencias = new ArrayList<>();
 
-    public Integer getIdCliente() {
-        return idCliente;
-    }
+    //mapeada
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-inscripcionEvento")
+    private List<InscripcionEvento> inscripcionesEvento = new ArrayList<>();
 
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
-    }
+    //mapeada
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-nutricion")
+    private List<Nutricion> nutricion = new ArrayList<>();
 
-    public String getNombres() {
-        return nombres;
-    }
+    //mapeada
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-clienteRutina")
+    private List<ClienteRutina> clienteRutina = new ArrayList<>();
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
-    }
-
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
-    }
-
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
-    }
-
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
-    }
-
-    public String getCurp() {
-        return curp;
-    }
-
-    public void setCurp(String curp) {
-        this.curp = curp;
-    }
-
-    public String getNumeroCelular() {
-        return numeroCelular;
-    }
-
-    public void setNumeroCelular(String numeroCelular) {
-        this.numeroCelular = numeroCelular;
-    }
-
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public String getCodigoAcceso() {
-        return codigoAcceso;
-    }
-
-    public void setCodigoAcceso(String codigoAcceso) {
-        this.codigoAcceso = codigoAcceso;
-    }
-
-    public BigDecimal getEstaturaMetros() {
-        return estaturaMetros;
-    }
-
-    public void setEstaturaMetros(BigDecimal estaturaMetros) {
-        this.estaturaMetros = estaturaMetros;
-    }
-
-    public BigDecimal getPesoObjetivoKg() {
-        return pesoObjetivoKg;
-    }
-
-    public void setPesoObjetivoKg(BigDecimal pesoObjetivoKg) {
-        this.pesoObjetivoKg = pesoObjetivoKg;
-    }
-
-    public List<ClienteInvitado> getClientesInvitados() {
-        return clientesInvitados;
-    }
-
-    public void setClientesInvitados(List<ClienteInvitado> clientesInvitados) {
-        this.clientesInvitados = clientesInvitados;
-    }
-
-    public Cuenta getCuenta() {
-        return cuenta;
-    }
-
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
-    }
-
-    public List<Suscripcion> getSuscripciones() {
-        return suscripciones;
-    }
-
-    public void setSuscripciones(List<Suscripcion> suscripciones) {
-        this.suscripciones = suscripciones;
-    }
-
-    public List<Asistencia> getAsistencias() {
-        return asistencias;
-    }
-
-    public void setAsistencias(List<Asistencia> asistencias) {
-        this.asistencias = asistencias;
-    }
-
-    
-
-    
+    //mapeada
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference("cliente-medicionPeso")
+    private List<MedicionPeso> medicionPeso = new ArrayList<>();
 }
