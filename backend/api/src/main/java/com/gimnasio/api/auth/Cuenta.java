@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gimnasio.api.bitacora.Bitacora;
 import com.gimnasio.api.clientes.Cliente;
+import com.gimnasio.api.common.enums.EstadoCuenta;
 import com.gimnasio.api.trabajadores.Trabajador;
 
 import jakarta.persistence.*;
@@ -67,5 +68,5 @@ public class Cuenta {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column (name = "estado", nullable=false)
-    private estadoCuenta estado = estadoCuenta.pendiente;
+    private EstadoCuenta estado = EstadoCuenta.pendiente;
 }
