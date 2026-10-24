@@ -1,4 +1,4 @@
-package com.gimnasio.api.suscripciones;
+package com.gimnasio.api.suscripciones.persistance;
 
 import java.util.ArrayList;
 import java.util.List;

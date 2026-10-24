@@ -13,7 +13,7 @@ import com.gimnasio.api.eventos.InscripcionEvento;
 import com.gimnasio.api.nutricion.Nutricion;
 import com.gimnasio.api.nutricion.PlanAlimentacion;
 import com.gimnasio.api.rutinas.ClienteRutina;
-import com.gimnasio.api.suscripciones.Suscripcion;
+import com.gimnasio.api.suscripciones.persistance.Suscripcion;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

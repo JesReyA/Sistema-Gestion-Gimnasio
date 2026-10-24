@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.gimnasio.api.suscripciones.Suscripcion;
+import com.gimnasio.api.suscripciones.persistance.Suscripcion;
 
 
 @Entity 
