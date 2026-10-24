@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gimnasio.api.clientes.Cliente;
 
+import com.gimnasio.api.common.enums.EstadoSuscripcion;
 import com.gimnasio.api.pagos.Pago;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -57,15 +58,15 @@ public class Suscripcion {
     @Column (name="fecha_fin", nullable=false)
     private LocalDate fechaFin;
 
-    public enum estadoSuscripcion{
+    /*public enum estadoSuscripcion{
         activa, 
         vencida,
         cancelada
-    }
+    }*/
 
     @NotNull 
     @Column (nullable=false)
     @Enumerated(EnumType.STRING)
-    private estadoSuscripcion estado = estadoSuscripcion.activa;
+    private EstadoSuscripcion estado = EstadoSuscripcion.activa;
 
 }
