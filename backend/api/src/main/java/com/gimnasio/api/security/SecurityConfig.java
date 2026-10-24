@@ -41,6 +41,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         // 2. Replace AntPathRequestMatcher with plain strings (fixes the 2 red errors)
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/users/register", "/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/users/profile").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/posts/mine").hasRole("USER")

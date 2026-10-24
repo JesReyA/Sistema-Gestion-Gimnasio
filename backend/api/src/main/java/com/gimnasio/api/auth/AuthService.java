@@ -6,6 +6,7 @@ import com.gimnasio.api.security.CuentaUserDetails;
 import com.gimnasio.api.security.JwtService;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -56,6 +57,11 @@ public class AuthService {
         cliente.setApellidoPaterno(input.apellidoPaterno());
         cliente.setApellidoMaterno(input.apellidoMaterno());
         cliente.setCorreoElectronico(input.email());
+
+        //generando codigo de acceso con UUID
+        String uuidConGuiones = UUID.randomUUID().toString();
+        String codigoAcceso = uuidConGuiones.replace("-","");
+        cliente.setCodigoAcceso(codigoAcceso);
 
         // Guarda el cliente
         clienteRepository.save(cliente);
