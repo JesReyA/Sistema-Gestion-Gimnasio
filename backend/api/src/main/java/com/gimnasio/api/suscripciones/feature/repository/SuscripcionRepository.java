@@ -1,4 +1,4 @@
-package com.gimnasio.api.suscripciones.feature;
+package com.gimnasio.api.suscripciones.feature.repository;
 
 import com.gimnasio.api.suscripciones.persistance.Suscripcion;
 import org.springframework.data.jpa.repository.JpaRepository;
