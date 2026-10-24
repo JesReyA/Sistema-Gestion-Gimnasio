@@ -26,16 +26,20 @@ import jakarta.validation.constraints.Positive;
 
 import com.gimnasio.api.common.enums.RolTrabajador;
 import com.gimnasio.api.common.enums.TurnoTrabajador;
+import lombok.*;
 
 
 @Entity
 @Table(name = "trabajadores")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Trabajador {
 
-    public Trabajador() {
-    }
-
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue (strategy = GenerationType.IDENTITY)  // Auto-increment
     @Column (name = "id_trabajador", nullable=false)
     private Integer idTrabajador;
@@ -79,101 +83,28 @@ public class Trabajador {
     private LocalDate fechaNacimiento;
 
     // las relaciones Uno a muchos del lado del no dependiente deben tener OneToMany y mappedBy, y del lado dependiente ManyToOne y JoinColumn
-    @NotNull 
+
+    //mapeada
+    @NotNull
     @ManyToOne 
-    @JsonBackReference
+    @JsonBackReference("sucursal-trabajador")
     @JoinColumn (name="sucursal_id", nullable=false)
     private Sucursal sucursal;
 
+    //mapeada
     @OneToOne (mappedBy = "trabajador")
-    @JsonManagedReference
+    @JsonManagedReference("trabajador-cuenta")
     private Cuenta cuenta;
 
-    public Integer getIdTrabajador() {
-        return idTrabajador;
-    }
+    //mapeada
+    @OneToOne(mappedBy = "trabajador")
+    @JsonManagedReference("trabajador-entrenador")
+    private Entrenador entrenador;
 
-    public void setIdTrabajador(Integer idTrabajador) {
-        this.idTrabajador = idTrabajador;
-    }
+    //mapeada
+    @OneToOne(mappedBy = "trabajador")
+    @JsonManagedReference("trabajador-nutriologo")
+    private Nutriologo nutriologo;
 
-    public String getNombres() {
-        return nombres;
-    }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
-    }
-
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
-    }
-
-    public String getRfc() {
-        return rfc;
-    }
-
-    public void setRfc(String rfc) {
-        this.rfc = rfc;
-    }
-
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
-    }
-
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
-    }
-
-    public TurnoTrabajador getTurno() {
-        return turno;
-    }
-
-    public void setTurno(TurnoTrabajador turno) {
-        this.turno = turno;
-    }
-
-    public RolTrabajador getRol() {
-        return rol;
-    }
-
-    public void setRol(RolTrabajador rol) {
-        this.rol = rol;
-    }
-
-    public BigDecimal getSueldo() {
-        return sueldo;
-    }
-
-    public void setSueldo(BigDecimal sueldo) {
-        this.sueldo = sueldo;
-    }
-
-    public Sucursal getSucursal() {
-        return sucursal;
-    }
-
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
-    }
-
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public Cuenta getCuenta() {
-        return cuenta;
-    }
-
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
-    }
 }

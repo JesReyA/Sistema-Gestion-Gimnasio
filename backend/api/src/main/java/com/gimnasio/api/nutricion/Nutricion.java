@@ -1,11 +1,14 @@
 package com.gimnasio.api.nutricion;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.gimnasio.api.clientes.Cliente;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "nutricion")
@@ -16,13 +19,19 @@ public class Nutricion {
     @Column(name = "id_nutricion")
     private Integer idNutricion;
 
-    //cliente id
+    //mapeada
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    @JsonBackReference ("cliente-nutricion")
+    private Cliente cliente;
+
     @NotNull
     @Column(name = "fecha")
     private LocalDate fecha;
 
     @NotNull
     @Column(name = "tipo_comida")
+    @Enumerated(EnumType.STRING)
     private tipoComida comida;
 
     @NotNull

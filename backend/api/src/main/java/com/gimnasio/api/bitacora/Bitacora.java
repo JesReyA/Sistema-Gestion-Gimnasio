@@ -1,26 +1,41 @@
 package com.gimnasio.api.bitacora;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.gimnasio.api.auth.Cuenta;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Entity
 @Table(name = "bitacora")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Bitacora {
 
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "id_bitacora")
-    private BigInteger idBitacora;
+    @Column(name = "id_bitacora", columnDefinition = "BIGINT UNSIGNED")
+    private Long idBitacora;
+
+    @ManyToOne
+    @JsonBackReference("cuenta-bitacora")
+    @JoinColumn(name = "cuenta_id", nullable = false)
+    private Cuenta cuenta;
 
     @NotNull
     @Column(name = "fecha")
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -31,7 +46,6 @@ public class Bitacora {
     @Column(name = "entidad", length = 50)
     private String entidad;
 
-
     @NotNull
     @Column(name = "entidad_id")
     private Integer entidadId;
@@ -40,8 +54,6 @@ public class Bitacora {
     @Column(columnDefinition = "json")
     private Map<String, Object> detalle;
 
-
-    //cuenta id
     private enum accionBitacora{
         codigo_regenerado,
         rol_cambiado,
@@ -54,54 +66,4 @@ public class Bitacora {
         evento_eliminado
     }
 
-    public Bitacora() {
-    }
-
-    public BigInteger getIdBitacora() {
-        return idBitacora;
-    }
-
-    public void setIdBitacora(BigInteger idBitacora) {
-        this.idBitacora = idBitacora;
-    }
-
-    public Map<String, Object> getDetalle() {
-        return detalle;
-    }
-
-    public void setDetalle(Map<String, Object> detalle) {
-        this.detalle = detalle;
-    }
-
-    public Integer getEntidadId() {
-        return entidadId;
-    }
-
-    public void setEntidadId(Integer entidadId) {
-        this.entidadId = entidadId;
-    }
-
-    public String getEntidad() {
-        return entidad;
-    }
-
-    public void setEntidad(String entidad) {
-        this.entidad = entidad;
-    }
-
-    public accionBitacora getAccion() {
-        return accion;
-    }
-
-    public void setAccion(accionBitacora accion) {
-        this.accion = accion;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
 }

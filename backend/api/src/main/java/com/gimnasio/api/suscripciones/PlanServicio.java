@@ -2,59 +2,34 @@ package com.gimnasio.api.suscripciones;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity 
 @Table (name="planes_servicios")
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PlanServicio {
-    public PlanServicio(){
-    }
 
-    @EmbeddedId 
-    private PlanServicioId idPlanServicio = new PlanServicioId();
+    @EqualsAndHashCode.Include
+    @EmbeddedId
+    private PlanServicioId id = new PlanServicioId();
 
+    //mapeada
     @ManyToOne 
-    @JsonBackReference 
+    @JsonBackReference("planSuscripcion-planServicio")
+    @MapsId("planSuscripcion")
     @JoinColumn (name="plan_id")
-    @MapsId ("planId")
     private PlanSuscripcion planSuscripcion;
 
+    //mapeada
     @ManyToOne
-    @JsonBackReference 
+    @JsonBackReference("servicio-planServicio")
+    @MapsId("servicio")
     @JoinColumn (name="servicio_id")
-    @MapsId ("servicioId")
     private Servicio servicio;
 
-    //Falta indexar ambos FK como un sólo PK
-
-    public PlanSuscripcion getPlanSuscripcion() {
-        return planSuscripcion;
-    }
-
-    public void setPlanSuscripcion(PlanSuscripcion planSuscripcion) {
-        this.planSuscripcion = planSuscripcion;
-    }
-
-    public Servicio getServicio() {
-        return servicio;
-    }
-
-    public void setServicio(Servicio servicio) {
-        this.servicio = servicio;
-    }
-
-    public PlanServicioId getIdPlanServicio() {
-        return idPlanServicio;
-    }
-
-    public void setIdPlanServicio(PlanServicioId idPlanServicio) {
-        this.idPlanServicio = idPlanServicio;
-    }
-
-    
 }
