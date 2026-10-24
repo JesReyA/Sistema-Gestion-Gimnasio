@@ -11,5 +11,5 @@ Thumbs.db
 .env
 .env.local
 
-#Modelo relacional de base de datos
+#ignorar .sql
 *.sql
