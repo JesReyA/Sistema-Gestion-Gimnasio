@@ -1,18 +1,46 @@
 package com.gimnasio.api.maquinas;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gimnasio.api.rutinas.Ejercicio;
+import com.gimnasio.api.sucursales.Sucursal;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "maquinas")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Maquina {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_maquina")
     private Integer idMaquina;
 
     //sucursal id
+    @ManyToOne
+    @JoinColumn(name = "sucursal_id", nullable = false)
+    @JsonBackReference("sucursal-maquina")
+    private Sucursal sucursal;
+
+    //mapeada
+    @OneToMany(mappedBy = "maquina")
+    @JsonManagedReference("maquina-ejercicio")
+    private List<Ejercicio> ejercicio = new ArrayList<>();
+
+    //mapeada
+    @OneToMany(mappedBy = "maquina")
+    @JsonManagedReference("maquina-ordenReparacion")
+    private List<OrdenReparacion> ordenReparacion = new ArrayList<>();
 
     @NotNull
     @Column(name = "nombre", length = 100)
@@ -39,69 +67,9 @@ public class Maquina {
     @Enumerated(EnumType.STRING)
     private estadoFuncional estado = estadoFuncional.disponible;
 
-
     enum estadoFuncional{
         disponible,
         en_reparacion,
         fuera_de_servicio
-    }
-
-    public Maquina() {
-    }
-
-    public Integer getIdMaquina() {
-        return idMaquina;
-    }
-
-    public void setIdMaquina(Integer idMaquina) {
-        this.idMaquina = idMaquina;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getGrupoMuscular() {
-        return grupoMuscular;
-    }
-
-    public void setGrupoMuscular(String grupoMuscular) {
-        this.grupoMuscular = grupoMuscular;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public estadoFuncional getEstado() {
-        return estado;
-    }
-
-    public void setEstado(estadoFuncional estado) {
-        this.estado = estado;
-    }
-
-    public String getNumeroSerie() {
-        return numeroSerie;
-    }
-
-    public void setNumeroSerie(String numeroSerie) {
-        this.numeroSerie = numeroSerie;
     }
 }

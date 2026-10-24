@@ -1,67 +1,50 @@
 package com.gimnasio.api.eventos;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "eventos")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Evento {
+
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_evento", nullable = false)
-    Integer idEvento;
+    private Integer idEvento;
 
     @NotNull
     @Column(name = "nombre_evento", length = 150)
-    String nombreEvento;
+    private String nombreEvento;
 
     @NotNull
     @Column(name = "duracion_minutos")
     @Size(min = 1)
-    Integer duracionMinutos;
-
+    private Integer duracionMinutos;
+    
     @NotNull
     @Column(name = "fecha_evento")
-    LocalDate fechaEvento;
+    private LocalDateTime fechaEvento;
 
     @OneToMany(mappedBy = "evento")
+    @JsonManagedReference("evento-inscripcionEvento")
     private List<InscripcionEvento> inscripcionesEventos;
 
     @OneToMany(mappedBy = "evento")
+    @JsonManagedReference("evento-salonEvento")
     private List<SalonEvento> salonesEventos;
 
-    public Integer getIdEvento() {
-        return idEvento;
-    }
 
-    public void setIdEvento(Integer idEvento) {
-        this.idEvento = idEvento;
-    }
-
-    public String getNombreEvento() {
-        return nombreEvento;
-    }
-
-    public void setNombreEvento(String nombreEvento) {
-        this.nombreEvento = nombreEvento;
-    }
-
-    public Integer getDuracionMinutos() {
-        return duracionMinutos;
-    }
-
-    public void setDuracionMinutos(Integer duracionMinutos) {
-        this.duracionMinutos = duracionMinutos;
-    }
-
-    public LocalDate getFechaEvento() {
-        return fechaEvento;
-    }
-
-    public void setFechaEvento(LocalDate fechaEvento) {
-        this.fechaEvento = fechaEvento;
-    }
 }

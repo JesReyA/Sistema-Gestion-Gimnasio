@@ -1,42 +1,50 @@
 package com.gimnasio.api.auth;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gimnasio.api.bitacora.Bitacora;
 import com.gimnasio.api.clientes.Cliente;
-import com.gimnasio.api.trabajadores.Trabajador;
 import com.gimnasio.api.common.enums.EstadoCuenta;
+import com.gimnasio.api.trabajadores.Trabajador;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
 @Table(name = "cuentas")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cuenta {
-
-    public Cuenta() {
-    }
     
-    @Id 
+    @Id
+    @EqualsAndHashCode.Include
     @Column(name = "id_cuenta", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment
     private Integer idCuenta;
 
+    @JsonManagedReference("cuenta-bitacora")
+    @OneToMany(mappedBy = "cuenta")
+    private List<Bitacora> bitacora = new ArrayList<>();
+
+    //mapeada
     @OneToOne 
     @JoinColumn (name ="cliente_id", nullable = true)
-    @JsonBackReference 
+    @JsonBackReference("cliente-cuenta")
     private Cliente cliente;
 
+    //mapeada
     @OneToOne 
-    @JoinColumn (name ="trabajador_id", nullable = true)
-    @JsonBackReference 
+    @JoinColumn (name ="trabajador_id", unique = true)
+    @JsonBackReference("trabajador-cuenta")
     private Trabajador trabajador;
 
     @NotNull 
@@ -49,58 +57,16 @@ public class Cuenta {
     @Column (name="contrasena_hash", nullable=false, length = 255)
     private String contrasena;
 
+
+    public enum estadoCuenta{
+        activa, 
+        inactiva, 
+        suspendida,
+        pendiente
+    }
+
     @NotNull
-    @Column (nullable=false)
+    @Enumerated(EnumType.STRING)
+    @Column (name = "estado", nullable=false)
     private EstadoCuenta estado = EstadoCuenta.pendiente;
-
-    public Integer getIdCuenta() {
-        return idCuenta;
-    }
-
-    public void setIdCuenta(Integer idCuenta) {
-        this.idCuenta = idCuenta;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Trabajador getTrabajador() {
-        return trabajador;
-    }
-
-    public void setTrabajador(Trabajador trabajador) {
-        this.trabajador = trabajador;
-    }
-
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
-    public EstadoCuenta getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoCuenta estado) {
-        this.estado = estado;
-    }
-
-    
-
 }

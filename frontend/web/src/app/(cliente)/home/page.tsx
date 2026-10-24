@@ -277,7 +277,7 @@ export default function PaginaInicioCliente() {
 
   return (
     <div className="w-full flex flex-col gap-5">
-      
+      <div className="pointer-events-none fixed -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[340px] bg-[#ff2a55]/15 blur-[140px] rounded-full -z-0" />
       {/* 1. CABECERA Y FOTO DE PERFIL */}
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-3">

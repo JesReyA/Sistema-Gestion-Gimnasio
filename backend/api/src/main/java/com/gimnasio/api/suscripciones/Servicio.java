@@ -16,15 +16,18 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 @Entity 
 @Table (name="servicios")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Servicio {
 
-    public Servicio(){
-
-    }
-
+    @EqualsAndHashCode.Include
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column (name="id_servicio", nullable=false)
@@ -37,43 +40,11 @@ public class Servicio {
     private String nombre;
 
     @Lob 
-    @Column (columnDefinition="TEXT")
+    @Column (columnDefinition="text")
     private String descripcion;
 
     @OneToMany (mappedBy="servicio")
-    @JsonManagedReference 
+    @JsonManagedReference ("servicio-planServicio")
     private List<PlanServicio> planesServicios = new ArrayList<>();
-
-    public Integer getIdServicio() {
-        return idServicio;
-    }
-
-    public void setIdServicio(Integer idServicio) {
-        this.idServicio = idServicio;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public List<PlanServicio> getPlanesServicios() {
-        return planesServicios;
-    }
-
-    public void setPlanesServicios(List<PlanServicio> planesServicios) {
-        this.planesServicios = planesServicios;
-    }
 
 }
