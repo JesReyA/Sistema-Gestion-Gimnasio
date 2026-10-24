@@ -1,14 +1,23 @@
 package com.gimnasio.api.rutinas;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="rutinas")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Rutina {
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rutina")
     private Integer idRutina;
@@ -25,42 +34,15 @@ public class Rutina {
     @NotNull
     private String nivel;
 
+    //mapeada
     @OneToMany(mappedBy = "rutina")
-    @NotNull
-    private List<RutinaEjercicio> rutinaEjercicio;
+    @JsonManagedReference("rutina-clienteRutina")
+    private List<ClienteRutina> clienteRutina = new ArrayList<>();
 
-    public Rutina() {
-    }
+    //mapeada
+    @OneToMany(mappedBy = "rutina")
+    @JsonManagedReference("rutina-rutinaEjercicio")
+    private List<RutinaEjercicio> rutinaEjercicio = new ArrayList<>();
 
-    public Integer getIdRutina() {
-        return idRutina;
-    }
 
-    public void setIdRutina(Integer idRutina) {
-        this.idRutina = idRutina;
-    }
-
-    public String getNivel() {
-        return nivel;
-    }
-
-    public void setNivel(String nivel) {
-        this.nivel = nivel;
-    }
-
-    public String getObjetivo() {
-        return objetivo;
-    }
-
-    public void setObjetivo(String objetivo) {
-        this.objetivo = objetivo;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 }

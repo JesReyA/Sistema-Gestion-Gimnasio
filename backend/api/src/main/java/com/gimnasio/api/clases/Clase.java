@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import com.gimnasio.api.trabajadores.EntrenadorClase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,15 +17,19 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 @Entity 
-@Table (name="clase")
+@Table (name="clases")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Clase {
-    public Clase (){
 
-    }
-
-    @Id 
+    @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue (strategy= GenerationType.IDENTITY)
     @Column (name="id_clase", nullable=false)
     private Integer idClase;
@@ -47,49 +52,11 @@ public class Clase {
     private Integer aforo;
 
     @OneToMany (mappedBy = "clase")
-    @JsonManagedReference 
+    @JsonManagedReference("clase-sesionClase")
     private List<SesionClase> sesionesClase = new ArrayList<>();
 
-    public Integer getIdClase() {
-        return idClase;
-    }
+    @OneToMany (mappedBy = "clase")
+    @JsonManagedReference("clase-entrenadorClase")
+    private List<EntrenadorClase> entrenadorClase = new ArrayList<>();
 
-    public void setIdClase(Integer idClase) {
-        this.idClase = idClase;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getTematica() {
-        return tematica;
-    }
-
-    public void setTematica(String tematica) {
-        this.tematica = tematica;
-    }
-
-    public Integer getAforo() {
-        return aforo;
-    }
-
-    public void setAforo(Integer aforo) {
-        this.aforo = aforo;
-    }
-
-    public List<SesionClase> getSesionesClase() {
-        return sesionesClase;
-    }
-
-    public void setSesionesClase(List<SesionClase> sesionesClase) {
-        this.sesionesClase = sesionesClase;
-    }
-
-    
-    
 }
