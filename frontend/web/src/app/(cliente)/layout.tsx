@@ -24,7 +24,7 @@ export default function ClienteLayout({
 
   return (
     <div className="min-h-screen bg-[#090a0f] text-white flex justify-center selection:bg-[#ff2a51]/30">
-      {/* Contenedor */}
+      {/* Contenedor tipo móvil centrado */}
       <div className="w-full max-w-sm flex flex-col min-h-dvh pb-24 px-4 pt-4 relative">
         
         {/* Contenido de cada página */}
@@ -32,7 +32,12 @@ export default function ClienteLayout({
           {children}
         </main>
 
-        {/* Barra de navegación inferior*/}
+        {/* Modal / Vista flotante del QR */}
+        <AnimatePresence>
+          {qrOpen && <AccesoQr onClose={() => setQrOpen(false)} />}
+        </AnimatePresence>
+
+        {/* Barra de navegación inferior */}
         <nav className="fixed bottom-2 left-0 right-0 z-50 bg-[#0d0e12]/95 backdrop-blur-md border-t border-white/20 py-2 px-6 max-w-sm mx-auto flex justify-around items-center rounded-full">
           
           {/* 1. Inicio */}
@@ -42,13 +47,11 @@ export default function ClienteLayout({
               pathname === '/home' ? activeColor : inactiveColor
             }`}
           >
-            <IconoHome
-                className="w-5 h-5 fill-current"
-            />
+            <IconoHome className="w-5 h-5 fill-current" />
             <span className="text-[10px] font-semibold tracking-wide">Inicio</span>
           </Link>
 
-          {/* 2. Rutinas (Mancuerna*/}
+          {/* 2. Rutinas */}
           <Link
             href="/rutinas"
             className={`flex flex-col items-center gap-1 transition-colors ${
