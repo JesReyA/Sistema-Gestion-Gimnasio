@@ -1,3 +1,4 @@
+//lol no estába el page en la rama main
 'use client';
 
 import React from 'react';
