@@ -1,57 +1,61 @@
 package com.gimnasio.api.asistencias;
 
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gimnasio.api.clientes.Cliente;
 import com.gimnasio.api.clientes.Invitado;
 import com.gimnasio.api.sucursales.Sucursal;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.gimnasio.api.trabajadores.Trabajador;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-
+import lombok.*;
 
 @Entity 
 @Table (name="asistencias")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Asistencia {
 
-    public Asistencia (){
-    }
-
+    @EqualsAndHashCode.Include
     @Id 
     @Column(name="id_asistencia", nullable=false)
     @GeneratedValue (strategy= GenerationType.IDENTITY)
     private Integer idAsistencia;
-    
+
+
+    //@OneToMany(mappedBy = "")
+    //private List<Trabajador> trabajador = new ArrayList<>();
 
     @NotNull 
     @ManyToOne
     @JoinColumn (name="sucursal_id")
-    @JsonBackReference 
+    @JsonBackReference ("sucursal-asistencia")
     private Sucursal sucursal;
 
+    //mapeado
     @NotNull 
     @ManyToOne
     @JoinColumn (name="cliente_id")
-    @JsonBackReference 
+    @JsonBackReference("cliente-asistencia")
     private Cliente cliente;
 
+    //mapeado
     @NotNull 
     @ManyToOne
     @JoinColumn (name="invitado_id")
-    @JsonBackReference 
+    @JsonBackReference("invitado-asistencia")
     private Invitado invitado;
-
 
     @NotNull 
     @Column (nullable=false)
@@ -65,64 +69,4 @@ public class Asistencia {
     @Column (name="codigo_entrada", length=32)
     private String codigoEntrada;
 
-    
-    public Integer getIdAsistencia() {
-        return idAsistencia;
-    }
-
-    public void setIdAsistencia(Integer idAsistencia) {
-        this.idAsistencia = idAsistencia;
-    }
-
-    public Sucursal getSucursal() {
-        return sucursal;
-    }
-
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Invitado getInvitado() {
-        return invitado;
-    }
-
-    public void setInvitado(Invitado invitado) {
-        this.invitado = invitado;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-
-    public LocalTime getHoraEntrada() {
-        return horaEntrada;
-    }
-
-    public void setHoraEntrada(LocalTime horaEntrada) {
-        this.horaEntrada = horaEntrada;
-    }
-
-    public String getCodigoEntrada() {
-        return codigoEntrada;
-    }
-
-    public void setCodigoEntrada(String codigoEntrada) {
-        this.codigoEntrada = codigoEntrada;
-    }
-
-    
-    
-    
 }

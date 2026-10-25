@@ -181,7 +181,7 @@ export default function Perfil() {
             </Link>
           </div>
           <div className=" relative w-full h-1/4 flex-none items-center gap-3 justify-center text-2xl border-b border-white/5 text-left">
-            <Link href="/" className="w-full h-full flex items-center gap-3 px-3 rounded-t-2xl">
+            <Link href="/pagos-cliente" className="w-full h-full flex items-center gap-3 px-3 rounded-t-2xl">
               <div className="w-9 h-9 rounded-xl bg-[#1b1e2d] border border-white/4 flex items-center justify-center text-2xl shadow-lg">
                 <IconoTarjetaCredito
                   className='w-5 h-5 text-[#ff3355]'

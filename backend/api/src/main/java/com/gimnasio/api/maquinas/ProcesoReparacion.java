@@ -1,14 +1,32 @@
 package com.gimnasio.api.maquinas;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Entity
 @Table(name = "procesos_reparacion")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ProcesoReparacion {
 
     //orden_reparacion id
+
+    @Id
+    @EqualsAndHashCode.Include
+    @Column(name ="orden_reparacion_id")
+    private Integer ordenReparacionId;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "orden_reparacion_id")
+    @JsonBackReference("ordenReparacion-procesoReparacion")
+    private OrdenReparacion ordenReparacion;
 
     @NotNull
     @Column(name = "folio_reparacion", unique = true, length = 50)
@@ -32,30 +50,5 @@ public class ProcesoReparacion {
 
     }
 
-    public ProcesoReparacion() {
-    }
 
-    public String getFolioReparacion() {
-        return folioReparacion;
-    }
-
-    public void setFolioReparacion(String folioReparacion) {
-        this.folioReparacion = folioReparacion;
-    }
-
-    public estadoReparacion getEstadoRep() {
-        return estadoRep;
-    }
-
-    public void setEstadoRep(estadoReparacion estadoRep) {
-        this.estadoRep = estadoRep;
-    }
-
-    public String getTipoReparacion() {
-        return tipoReparacion;
-    }
-
-    public void setTipoReparacion(String tipoReparacion) {
-        this.tipoReparacion = tipoReparacion;
-    }
 }

@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Qr } from "@/components/icons/Qr";
-import { IconoPerfil } from "@/components/icons/IconoPerfil";
-import { IconoCalendario } from "@/components/icons/IconoCalendario";
-import { IconoRutinas } from "@/components/icons/IconoRutinas";
-import { IconoHome } from "@/components/icons/IconoHome";
+import {Qr} from "@/components/icons/Qr";
+import {IconoPerfil} from "@/components/icons/IconoPerfil";
+import {IconoCalorias} from "@/components/icons/IconoCalorias";
+import {IconoRutinas} from "@/components/icons/IconoRutinas";
+import {IconoHome} from "@/components/icons/IconoHome";
 import { AnimatePresence } from 'motion/react';
 import AccesoQr from '@/components/AccesoQr';
 
@@ -16,11 +16,11 @@ export default function ClienteLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [qrOpen, setQrOpen] = useState(false);
-  const pathname = usePathname();
+    const [qrOpen, setQrOpen] = useState(false);
+    const pathname = usePathname();
 
-  const activeColor = 'text-[#ff3355]';
-  const inactiveColor = 'text-[#717684] hover:text-white';
+    const activeColor = 'text-[#ff3355]';
+    const inactiveColor = 'text-[#717684] hover:text-white';
 
   return (
     <div className="min-h-screen bg-[#090a0f] text-white flex justify-center selection:bg-[#ff2a51]/30">
@@ -58,28 +58,24 @@ export default function ClienteLayout({
               pathname === '/rutinas' ? activeColor : inactiveColor
             }`}
           >
-            <IconoRutinas className="w-5 h-5 fill-current" />
+            <IconoRutinas
+                className="w-5 h-5 fill-current"
+            />
+
             <span className="text-[10px] font-semibold tracking-wide">Rutinas</span>
           </Link>
 
-          {/* Botón Central Flotante: QR */}
-          <button
-            type="button"
-            onClick={() => setQrOpen(!qrOpen)}
-            className="flex flex-col items-center justify-center -mt-6 bg-gradient-to-tr from-[#ff2a51] to-[#ff6b4a] text-white p-3.5 rounded-full shadow-lg shadow-[#ff2a51]/30 active:scale-95 transition"
-          >
-            <Qr className="w-6 h-6 fill-current" />
-          </button>
-
-          {/* 3. Clases / Calendario */}
+          {/* 3. Nutrición */}
           <Link
-            href="/clases"
+            href="/nutricion"
             className={`flex flex-col items-center gap-1 transition-colors ${
-              pathname === '/clases' ? activeColor : inactiveColor
+              pathname === '/nutricion' ? activeColor : inactiveColor
             }`}
           >
-            <IconoCalendario className="w-5 h-5 fill-current" />
-            <span className="text-[10px] font-semibold tracking-wide">Clases</span>
+            <IconoCalorias
+                className="w-5 h-5 fill-current"
+            />
+            <span className="text-[10px] font-semibold tracking-wide">Nutrición</span>
           </Link>
 
           {/* 4. Perfil */}
@@ -89,11 +85,32 @@ export default function ClienteLayout({
               pathname === '/perfil' ? activeColor : inactiveColor
             }`}
           >
-            <IconoPerfil className="w-5 h-5" />
+            <IconoPerfil
+                className='w-5 h-5'
+            />
             <span className="text-[10px] font-semibold tracking-wide">Perfil</span>
           </Link>
 
+          {/* Botón Qr */}
+          <div className='absolute bottom-19 right-6 sm:right-9 w-13 h-13 bg-[#0d0e12]/95 backdrop-blur-md border-t border-white/20 rounded-xl'>
+            <button onClick={() => setQrOpen(true)} className='absolute  inset-0 w-full h-full p-1 rounded-xl shadow-[0_0_20px_rgba(255,51,85,0.6)] transition-all'>
+              <Qr 
+                className={`w-full h-full ${activeColor}`}
+              />
+            </button>
+          </div>
         </nav>
+        
+        {/* Animación qr para cerrarse */}
+        <AnimatePresence>
+          {qrOpen && (
+          <AccesoQr
+            key="acceso-qr"
+            onClose={() => setQrOpen(false)}
+          />
+          )}
+        </AnimatePresence>
+        
       </div>
     </div>
   );
