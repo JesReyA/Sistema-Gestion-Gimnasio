@@ -1,14 +1,39 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { IconoMancuerna } from '@/components/icons/IconoMancuerna';
+
+// Api login
+import { useActionState } from 'react';
+import { loginAction } from './actions';
+import { SearchParams } from 'next/dist/server/request/search-params';
+import { useSearchParams } from 'next/navigation';
 
 export default function LoginPage() {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+
+  // state es lo ultimo que devolvio la accion, formAction es la version de la accion en el formulario y pending true significa mientras se envia
+  const[state, formAction, pending] = useActionState(loginAction, null)
+
+
+  function AvisoRegistro() {
+    const searchParams = useSearchParams()
+    const registrado = searchParams.get("registrado") === "1"
+
+    if (!registrado) return null
+
+    return (
+      <p className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-400">
+        El registro ha sido un éxito.
+        <br />
+        Inicia sesión.
+      </p>
+    )
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,8 +72,12 @@ export default function LoginPage() {
         </div>
 
         {/* 3. Formulario principal*/}
-        <form onSubmit={handleSubmit} className="w-full space-y-4">
+        <form action={formAction} className="w-full space-y-4">
           
+          <Suspense fallback={null}>
+            <AvisoRegistro />
+          </Suspense>
+
           {/* Campo: Correo o Número de Membresía */}
           <div className="space-y-1.5">
             <label className="text-xs text-gray-400 block font-medium">
@@ -62,10 +91,11 @@ export default function LoginPage() {
                 </svg>
               </span>
               <input
-                type="text"
-                value={identifier}
-                onChange={(e) => setIdentifier(e.target.value)}
-                placeholder="atleta@ironfit.com o #IF-8821"
+                name="email"
+                type="email"
+                defaultValue={state?.email}
+                autoComplete='email'
+                placeholder="atleta@ironfit.com"
                 className="w-full bg-[#15161a] border border-white/5 rounded-xl py-3 pl-10 pr-4 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-[#ff3355]/60 transition-colors"
                 required
               />
@@ -85,9 +115,9 @@ export default function LoginPage() {
                 </svg>
               </span>
               <input
+                name='password'
                 type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                autoComplete='current-password'
                 placeholder="••••••••••••"
                 className="w-full bg-[#15161a] border border-white/5 rounded-xl py-3 pl-10 pr-10 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-[#ff3355]/60 transition-colors"
                 required
@@ -121,14 +151,22 @@ export default function LoginPage() {
               ¿Olvidaste tu clave?
             </a>
           </div>
+          
+          {state?.error && (
+            <p className="text-xs text-[#ff4763] bg-[#ff4763]/10 border border-[#ff4763]/20 rounded-lg px-3 py-2">
+              {state.error}
+            </p>
+          )}
 
           {/* Botón de Submit */}
           <button
             type="submit"
-            className="w-full py-3.5 px-4 bg-gradient-to-r from-[#e62e4c] to-[#ff4763] hover:from-[#d62441] hover:to-[#eb3b57] text-white font-medium text-xs rounded-xl shadow-lg shadow-[#e62e4c]/20 flex items-center justify-center space-x-2 transition-all active:scale-[0.99]"
+            disabled={pending}
+            className="w-full py-3.5 px-4 bg-gradient-to-r from-[#e62e4c] to-[#ff4763] hover:from-[#d62441] hover:to-[#eb3b57] text-white font-medium text-xs rounded-xl shadow-lg shadow-[#e62e4c]/20 flex items-center justify-center space-x-2 transition-all active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
+
           >
-            <span>Entrar a mi cuenta</span>
-            <span>→</span>
+            <span>{pending ? "Iniciando sesión..." : "Entrar a mi cuenta"}</span>
+            {!pending &&<span>→</span>}
           </button>
         </form>
 

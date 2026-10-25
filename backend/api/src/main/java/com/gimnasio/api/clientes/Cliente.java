@@ -63,15 +63,11 @@ public class Cliente {
     @Column(name = "apellido_materno", length = 100)
     private String apellidoMaterno;
 
-    @NotNull
-    @NotBlank
     @Size(min = 18, max = 18, message = "CURP debe tener exactamente 18 caracteres")
-    @Column(nullable = false, length = 18, unique = true)
+    @Column(length = 18, unique = true)
     private String curp;
 
-    @NotNull
-    @NotBlank
-    @Column(name = "numero_celular", nullable = false, length = 20)
+    @Column(name = "numero_celular", length = 20)
     private String numeroCelular;
 
     @NotNull
@@ -80,8 +76,7 @@ public class Cliente {
     @Column(name = "correo_electronico", nullable = false, length = 150, unique = true)
     private String correoElectronico;
 
-    @NotNull
-    @Column(nullable = false)
+    @Column
     private LocalDate fechaNacimiento;
 
     @NotNull

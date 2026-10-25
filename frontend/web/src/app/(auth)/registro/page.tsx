@@ -4,6 +4,10 @@ import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { IconoMancuerna } from '@/components/icons/IconoMancuerna';
 
+// api registro
+import { useActionState } from 'react';
+import { registroAction } from './actions';
+
 type RegistrationValues = {
   nombre: string;
   apellidoPaterno: string;
@@ -59,6 +63,9 @@ export default function RegistroPage() {
   const [errors, setErrors] = useState<RegistrationErrors>({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
+  // registro API
+  const[state, formAction, pending] = useActionState(registroAction,null)
+
   function handleChange(field: keyof RegistrationValues, value: string) {
     const nextValues = { ...values, [field]: value };
     setValues(nextValues);
@@ -100,7 +107,7 @@ export default function RegistroPage() {
           </p>
         </header>
 
-        <form onSubmit={handleSubmit} noValidate className="space-y-5">
+        <form action={formAction} noValidate className="space-y-5">
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div className="space-y-2 sm:col-span-2">
               <label htmlFor="nombre" className="block text-sm font-medium text-gray-300">
@@ -108,15 +115,15 @@ export default function RegistroPage() {
               </label>
               <input
                 id="nombre"
-                name="nombre"
+                name="nombres"
                 type="text"
                 autoComplete="given-name"
-                value={values.nombre}
-                onChange={(event) => handleChange('nombre', event.target.value)}
+                defaultValue={state?.values?.nombres}
                 className={inputClassName}
-                placeholder="Tu nombre"
+                placeholder="Introduce tu nombre"
                 aria-invalid={Boolean(errors.nombre)}
                 aria-describedby={fieldError('nombre')}
+                required
               />
               {errors.nombre && (
                 <p id="nombre-error" role="alert" className="text-sm text-rose-400">
@@ -134,13 +141,13 @@ export default function RegistroPage() {
                 name="apellidoPaterno"
                 type="text"
                 autoComplete="family-name"
-                value={values.apellidoPaterno}
-                onChange={(event) => handleChange('apellidoPaterno', event.target.value)}
+                defaultValue={state?.values?.apellidoPaterno}
                 className={inputClassName}
-                placeholder="Tu apellido paterno"
+                placeholder="Ingresa tu apellido paterno"
                 maxLength={100}
                 aria-invalid={Boolean(errors.apellidoPaterno)}
                 aria-describedby={fieldError('apellidoPaterno')}
+                required
               />
               {errors.apellidoPaterno && (
                 <p id="apellidoPaterno-error" role="alert" className="text-sm text-rose-400">
@@ -157,10 +164,9 @@ export default function RegistroPage() {
                 id="apellidoMaterno"
                 name="apellidoMaterno"
                 type="text"
-                value={values.apellidoMaterno}
-                onChange={(event) => handleChange('apellidoMaterno', event.target.value)}
                 className={inputClassName}
-                placeholder="Tu apellido materno"
+                placeholder="Ingresa tu apellido materno"
+                defaultValue={state?.values?.apellidoMaterno}
                 maxLength={100}
                 aria-invalid={Boolean(errors.apellidoMaterno)}
                 aria-describedby={fieldError('apellidoMaterno')}
@@ -179,15 +185,15 @@ export default function RegistroPage() {
             </label>
             <input
               id="correo"
-              name="correo"
+              name="email"
               type="email"
               autoComplete="email"
-              value={values.correo}
-              onChange={(event) => handleChange('correo', event.target.value)}
+              defaultValue={state?.values?.email}
               className={inputClassName}
               placeholder="tu@correo.com"
               aria-invalid={Boolean(errors.correo)}
               aria-describedby={fieldError('correo')}
+              required
             />
             {errors.correo && (
               <p id="correo-error" role="alert" className="text-sm text-rose-400">
@@ -206,12 +212,11 @@ export default function RegistroPage() {
                 name="password"
                 type="password"
                 autoComplete="new-password"
-                value={values.password}
-                onChange={(event) => handleChange('password', event.target.value)}
                 className={inputClassName}
                 placeholder="Mínimo 8 caracteres"
                 aria-invalid={Boolean(errors.password)}
                 aria-describedby={fieldError('password')}
+                required
               />
               {errors.password && (
                 <p id="password-error" role="alert" className="text-sm text-rose-400">
@@ -229,12 +234,11 @@ export default function RegistroPage() {
                 name="confirmPassword"
                 type="password"
                 autoComplete="new-password"
-                value={values.confirmPassword}
-                onChange={(event) => handleChange('confirmPassword', event.target.value)}
                 className={inputClassName}
                 placeholder="Repite tu contraseña"
                 aria-invalid={Boolean(errors.confirmPassword)}
                 aria-describedby={fieldError('confirmPassword')}
+                required
               />
               {errors.confirmPassword && (
                 <p id="confirmPassword-error" role="alert" className="text-sm text-rose-400">
@@ -243,12 +247,19 @@ export default function RegistroPage() {
               )}
             </div>
           </div>
+          
+          {state?.error && (
+            <p className="text-xs text-[#ff4763] bg-[#ff4763]/10 border border-[#ff4763]/20 rounded-lg px-3 py-2">
+              {state.error}
+            </p>
+          )}
 
           <button
             type="submit"
-            className="flex min-h-12 w-full items-center justify-center rounded-xl bg-gradient-to-r from-[#e62e4c] to-[#ff4763] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#e62e4c]/20 transition-all hover:from-[#d62441] hover:to-[#eb3b57] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4763] focus-visible:ring-offset-2 focus-visible:ring-offset-[#090a0c]"
+            disabled={pending}
+            className="flex min-h-12 w-full items-center justify-center rounded-xl bg-gradient-to-r from-[#e62e4c] to-[#ff4763] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#e62e4c]/20 transition-all hover:from-[#d62441] hover:to-[#eb3b57] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4763] focus-visible:ring-offset-2 focus-visible:ring-offset-[#090a0c] disabled:cursor-not-allowed disabled:opacity-60 disabled:active:scale-100"
           >
-            Crear cuenta
+            {pending ? "Creando cuenta..." : "Crear cuenta"}
           </button>
         </form>
 
