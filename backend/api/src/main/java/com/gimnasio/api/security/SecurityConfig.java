@@ -63,7 +63,15 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         // Todos los endpoints de auth se pueden acceder
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(
+                            "/api/auth/login",
+                            "/api/auth/registro",
+                            "/actuator/health",
+                            "/actuator/health/**",
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html").permitAll()
+                            
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permite peticiones preflight, se envía antes de la petición para verificar conectividad
                         .anyRequest().authenticated()
                 )
