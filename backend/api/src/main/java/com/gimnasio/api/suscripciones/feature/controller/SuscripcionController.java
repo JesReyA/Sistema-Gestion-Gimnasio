@@ -1,18 +1,19 @@
 package com.gimnasio.api.suscripciones.feature.controller;
 
 
-import com.gimnasio.api.security.CuentaUserDetails;
 import com.gimnasio.api.suscripciones.feature.model.SuscripcionRequest;
-import com.gimnasio.api.suscripciones.feature.model.SuscripcionResponse;
 import com.gimnasio.api.suscripciones.feature.model.SuscripcionResume;
 import com.gimnasio.api.suscripciones.feature.service.SuscripcionService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/suscripcion")
 public class SuscripcionController {
 
     private final SuscripcionService suscripcionService;
@@ -22,12 +23,11 @@ public class SuscripcionController {
     }
 
     //registrar suscripcion de usuario
-    public ResponseEntity<SuscripcionResponse> crearNuevaSuscripcion(@Valid @RequestBody SuscripcionRequest suscripcionNueva){
+    @PostMapping("/crear-suscripcion")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<SuscripcionResume> crearNuevaSuscripcion(@Valid @RequestBody SuscripcionRequest suscripcionNueva){
         SuscripcionResume resumenDeCreacionUsuario = suscripcionService.crearSuscripcion(suscripcionNueva);
-
-
-
-        return null;
+        return ResponseEntity.ok(resumenDeCreacionUsuario);
     }
 
 
@@ -37,11 +37,6 @@ public class SuscripcionController {
 
     //obtener datos de suscripcion de usuario
 
-
-    public ResponseEntity<SuscripcionResponse> getSuscripcionUsuario(@AuthenticationPrincipal CuentaUserDetails usuario){
-
-
-    }
 
     //etc, a la meme
 

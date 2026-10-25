@@ -31,7 +31,6 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
-    
 
     public AuthService(ClienteRepository clienteRepository, CuentaRepository cuentaRepository,
             PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService) {
