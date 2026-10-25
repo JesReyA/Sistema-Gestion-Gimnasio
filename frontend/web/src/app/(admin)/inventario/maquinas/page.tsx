@@ -1,4 +1,4 @@
-//lol no estába el page en la rama main
+//laaaaaa que me parío, no se subió
 'use client';
 
 import React, { useState, useMemo } from 'react';
