@@ -137,8 +137,10 @@ export default function AccesoQr({ onClose }: AccesoQrProps) {
                     value= {qr.codigoAccesoQr}
                     bgColor={"#ffffff"}
                     fgColor={"#000000"}
-                    size={200}
+                    size={256}
+                    className='h-full w-full'
                     level = {"M"} 
+                    marginSize={2}
                     />
                   }
                 </div>
