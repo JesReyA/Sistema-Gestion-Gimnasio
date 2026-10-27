@@ -1,3 +1,5 @@
+'use client'
+
 import { IconoPerfil } from "@/components/icons/IconoPerfil";
 import { IconoTarjetaCredito } from "@/components/icons/IconoTarjetaCredito";
 import Link from "next/link";
@@ -8,8 +10,12 @@ import { IconoObjetivos } from "@/components/icons/IconoObjetivos";
 import { IconoCalorias} from "@/components/icons/IconoCalorias";
 import { IconoFlecha } from "@/components/icons/IconoFlecha";
 import { IconoConfiguracion } from "@/components/icons/IconoConfiguracion";
+import { useMe } from "@/lib/hooks/use-user-data";
 
 export default function Perfil() {
+
+  const {data:me, isLoading} = useMe()
+
   return (
      <div className="relative flex flex-col items-center gap-6 py-4 text-center">
 
@@ -63,11 +69,11 @@ export default function Perfil() {
             {/* Datos */}
             <div className="min-w-0 flex-1 text-left">
                 <h2 className="text-base font-bold text-white truncate">
-                  Nombre Usuario
+                  {me?.nombres} {me?.apellidoPaterno} {me?.apellidoPaterno}
                 </h2>
 
                 <p className="text-[11px] text-[#717684] mt-1">
-                  usuario@correo.com
+                  {me?.email}
                 </p>
 
                 <div className="flex items-center gap-1.5 mt-3 drop-shadow-[0_0_6px_rgba(1,197,135,0.6)]">

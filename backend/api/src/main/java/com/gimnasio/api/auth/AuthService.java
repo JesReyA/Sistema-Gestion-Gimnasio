@@ -131,4 +131,16 @@ public class AuthService {
         return new AuthResponse(token, "Bearer", jwtService.getExpirationTime(), resumen , null);
     }
 
+
+    // Metodo para obtener datos de la cuenta del usuario (cliente o trabajador) sirve para mostrarlos en la interfaz
+    @Transactional (readOnly = true )
+    public ResumenUsuario obtenerDatosPerfil(CuentaUserDetails cuentaUserDetails){
+        Cuenta cuenta = cuentaRepository.findByCorreoElectronico(cuentaUserDetails.getUsername())
+        .orElseThrow(() -> new IllegalStateException("Cuenta no registrada"));
+
+        List<String> roles = cuentaUserDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+
+        return armarResumenUsuario(cuenta, roles);
+    }
+
 }

@@ -2,12 +2,35 @@
 
 import { motion } from 'motion/react';
 import { IconoWallet } from './icons/IconoWallet';
+import { QRCodeSVG } from 'qrcode.react';
+import { useMe } from '@/lib/hooks/use-user-data';
+import { useAccesoQr } from '@/lib/hooks/use-user-data';
+import { useEffect, useState } from 'react';
 
 interface AccesoQrProps {
   onClose: () => void;
 }
 
 export default function AccesoQr({ onClose }: AccesoQrProps) {
+
+  const {data: me, isLoading} = useMe()
+  const {data: qr} = useAccesoQr()
+  const [hoy, setHoy] = useState("")
+
+  useEffect(() =>{
+    setHoy(
+      new Date().toLocaleDateString("es-MX", {
+        weekday: "long", 
+        day: "numeric",
+        month: "long",
+        year: "numeric", 
+        timeZone:"America/Mexico_City",
+
+      })
+    )
+  }, [])
+  
+
   return (
     <motion.div
       className="fixed inset-0 z-[100] flex flex-col items-center justify-between text-center p-4 bg-[#08080b] overflow-hidden overscroll-none select-none"
@@ -54,8 +77,8 @@ export default function AccesoQr({ onClose }: AccesoQrProps) {
           Club Pass
         </h1>
 
-        <p className="text-xs text-gray-400">
-          Sábado 17 de Octubre 2026
+        <p className="text-xs text-gray-400 uppercase">
+          {hoy}
         </p>
       </div>
 
@@ -85,7 +108,7 @@ export default function AccesoQr({ onClose }: AccesoQrProps) {
 
               <div className="min-w-0 flex-1">
                 <h2 className="text-sm font-bold text-white truncate">
-                  Nombre del usuario
+                  {me?.nombres} {me?.apellidoPaterno}
                 </h2>
 
                 <p className="text-xs text-rose-400 mt-1">
@@ -109,19 +132,15 @@ export default function AccesoQr({ onClose }: AccesoQrProps) {
 
                 {/* QR ilustrativo: sustituir por el QR real */}
                 <div className="w-full h-full flex items-center justify-center text-gray-900">
-                  <svg
-                    viewBox="0 0 100 100"
-                    className="w-full h-full"
-                    fill="currentColor"
-                    aria-label="Código QR ilustrativo"
-                    role="img"
-                  >
-                    <path d="M5 5h30v30H5z M10 10v20h20V10z M15 15h10v10H15z" />
-                    <path d="M65 5h30v30H65z M70 10v20h20V10z M75 15h10v10H75z" />
-                    <path d="M5 65h30v30H5z M10 70v20h20V70z M15 75h10v10H15z" />
-                    <path d="M42 5h7v7h-7z M53 5h7v7h-7z M42 16h7v7h-7z M53 27h7v7h-7z M42 38h7v7h-7z M53 38h7v7h-7z M64 42h7v7h-7z M75 42h7v7h-7z M86 42h7v7h-7z M42 53h7v7h-7z M53 53h7v7h-7z M64 53h7v7h-7z M75 53h7v7h-7z M86 53h7v7h-7z M42 64h7v7h-7z M53 75h7v7h-7z M64 64h7v7h-7z M75 75h7v7h-7z M86 64h7v7h-7z M42 86h7v7h-7z M64 86h7v7h-7z M75 86h7v7h-7z M86 86h7v7h-7z" />
-                  </svg>
-                  
+                  {qr && 
+                    <QRCodeSVG
+                    value= {qr.codigoAccesoQr}
+                    bgColor={"#ffffff"}
+                    fgColor={"#000000"}
+                    size={200}
+                    level = {"M"} 
+                    />
+                  }
                 </div>
               </div>
             </div>
