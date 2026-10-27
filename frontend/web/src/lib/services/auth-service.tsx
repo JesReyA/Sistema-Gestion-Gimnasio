@@ -1,4 +1,6 @@
+import { body } from "motion/react-client";
 import { fetchWithAuth } from "../api-client";
+import { cache } from "react";
 
 export type LoginCredentials = {
     email : string 
@@ -50,3 +52,7 @@ export async function registroWithApi(data:RegistroRequest) {
         auth: false,
     })
 }
+
+export const getMe = cache(() =>
+    fetchWithAuth<ResumenUsuario>("/api/auth/me")
+)

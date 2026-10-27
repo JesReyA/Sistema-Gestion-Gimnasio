@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { IconoCalorias } from "@/components/icons/IconoCalorias";
+import { useMe } from '@/lib/hooks/use-user-data';
+import { useAccesoQr } from '@/lib/hooks/use-user-data';
+
 interface DiaAsistenciaReal {
   fechaId: string;
   letraDia: string;
@@ -111,6 +114,11 @@ export default function PaginaInicioCliente() {
   const [editandoMeta, setEditandoMeta] = useState<boolean>(false);
   const [nuevoMetaInput, setNuevoMetaInput] = useState<string>('');
   const [guardandoMeta, setGuardandoMeta] = useState<boolean>(false);
+
+  // Obtener datos del usuario desde la API
+  const {data: me, isLoading} = useMe()
+
+  useAccesoQr()
 
   useEffect(() => {
     const ahora = new Date();
@@ -286,7 +294,7 @@ export default function PaginaInicioCliente() {
 
           <div>
             <h1 className="text-lg font-bold flex items-center gap-1.5">
-              Hola, {datosUsuario.nombre} 
+              Hola, {me?.nombres} {me?.apellidoPaterno} 
             </h1>
             <p className="text-xs text-neutral-400">¡Vamos por más hoy!</p>
           </div>

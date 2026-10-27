@@ -10,6 +10,7 @@ import { IconoHome } from '@/components/icons/IconoHome';
 import { IconoMancuerna } from '@/components/icons/IconoMancuerna';
 import { IconoPerfil } from '@/components/icons/IconoPerfil';
 import { IconoTarjetaCredito } from '@/components/icons/IconoTarjetaCredito';
+import { useMe } from '@/lib/hooks/use-user-data';
 
 type AdminNavItem = {
   href: string;
@@ -170,6 +171,8 @@ function AdminNavigation({
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
+  const {data: me, isLoading} = useMe()
+
 
   const toggleGroup = (id: string) => {
     setExpandedGroups((current) => ({ ...current, [id]: !current[id] }));
@@ -200,9 +203,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         />
 
         <div className="mt-auto rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
-          <p className="text-xs font-semibold text-[#d5d6dc]">Panel administrativo</p>
-          <p className="mt-1 text-[11px] leading-relaxed text-[#717684]">
-            Gestiona las operaciones de IRONFIT desde este espacio.
+          <p className="text-xs font-semibold text-[#d5d6dc]">{me?.roles.toString().slice(5)}</p>
+          <p className="mt-1 text-[11px] leading-relaxed text-white">
+            {me?.nombres} {me?.apellidoPaterno}
           </p>
         </div>
       </aside>
