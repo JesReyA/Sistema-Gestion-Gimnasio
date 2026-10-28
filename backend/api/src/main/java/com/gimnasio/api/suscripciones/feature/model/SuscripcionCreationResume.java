@@ -8,10 +8,10 @@ import java.time.LocalDate;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record SuscripcionResume (LocalDate fechaCreacion,
-                                 LocalDate fechaFinalizacion,
-                                 PlanSuscripcion tipoSuscripcion,
-                                 EstadoSuscripcion estadoSuscripcion
+public record SuscripcionCreationResume(LocalDate fechaCreacion,
+                                        LocalDate fechaFinalizacion,
+                                        PlanSuscripcion tipoSuscripcion,
+                                        EstadoSuscripcion estadoSuscripcion
                                 ) {
     @Override
     public String toString() {

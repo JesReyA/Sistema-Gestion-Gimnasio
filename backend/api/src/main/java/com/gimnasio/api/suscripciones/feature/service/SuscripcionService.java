@@ -3,19 +3,17 @@ package com.gimnasio.api.suscripciones.feature.service;
 
 import com.gimnasio.api.clientes.Cliente;
 import com.gimnasio.api.clientes.ClienteRepository;
-import com.gimnasio.api.pagos.Pago;
+import com.gimnasio.api.suscripciones.feature.model.ClienteDTO;
 import com.gimnasio.api.suscripciones.feature.model.SuscripcionRequest;
-import com.gimnasio.api.suscripciones.feature.model.SuscripcionResume;
+import com.gimnasio.api.suscripciones.feature.model.SuscripcionCreationResume;
 import com.gimnasio.api.suscripciones.feature.repository.SuscripcionRepository;
 import com.gimnasio.api.suscripciones.persistance.PlanSuscripcion;
 import com.gimnasio.api.suscripciones.persistance.PlanSuscripcionRepository;
 import com.gimnasio.api.suscripciones.persistance.Suscripcion;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,13 +31,13 @@ public class SuscripcionService {
         this.suscripcionRepository = suscripcionRepository;
     }
 
-    public SuscripcionResume crearSuscripcion(SuscripcionRequest suscripcion){
+    public SuscripcionCreationResume crearSuscripcion(SuscripcionRequest suscripcion){
 
         Cliente cliente = clienteRepository.findByCorreoElectronico(suscripcion.getCorreoCliente())
                 .orElseThrow(()-> new RuntimeException("Cliente no encontrado"));
 
 
-        if (suscripcionRepository.existByCliente(cliente)) {
+        if (suscripcionRepository.existsByCliente(cliente)) {
             throw new IllegalStateException("El cliente ya cuenta con una suscripción activa");
         }
 
@@ -60,7 +58,7 @@ public class SuscripcionService {
 
         Suscripcion suscripcionGuardada = suscripcionRepository.save(nuevaSuscripcion);
 
-        return new SuscripcionResume(suscripcionGuardada.getFechaInicio(),
+        return new SuscripcionCreationResume(suscripcionGuardada.getFechaInicio(),
                 suscripcionGuardada.getFechaFin(),
                 suscripcionGuardada.getPlanSuscripcion(),
                 suscripcionGuardada.getEstado());
@@ -72,4 +70,10 @@ public class SuscripcionService {
         return cliente.getSuscripciones();
     }
 
+    //incompleto
+    public void eliminarSuscripcion(ClienteDTO clienteCorreo){
+        Cliente cliente = clienteRepository.findByCorreoElectronico(clienteCorreo.getClienteEmail())
+                .orElseThrow(()-> new RuntimeException("cliente no encontrado"));
+        suscripcionRepository.deleteByCliente(cliente);
+    }
 }
