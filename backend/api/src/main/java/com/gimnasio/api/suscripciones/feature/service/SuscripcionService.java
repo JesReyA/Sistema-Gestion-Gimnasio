@@ -65,5 +65,11 @@ public class SuscripcionService {
                 suscripcionGuardada.getPlanSuscripcion(),
                 suscripcionGuardada.getEstado());
     }
+    public List<Suscripcion> getAllSuscripciones(SuscripcionRequest suscripcion){
+        Cliente cliente = clienteRepository.findByCorreoElectronico(suscripcion.getCorreoCliente())
+                .orElseThrow(() -> new RuntimeException("cliente no encontado"));
+        //lista de suscripciones por cliente
+        return cliente.getSuscripciones();
+    }
 
 }

@@ -22,4 +22,5 @@ public record SuscripcionResume (LocalDate fechaCreacion,
                 ", fechaFinalizacion=" + fechaFinalizacion +
                 '}';
     }
+
 }

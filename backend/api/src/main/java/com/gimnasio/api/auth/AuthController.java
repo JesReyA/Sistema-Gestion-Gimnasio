@@ -30,7 +30,6 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> autenticar (@Valid @RequestBody LoginRequest loginRequest){
         AuthResponse respuesta = authService.login(loginRequest);
-
         return ResponseEntity.ok(respuesta);
     }
     
@@ -38,9 +37,7 @@ public class AuthController {
     // Metodo y endpoint para registro
     @PostMapping("/registro")
     public ResponseEntity<ResumenUsuario> registro(@Valid @RequestBody RegistroRequest registroRequest){
-
         ResumenUsuario resumenUsuario = authService.registro(registroRequest);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(resumenUsuario);
         
     }
